@@ -3,15 +3,21 @@
  */
 'use strict';
 
-import {Platform} from 'react-native';
+import {Platform, Dimensions, PixelRatio} from 'react-native';
 import colors from './colors';
 import px2dp from '../utils/px2dp';
 
-const favoriteColor = colors.orange;
+const favoriteColor = colors.limeGreen;
 
 export default {
     mainThemeColor: favoriteColor,
     pageBackgroundColor: '#f4f4f4',
+    screenHeight: Dimensions.get('window').height,
+    screenWidth: Dimensions.get('window').width,
+    segment: {
+        color: '#ccc',
+        width: 1/PixelRatio.get()
+    },
     tabButton: {
         selectedColor: favoriteColor,
         normalColor: '#aaa'
