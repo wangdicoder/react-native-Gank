@@ -27,7 +27,7 @@ class BottomTabBar extends Component{
     constructor(props){
         super(props);
         this.state = {
-            selectedTab: 'discovery'
+            selectedTab: 'me'
         };
         this.tabNames = ['首页', '发现', '收藏', '我'];
     }

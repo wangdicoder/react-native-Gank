@@ -7,7 +7,7 @@ import {Platform} from 'react-native';
 import colors from './colors';
 import px2dp from '../utils/px2dp';
 
-const favoriteColor = colors.dodgerBlue;
+const favoriteColor = colors.orange;
 
 export default {
     mainThemeColor: favoriteColor,
@@ -17,9 +17,9 @@ export default {
         normalColor: '#aaa'
     },
     toolbar: {
-        height: (Platform.OS === 'android') ? px2dp(45) : px2dp(52),
+        height: (Platform.OS === 'android') ? px2dp(45) : px2dp(49),
         barColor: favoriteColor,
         titleColor: '#fff',
-        titleSize: px2dp(20)
+        titleSize: px2dp(16)
     }
 }
