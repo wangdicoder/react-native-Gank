@@ -9,6 +9,7 @@ import TabNavigator from 'react-native-tab-navigator';
 import HomeFragment from './HomeFragment';
 import DiscoveryFragment from './DiscoveryFragment';
 import MeFragment from './MeFragment';
+import CollectionFragment from './CollectionFragment';
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
@@ -26,9 +27,9 @@ class BottomTabBar extends Component{
     constructor(props){
         super(props);
         this.state = {
-            selectedTab: 'me'
+            selectedTab: 'discovery'
         };
-        this.tabNames = ['首页', '发现', '我'];
+        this.tabNames = ['首页', '发现', '收藏', '我'];
     }
 
     render(){
@@ -55,8 +56,17 @@ class BottomTabBar extends Component{
                     {<DiscoveryFragment />}
                 </TabNavigator.Item>
                 <TabNavigator.Item
-                    selected={this.state.selectedTab === 'me'}
+                    selected={this.state.selectedTab === 'collection'}
                     title={this.tabNames[2]}
+                    selectedTitleStyle={{color: theme.tabButton.selectedColor}}
+                    renderIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.collectionNormal} />}
+                    renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.collectionSelected} />}
+                    onPress={() => this.setState({ selectedTab: 'collection' })}>
+                    {<CollectionFragment />}
+                </TabNavigator.Item>
+                <TabNavigator.Item
+                    selected={this.state.selectedTab === 'me'}
+                    title={this.tabNames[3]}
                     selectedTitleStyle={{color: theme.tabButton.selectedColor}}
                     renderIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.moreNormal} />}
                     renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.moreSelected} />}
@@ -74,6 +84,8 @@ class BottomTabBar extends Component{
         Icon.getImageSource('md-aperture', 100, theme.tabButton.selectedColor).then((source) => this.setState({ compassSelected: source }));
         Icon.getImageSource('md-person', 100, theme.tabButton.normalColor).then((source) => this.setState({ moreNormal: source }));
         Icon.getImageSource('md-person', 100, theme.tabButton.selectedColor).then((source) => this.setState({ moreSelected: source }));
+        Icon.getImageSource('md-cube', 100, theme.tabButton.normalColor).then((source) => this.setState({ collectionNormal: source }));
+        Icon.getImageSource('md-cube', 100, theme.tabButton.selectedColor).then((source) => this.setState({ collectionSelected: source }));
     }
 }
 
