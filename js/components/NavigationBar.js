@@ -2,7 +2,7 @@
  * Created by wangdi on 23/11/16.
  */
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, Platform, View, Text, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
+import {StyleSheet, Platform, View, Text, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -10,7 +10,15 @@ import Icon from 'react-native-vector-icons/Ionicons';
 export default class NavigationBar extends Component{
     static propTypes = {
         title: PropTypes.string.isRequired,
-        backPress: PropTypes.func
+        leftBtnIcon: PropTypes.string,
+        leftBtnPress: PropTypes.func,
+        rightBtnIcon: PropTypes.string,
+        rightBtnPress: PropTypes.func,
+        isBackBtnOnLeft: PropTypes.bool
+    };
+
+    static defaultProps = {
+        isBackBtnOnLeft: false
     };
 
     constructor(props) {
@@ -18,12 +26,12 @@ export default class NavigationBar extends Component{
     }
 
     render(){
-        const {title, backPress} = this.props;
+        const {title, leftBtnIcon, leftBtnPress, rightBtnIcon, rightBtnPress, isBackBtnOnLeft} = this.props;
         return (
             <View style={styles.toolbar}>
                 <View style={styles.fixedCell}>
-                    {backPress ?
-                        <IconButton onPress={backPress}/>
+                    {leftBtnIcon ?
+                        <IconButton icon={leftBtnIcon} onPress={leftBtnPress} isBackBtnOnLeft={isBackBtnOnLeft}/>
                         :
                         null
                     }
@@ -32,7 +40,11 @@ export default class NavigationBar extends Component{
                     <Text style={styles.title}>{title}</Text>
                 </View>
                 <View style={styles.fixedCell}>
-
+                    {rightBtnIcon ?
+                        <IconButton icon={rightBtnIcon} onPress={rightBtnPress}/>
+                        :
+                        null
+                    }
                 </View>
             </View>
         );
@@ -41,27 +53,38 @@ export default class NavigationBar extends Component{
 
 class IconButton extends Component{
     static propTypes = {
-        onPress: PropTypes.func
+        icon: PropTypes.string.isRequired,
+        onPress: PropTypes.func,
+        isBackBtnOnLeft: PropTypes.bool
     };
 
     render(){
         if(Platform.OS === 'android'){
+            const icon = 'md-'+this.props.icon;
             return(
                 <TouchableNativeFeedback
                     onPress={this.props.onPress}>
                     <View style={styles.backBtn}>
-                        <Icon name="md-arrow-back" color="#fff" size={23}/>
+                        <Icon name={icon} color="#fff" size={px2dp(23)}/>
                     </View>
                 </TouchableNativeFeedback>
             );
         }else if(Platform.OS === 'ios'){
+            const icon = 'ios-'+this.props.icon;
             return(
-                <TouchableHighlight
-                    onPress={this.props.onPress}>
-                    <View style={styles.backBtn}>
-                        <Icon name="ios-arrow-back" color="#fff" size={23}/>
-                    </View>
-                </TouchableHighlight>
+                <TouchableOpacity
+                    onPress={this.props.onPress}
+                    activeOpacity={theme.touchableOpacityActiveOpacity}>
+                    {this.props.isBackBtnOnLeft ?
+                        <View style={[styles.backBtn, {paddingRight: px2dp(20)}]}>
+                            <Icon name={icon} color="#fff" size={px2dp(23)}/>
+                        </View>
+                        :
+                        <View style={styles.backBtn}>
+                            <Icon name={icon} color="#fff" size={px2dp(23)}/>
+                        </View>
+                    }
+                </TouchableOpacity>
             );
         }
     }
@@ -82,12 +105,13 @@ const styles = StyleSheet.create({
     fixedCell: {
         width: theme.toolbar.height,
         height: theme.toolbar.height,
+        flexDirection:'row',
     },
     centerCell: {
         flex: 1,
         height: theme.toolbar.height,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     title: {
         fontSize: theme.toolbar.titleSize,
@@ -96,6 +120,8 @@ const styles = StyleSheet.create({
     backBtn: {
         justifyContent:'center',
         alignItems:'center',
-        flex: 1
+        flex: 1,
+        width: theme.toolbar.height,
+        height: Platform.OS === 'android' ? theme.toolbar.height : theme.toolbar.height - px2dp(6),
     }
 });

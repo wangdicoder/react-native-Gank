@@ -32,7 +32,7 @@ export default class SimpleRowItem extends Component{
             return(
                 <TouchableHighlight
                     onPress={this.props.onPress}
-                    underlayColor="rgb(210, 230, 255)">
+                    underlayColor={theme.touchableHighlightUnderlayColor}>
                     {this._renderContent()}
                 </TouchableHighlight>
             );
