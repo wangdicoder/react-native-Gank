@@ -7,15 +7,14 @@ import {BackAndroid} from 'react-native';
 export default class PageComponent extends Component{
     constructor(props){
         super(props);
-        this.handleBack = this._handleBack.bind(this);
     }
 
     componentDidMount() {
-        BackAndroid.addEventListener('hardwareBackPress', this.handleBack);
+        BackAndroid.addEventListener('hardwareBackPress', this._handleBack.bind(this));
     }
 
     componentWillUnmount() {
-        BackAndroid.removeEventListener('hardwareBackPress', this.handleBack);
+        BackAndroid.removeEventListener('hardwareBackPress', this._handleBack.bind(this));
     }
 
     _handleBack() {

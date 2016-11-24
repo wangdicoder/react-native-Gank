@@ -3,10 +3,11 @@
  */
 'use strict';
 
-import React, {Component} from 'react';
-import {StyleSheet, View, Text, ScrollView, Image} from 'react-native';
+import React, {Component, PropTypes} from 'react';
+import {StyleSheet, View, Text, ScrollView, Image, ListView} from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import theme from '../../constants/theme';
+import px2dp from '../../utils/px2dp';
 import NavigationBar from '../../components/NavigationBar';
 
 export default class HomeFragment extends Component{
@@ -15,21 +16,25 @@ export default class HomeFragment extends Component{
         this.state = {
             opacity: 0,
         };
-        this.imageHeight = 300;
+        this.imageHeight = px2dp(400);
     }
 
     render(){
         return(
             <View style={styles.container}>
                 <View style={[styles.toolbar, {opacity: this.state.opacity}]}>
-                    <NavigationBar title="今日Gank"/>
+                    <NavigationBar title="今日干货"/>
                 </View>
                 <ScrollView
                     scrollEnabled={this.state.scrollEnabled}
                     onScroll={this._onScroll.bind(this)}>
-                    <Image source={require('../../assets/test.jpg')} resizeMode="cover" style={{height: this.imageHeight, width: theme.screenWidth}}/>
+                    <View style={{height: this.imageHeight, width: theme.screenWidth}}>
+                        <ImageView
+                            imgUrl="http://ww3.sinaimg.cn/large/610dc034jw1fa2vh33em9j20u00zmabz.jpg"
+                            labelTime="2016/11/24"/>
+                    </View>
                     <View style={styles.scrollContents}>
-                        <Text>dsds</Text>
+
                     </View>
                 </ScrollView>
             </View>
@@ -41,25 +46,74 @@ export default class HomeFragment extends Component{
         if(offsetY <= this.imageHeight - theme.toolbar.height){
             var opacity = offsetY / (this.imageHeight - theme.toolbar.height);
             this.setState({opacity: opacity});
+        }else{
+            this.setState({opacity: 1});
         }
-
-
     }
 
 }
 
+class ImageView extends Component{
+    static propTypes = {
+        imgUrl: PropTypes.string,
+        labelTime: PropTypes.string
+    }
+
+    render(){
+        return(
+            <View style={styles.container}>
+                <Image source={{uri: this.props.imgUrl}} style={styles.img}/>
+                <View style={styles.dateLabel}>
+                    <Text style={styles.label}>{this.props.labelTime}</Text>
+                </View>
+            </View>
+        );
+    }
+}
+
+class MyList extends Component{
+
+    render(){
+        // return(
+        //     <ListView
+        //
+        //     />
+        // );
+    }
+}
+
 const styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        backgroundColor: theme.pageBackgroundColor
     },
     toolbar: {
         position: 'absolute',
         width: theme.screenWidth,
-        left: 0,
-        top: 0,
         zIndex: 1
     },
     scrollContents: {
         height: theme.screenHeight,
+    },
+    img: {
+        width: theme.screenWidth,
+        height: px2dp(400),
+        resizeMode: 'cover'
+    },
+    dateLabel: {
+        backgroundColor: 'rgba(0,0,0,.5)',
+        position: 'relative',
+        width: theme.screenWidth,
+        height: px2dp(50),
+        bottom: px2dp(50),
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center'
+    },
+    label: {
+        color: '#fff',
+        fontSize: px2dp(20),
+        marginRight: px2dp(20),
+        fontWeight: 'bold'
     }
 });
