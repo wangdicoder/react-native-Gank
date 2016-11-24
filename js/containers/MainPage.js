@@ -37,7 +37,8 @@ class BottomTabBar extends Component{
         return(
             <TabNavigator
                 hidesTabTouch={true}
-                tabBarStyle={styles.tabBarStyle}>
+                tabBarStyle={styles.tabBarStyle}
+                sceneStyle={{paddingBottom: styles.tabBarStyle.height}}>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'home'}
                     title={this.tabNames[0]}
