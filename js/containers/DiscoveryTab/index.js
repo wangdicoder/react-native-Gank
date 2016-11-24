@@ -8,7 +8,7 @@ import {View, Text} from 'react-native';
 import ImageTabPage from './TabPages/ImageTabPage';
 import TextTabPage from './TabPages/TextTabPage';
 import VideoTabPage from './TabPages/VideoTabPage';
-import theme from '../constants/theme';
+import theme from '../../constants/theme';
 
 export default class DiscoveryFragment extends Component{
     constructor(props){

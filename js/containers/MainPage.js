@@ -6,10 +6,10 @@
 import React, {Component} from 'react';
 import {StyleSheet, Platform, View, Text, Image} from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
-import HomeFragment from './HomeFragment';
-import DiscoveryFragment from './DiscoveryFragment';
-import MeFragment from './MeFragment';
-import CollectionFragment from './CollectionFragment';
+import HomeFragment from './HomeTab/index';
+import DiscoveryFragment from './DiscoveryTab/index';
+import MeFragment from './MoreTab/index';
+import CollectionFragment from './CollectionTab/index';
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';

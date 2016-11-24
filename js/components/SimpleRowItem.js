@@ -30,10 +30,11 @@ export default class SimpleRowItem extends Component{
             );
         }else if(Platform.OS === 'ios'){
             return(
-                <TouchableOpacity
-                    onPress={this.props.onPress}>
+                <TouchableHighlight
+                    onPress={this.props.onPress}
+                    underlayColor="rgb(210, 230, 255)">
                     {this._renderContent()}
-                </TouchableOpacity>
+                </TouchableHighlight>
             );
         }
     }
