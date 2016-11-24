@@ -4,13 +4,18 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import RowItem from '../../components/SimpleRowItem';
 import px2dp from '../../utils/px2dp';
 
+import ThemeColorPage from './ThemeColorPage';
+
 export default class MeFragment extends Component{
+    constructor(props){
+        super(props);
+    }
 
     render(){
         return(
@@ -28,6 +33,9 @@ export default class MeFragment extends Component{
 
     _itemClickCallback(){
 
+        this.props.navigator.push({
+            component: ThemeColorPage
+        });
     }
 }
 

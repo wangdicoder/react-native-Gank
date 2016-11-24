@@ -18,7 +18,7 @@ export default class MainPage extends Component{
 
     render(){
         return(
-            <BottomTabBar />
+            <BottomTabBar navigator={this.props.navigator}/>
         );
     }
 }
@@ -33,6 +33,7 @@ class BottomTabBar extends Component{
     }
 
     render(){
+        const {navigator} = this.props;
         return(
             <TabNavigator
                 hidesTabTouch={true}
@@ -71,7 +72,7 @@ class BottomTabBar extends Component{
                     renderIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.moreNormal} />}
                     renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.moreSelected} />}
                     onPress={() => this.setState({ selectedTab: 'me' })}>
-                    {<MeFragment />}
+                    {<MeFragment navigator={navigator}/>}
                 </TabNavigator.Item>
             </TabNavigator>
         );
