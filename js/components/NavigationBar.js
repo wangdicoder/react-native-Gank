@@ -28,23 +28,25 @@ export default class NavigationBar extends Component{
     render(){
         const {title, leftBtnIcon, leftBtnPress, rightBtnIcon, rightBtnPress, isBackBtnOnLeft} = this.props;
         return (
-            <View style={styles.toolbar}>
-                <View style={styles.fixedCell}>
-                    {leftBtnIcon ?
-                        <IconButton icon={leftBtnIcon} onPress={leftBtnPress} isBackBtnOnLeft={isBackBtnOnLeft}/>
-                        :
-                        null
-                    }
-                </View>
-                <View style={styles.centerCell}>
-                    <Text style={styles.title}>{title}</Text>
-                </View>
-                <View style={styles.fixedCell}>
-                    {rightBtnIcon ?
-                        <IconButton icon={rightBtnIcon} onPress={rightBtnPress}/>
-                        :
-                        null
-                    }
+            <View style={styles.container}>
+                <View style={styles.toolbar}>
+                    <View style={styles.fixedCell}>
+                        {leftBtnIcon ?
+                            <IconButton icon={leftBtnIcon} onPress={leftBtnPress} isBackBtnOnLeft={isBackBtnOnLeft}/>
+                            :
+                            null
+                        }
+                    </View>
+                    <View style={styles.centerCell}>
+                        <Text style={styles.title}>{title}</Text>
+                    </View>
+                    <View style={styles.fixedCell}>
+                        {rightBtnIcon ?
+                            <IconButton icon={rightBtnIcon} onPress={rightBtnPress}/>
+                            :
+                            null
+                        }
+                    </View>
                 </View>
             </View>
         );
@@ -91,14 +93,18 @@ class IconButton extends Component{
 }
 
 const styles = StyleSheet.create({
+    container: { //in order to display the shadow on home tab
+        height: theme.toolbar.height + px2dp(4),
+        width: theme.screenWidth
+    },
     toolbar: {
         height: theme.toolbar.height,
         backgroundColor: theme.toolbar.barColor,
         flexDirection: 'row',
         paddingTop: Platform.OS === 'android' ? 0 : px2dp(6),
-        elevation: 8,
+        elevation: 3,
         shadowColor: 'rgb(0,0,0)',
-        shadowOffset: {height: 5, width: 1},
+        shadowOffset: {height: 3, width: 1},
         shadowOpacity: 0.25,
         shadowRadius: 3
     },

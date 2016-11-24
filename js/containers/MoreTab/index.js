@@ -57,11 +57,10 @@ const styles = StyleSheet.create({
     },
     intro: {
         height: 100,
-        marginTop: px2dp(18),
         backgroundColor: '#fff'
     },
     block: {
-        marginTop: px2dp(13),
+        marginTop: px2dp(12),
         borderBottomColor: theme.segment.color,
         borderBottomWidth: theme.segment.width,
         borderTopColor: theme.segment.color,
