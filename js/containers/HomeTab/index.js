@@ -13,9 +13,9 @@ export default class HomeFragment extends Component{
     constructor(props){
         super(props);
         this.state = {
-            opacity: 1,
-
+            opacity: 0,
         };
+        this.imageHeight = 300;
     }
 
     render(){
@@ -25,17 +25,24 @@ export default class HomeFragment extends Component{
                     <NavigationBar title="今日Gank"/>
                 </View>
                 <ScrollView
+                    scrollEnabled={this.state.scrollEnabled}
                     onScroll={this._onScroll.bind(this)}>
-                    <Image source={require('../../assets/test.jpg')} resizeMode="cover" style={{height: 300, width: theme.screenWidth}}/>
+                    <Image source={require('../../assets/test.jpg')} resizeMode="cover" style={{height: this.imageHeight, width: theme.screenWidth}}/>
                     <View style={styles.scrollContents}>
-
+                        <Text>dsds</Text>
                     </View>
                 </ScrollView>
             </View>
         );
     }
 
-    _onScroll(){
+    _onScroll(event){
+        var offsetY = event.nativeEvent.contentOffset.y;
+        if(offsetY <= this.imageHeight - theme.toolbar.height){
+            var opacity = offsetY / (this.imageHeight - theme.toolbar.height);
+            this.setState({opacity: opacity});
+        }
+
 
     }
 
@@ -50,7 +57,7 @@ const styles = StyleSheet.create({
         width: theme.screenWidth,
         left: 0,
         top: 0,
-        elevation: 8
+        zIndex: 1
     },
     scrollContents: {
         height: theme.screenHeight,
