@@ -16,7 +16,7 @@ import Avatar from '../../components/Avatar';
 export default class DiscoveryFragment extends Component{
     constructor(props){
         super(props);
-        this.tabNames = [['Android','iOS','前端'],['福利','休息视频','扩展阅读']];
+        this.tabNames = [['Android','iOS','前端'],['妹子','休息视频','扩展阅读']];
         this.tabIcon = [['logo-android','logo-apple','logo-chrome'],['ios-images','ios-film','ios-book']];
         this.tabColor = [['rgb(141,192,89)','#000','rgb(51,154,237)'],['rgb(249,89,58)','rgb(154,53,172)','rgb(65,87,175)']];
     }

@@ -20,7 +20,7 @@ function receiveData(responseData){
 
 export function fetchData(date) {
     return function (dispatch) {
-        dispatch(requestData());
+        //dispatch(requestData());
 
         return fetch(`http://gank.io/api/day/${date}`)
             .then(response => response.json())

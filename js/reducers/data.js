@@ -7,6 +7,7 @@ import * as types from '../actions/actionTypes';
 
 const initialState = {
     loading: true,
+    hasData: false,
     error: false,
     dataSource: {},
 };
@@ -16,13 +17,13 @@ export default function data(state=initialState, action){
         case types.REQUEST_DATA:
             return Object.assign({}, state, {
                 ...state,
-                loading: true
             });
 
         case types.RECEIVE_DATA:
             return Object.assign({}, state, {
                 ...state,
                 loading: false,
+                hasData: true,
                 dataSource: action.dataSource,
             });
 

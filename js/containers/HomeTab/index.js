@@ -7,7 +7,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestData';
-import {StyleSheet, View, Text, ScrollView, Image, ListView, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, Image, RefreshControl, ListView, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
 import theme from '../../constants/theme';
 import px2dp from '../../utils/px2dp';
 import NavigationBar from '../../components/NavigationBar';
@@ -34,10 +34,13 @@ class HomeFragment extends Component{
                 </View>
                 <ScrollView
                     scrollEnabled={this.state.scrollEnabled}
-                    onScroll={this._onScroll.bind(this)}>
-                    {this.props.loading ?
-                        <Text>loading</Text>
-                        :
+                    onScroll={this._onScroll.bind(this)}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.props.loading}
+                            onRefresh={this._onPress.bind(this, 0)}/>
+                    }>
+                    {this.props.hasData ?
                         <View>
                             <View style={{height: this.imageHeight, width: theme.screenWidth}}>
                                 <ImageView
@@ -60,10 +63,16 @@ class HomeFragment extends Component{
                                 </TouchableHighlight>
                             </View>
                         </View>
+                        :
+                        null
                     }
                 </ScrollView>
             </View>
         );
+    }
+
+    componentDidMount(){
+        this.props.actions.fetchData(getDate());
     }
 
     _onPress(id) {
@@ -155,8 +164,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
+        loading: state.data.loading,
+        hasData: state.data.hasData,
         dataSource: state.data.dataSource,
-        loading: state.data.loading
     };
 };
 
