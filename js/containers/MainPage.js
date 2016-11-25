@@ -27,7 +27,7 @@ class BottomTabBar extends Component{
     constructor(props){
         super(props);
         this.state = {
-            selectedTab: 'home'
+            selectedTab: 'discovery'
         };
         this.tabNames = ['首页', '发现', '收藏', '更多'];
     }
@@ -46,7 +46,7 @@ class BottomTabBar extends Component{
                     renderIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.homeNormal} />}
                     renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.homeSelected} />}
                     onPress={() => this.setState({ selectedTab: 'home' })}>
-                    {<HomeFragment />}
+                    {<HomeFragment navigator={navigator}/>}
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'discovery'}
@@ -55,7 +55,7 @@ class BottomTabBar extends Component{
                     renderIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.compassNormal} />}
                     renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.compassSelected} />}
                     onPress={() => this.setState({ selectedTab: 'discovery' })}>
-                    {<DiscoveryFragment />}
+                    {<DiscoveryFragment navigator={navigator}/>}
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'collection'}
@@ -64,7 +64,7 @@ class BottomTabBar extends Component{
                     renderIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.collectionNormal} />}
                     renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.collectionSelected} />}
                     onPress={() => this.setState({ selectedTab: 'collection' })}>
-                    {<CollectionFragment />}
+                    {<CollectionFragment navigator={navigator}/>}
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'me'}

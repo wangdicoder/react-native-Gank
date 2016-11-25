@@ -5,9 +5,9 @@
 
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, ScrollView, Platform, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
-import ImageTabPage from './TabPages/ImageTabPage';
-import TextTabPage from './TabPages/TextTabPage';
-import VideoTabPage from './TabPages/VideoTabPage';
+import ImageTabPage from './ImageTabPage';
+import TextTabPage from './TextTabPage';
+import VideoTabPage from './VideoTabPage';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import px2dp from '../../utils/px2dp';
@@ -35,13 +35,13 @@ export default class DiscoveryFragment extends Component{
                                             <View style={styles.btnCell} key={i+index}>
                                                 {Platform.OS === 'android' ?
                                                     <TouchableNativeFeedback
-                                                        onPress={this._itemPressCallback.bind(this, i+index)}
+                                                        onPress={this._itemPressCallback.bind(this, i+index, subItem)}
                                                         background={TouchableNativeFeedback.Ripple('rgba(0,0,0,.2)', true)}>
                                                         {this._renderBtnContent(i,index)}
                                                     </TouchableNativeFeedback>
                                                     :
                                                     <TouchableHighlight
-                                                        onPress={this._itemPressCallback.bind(this, i+index)}
+                                                        onPress={this._itemPressCallback.bind(this, i+index, subItem)}
                                                         underlayColor={theme.touchableHighlightUnderlayColor}>
                                                         {this._renderBtnContent(i,index)}
                                                     </TouchableHighlight>
@@ -67,8 +67,25 @@ export default class DiscoveryFragment extends Component{
         );
     }
 
-    _itemPressCallback(id){
+    _itemPressCallback(id, title){
+        switch(id){
+            case 3:  //福利Page
+                this._pushScene(ImageTabPage, title);
+                break;
+            case 4: //视频Page
+                this._pushScene(VideoTabPage, title);
+                break;
+            default:
+                this._pushScene(TextTabPage, title);
+                break;
+        }
+    }
 
+    _pushScene(component, title){
+        this.props.navigator.push({
+            component: component,
+            args: {title: title}
+        });
     }
 }
 
