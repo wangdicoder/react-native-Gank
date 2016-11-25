@@ -5,6 +5,7 @@
 
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Text, ListView} from 'react-native';
+import px2dp from '../utils/px2dp';
 
 export default class SimpleListView extends Component{
     static propTypes = {
@@ -54,14 +55,14 @@ export default class SimpleListView extends Component{
 const styles = StyleSheet.create({
     header: {
         color: '#000',
-        fontSize: 20,
-        padding: 10
+        fontSize: px2dp(20),
+        padding: px2dp(10)
     },
     rowItem: {
         backgroundColor: '#fff',
-        padding: 10
+        padding: px2dp(10)
     },
     rowContent: {
-        fontSize: 15
+        fontSize: px2dp(15)
     }
 });

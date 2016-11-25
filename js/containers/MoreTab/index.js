@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
        backgroundColor: theme.pageBackgroundColor
     },
     intro: {
-        height: 100,
+        height: px2dp(100),
         backgroundColor: '#fff'
     },
     block: {

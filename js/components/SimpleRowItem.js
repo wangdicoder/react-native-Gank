@@ -45,13 +45,13 @@ export default class SimpleRowItem extends Component{
             <View style={styles.container}>
                 <View style={styles.leftCell}>
                     <View style={styles.iconBorder}>
-                        <Icon name={icon} color="#fff" size={16}/>
+                        <Icon name={icon} color="#fff" size={px2dp(16)}/>
                     </View>
                 </View>
                 <View style={styles.rightCell}>
                     <View style={styles.cell}>
                         <Text style={styles.title}>{title}</Text>
-                        <Icon name="ios-arrow-forward" color={theme.segment.color} size={18}/>
+                        <Icon name="ios-arrow-forward" color={theme.segment.color} size={px2dp(18)}/>
                     </View>
                     { renderSegment ?
                         <View style={styles.segmentLine}/>

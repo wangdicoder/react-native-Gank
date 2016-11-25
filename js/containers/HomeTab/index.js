@@ -53,7 +53,7 @@ class HomeFragment extends Component{
                                     return <SimpleList key={i} dataSource={Info.getTargetList(dataSource, item)} headerTitle={item}/>
                                 })}
                             </View>
-                            <View style={{width: theme.screenWidth, alignItems: 'center', margin: 15}}>
+                            <View style={{width: theme.screenWidth, alignItems: 'center', margin: px2dp(15)}}>
                                 <TouchableHighlight
                                     onPress={this._onPress.bind(this, 1)}
                                     underlayColor={theme.touchableHighlightUnderlayColor}>
@@ -150,14 +150,14 @@ const styles = StyleSheet.create({
     bottomBtn: {
         backgroundColor: colors.lightBlue,
         width: theme.screenWidth*0.8,
-        height: 40,
+        height: px2dp(40),
         justifyContent:'center',
         alignItems:'center',
         borderRadius: 3
     },
     btnLabel: {
         color: '#fff',
-        fontSize: 16
+        fontSize: px2dp(16)
     }
 });
 

@@ -61,8 +61,8 @@ export default class DiscoveryFragment extends Component{
 
     _renderBtnContent(i, index){
         return(
-            <View style={{width:100, height:100, alignItems:'center', justifyContent:'center'}}>
-                <Avatar icon={this.tabIcon[i][index]} width={70} backgroundColor={this.tabColor[i][index]}/>
+            <View style={{width:px2dp(100), height:px2dp(100), alignItems:'center', justifyContent:'center'}}>
+                <Avatar icon={this.tabIcon[i][index]} width={px2dp(70)} backgroundColor={this.tabColor[i][index]}/>
             </View>
         );
     }
