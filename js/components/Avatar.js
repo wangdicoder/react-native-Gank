@@ -24,13 +24,13 @@ export default class Avatar extends Component {
         const {icon, width, backgroundColor, text, textSize} = this.props;
         if (icon) {
             return(
-                <View style={[{padding: 5, width: width, height: width, borderRadius: width/2, backgroundColor: backgroundColor}, styles.cell]}>
+                <View style={[{width: width, height: width, borderRadius: width/2, backgroundColor: backgroundColor}, styles.cell]}>
                     <Icon name={icon} color="#fff" size={width/2}/>
                 </View>
             )
         }else if (text) {
             return (
-                <View style={[{padding: 5, width: width, height: width, borderRadius: width/2, backgroundColor: backgroundColor}, styles.cell]}>
+                <View style={[{width: width, height: width, borderRadius: width/2, backgroundColor: backgroundColor}, styles.cell]}>
                     <Text style={{ color: '#fff', fontSize: textSize }}>{text}</Text>
                 </View>
             );
