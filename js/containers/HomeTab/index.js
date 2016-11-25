@@ -4,12 +4,17 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text, ScrollView, Image, ListView} from 'react-native';
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
+import * as Actions from '../../actions/requestData';
+import {StyleSheet, View, Text, ScrollView, Image, ListView, Button} from 'react-native';
 import theme from '../../constants/theme';
 import px2dp from '../../utils/px2dp';
 import NavigationBar from '../../components/NavigationBar';
+import getDate from '../../utils/getCurrentDate';
+import * as Info from '../../utils/handleDataSource';
 
-export default class HomeFragment extends Component{
+class HomeFragment extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -19,25 +24,34 @@ export default class HomeFragment extends Component{
     }
 
     render(){
+        const dataSource = this.props.dataSource;
         return(
             <View style={styles.container}>
                 <View style={[styles.toolbar, {opacity: this.state.opacity}]}>
-                    <NavigationBar title="今日干货"/>
+                    <NavigationBar title="今日干货" rightBtnIcon="calendar" rightBtnPress={this._onPress.bind(this)}/>
                 </View>
                 <ScrollView
                     scrollEnabled={this.state.scrollEnabled}
                     onScroll={this._onScroll.bind(this)}>
                     <View style={{height: this.imageHeight, width: theme.screenWidth}}>
-                        <ImageView
-                            imgUrl="http://ww3.sinaimg.cn/large/610dc034jw1fa2vh33em9j20u00zmabz.jpg"
-                            labelTime="2016/11/24"/>
+                        {this.props.loading ?
+                            <Text>loading</Text>
+                            :
+                            <ImageView
+                                imgUrl={Info.getFuLiUrl(dataSource)}
+                                labelTime={getDate()}/>
+                        }
                     </View>
                     <View style={styles.scrollContents}>
-
+                        {/*<Text>{this.props.dataSource}</Text>*/}
                     </View>
                 </ScrollView>
             </View>
         );
+    }
+
+    _onPress(){
+        this.props.actions.fetchData(getDate());
     }
 
     _onScroll(event){
@@ -67,17 +81,6 @@ class ImageView extends Component{
                 </View>
             </View>
         );
-    }
-}
-
-class MyList extends Component{
-
-    render(){
-        // return(
-        //     <ListView
-        //
-        //     />
-        // );
     }
 }
 
@@ -116,3 +119,18 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        dataSource: state.data.dataSource,
+        loading: state.data.loading
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeFragment);
