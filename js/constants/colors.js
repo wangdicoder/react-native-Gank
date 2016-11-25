@@ -12,5 +12,6 @@ export default {
     seaGreen: '#20b2aa',
     lightBlue: '#1ec8ff',
     dodgerBlue: '#1e90ff',
-    purple: '#7e83e3'
+    purple: '#7e83e3',
+    black: '#000'
 }

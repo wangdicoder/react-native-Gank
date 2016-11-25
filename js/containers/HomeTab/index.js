@@ -5,7 +5,6 @@
 
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Text, ScrollView, Image, ListView} from 'react-native';
-import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import theme from '../../constants/theme';
 import px2dp from '../../utils/px2dp';
 import NavigationBar from '../../components/NavigationBar';
