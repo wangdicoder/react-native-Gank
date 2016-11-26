@@ -103,8 +103,10 @@ const styles = StyleSheet.create({
         borderBottomWidth: theme.segment.width,
         borderTopColor: theme.segment.color,
         borderTopWidth: theme.segment.width,
-        padding: px2dp(15),
-        paddingBottom: px2dp(15)
+        paddingTop: px2dp(8),
+        paddingBottom: px2dp(15),
+        paddingLeft: px2dp(15),
+        paddingRight: px2dp(15),
     },
     btnRow: {
         flex: 1,

@@ -4,8 +4,8 @@
 'use strict';
 
 import {combineReducers} from 'redux';
-import data from './data';
+import homeData from './homeData';
 
 export default combineReducers({
-    data
+    homeData
 });

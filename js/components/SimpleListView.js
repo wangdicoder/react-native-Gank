@@ -9,7 +9,7 @@ import px2dp from '../utils/px2dp';
 import theme from '../constants/theme';
 import Avatar from './Avatar';
 import Icon from 'react-native-vector-icons/Ionicons';
-import WebView from './WebView';
+import WebViewPage from './WebViewPage';
 
 export default class SimpleListView extends Component{
     static propTypes = {
@@ -73,7 +73,7 @@ export default class SimpleListView extends Component{
         const headerTitle = this.props.headerTitle;
         return(
             <View style={styles.header}>
-                <Avatar icon={this.tabIcon[this._judgeIconAttribute(headerTitle)]} width={px2dp(22)} backgroundColor={this.tabColor[this._judgeIconAttribute(headerTitle)]}/>
+                <Avatar icon={this.tabIcon[this._judgeIconAttribute(headerTitle)]} width={px2dp(20)} backgroundColor={this.tabColor[this._judgeIconAttribute(headerTitle)]}/>
                 <Text style={styles.headerLabel}>{this.props.headerTitle}</Text>
             </View>
         );
@@ -87,7 +87,7 @@ export default class SimpleListView extends Component{
 
     _itemOnPress(rowData){
         this.props.navigator.push({
-            component: WebView,
+            component: WebViewPage,
             args: {rowData: rowData}
         });
     }
@@ -110,23 +110,22 @@ export default class SimpleListView extends Component{
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 10,
-        borderBottomColor: theme.segment.color,
-        borderBottomWidth: theme.segment.width
+
     },
     header: {
         flexDirection: 'row',
-        padding: px2dp(12),
+        paddingTop: px2dp(12),
+        paddingBottom: px2dp(6),
         paddingLeft: px2dp(15),
         alignItems: 'center',
         backgroundColor: '#fff',
-        borderBottomColor: theme.segment.color,
-        borderBottomWidth: theme.segment.width
+        borderTopColor: theme.segment.color,
+        borderTopWidth: theme.segment.width
     },
     headerLabel: {
-        color: '#000',
-        fontSize: px2dp(20),
-        marginLeft: px2dp(10),
+        color: 'steelblue',
+        fontSize: px2dp(17),
+        marginLeft: px2dp(7),
         textShadowColor: 'rgba(0,0,0,.4)',
         textShadowOffset: {height: 6, width: 2},
         textShadowRadius: 17

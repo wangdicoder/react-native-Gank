@@ -158,7 +158,9 @@ const styles = StyleSheet.create({
         height: px2dp(70),
         alignItems: 'center',
         backgroundColor: '#fff',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderTopColor: theme.segment.color,
+        borderTopWidth: theme.segment.width
     },
     bottomBtn: {
         backgroundColor: colors.lightBlue,
@@ -176,9 +178,9 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        loading: state.data.loading,
-        hasData: state.data.hasData,
-        dataSource: state.data.dataSource,
+        loading: state.homeData.loading,
+        hasData: state.homeData.hasData,
+        dataSource: state.homeData.dataSource,
     };
 };
 

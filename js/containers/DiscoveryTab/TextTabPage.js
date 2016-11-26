@@ -15,7 +15,11 @@ export default class TextTabPage extends BackPageComponent{
     render(){
         return(
             <View style={{flex: 1, backgroundColor: theme.pageBackgroundColor}}>
-                <NavigationBar title={this.props.title} isBackBtnOnLeft={true} leftBtnIcon="arrow-back" leftBtnPress={this._handleBack.bind(this)}/>
+                <NavigationBar
+                    title={this.props.title}
+                    isBackBtnOnLeft={true}
+                    leftBtnIcon="arrow-back"
+                    leftBtnPress={this._handleBack.bind(this)}/>
             </View>
         );
     }

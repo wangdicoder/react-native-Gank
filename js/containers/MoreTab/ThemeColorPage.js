@@ -11,7 +11,11 @@ export default class ThemeColorPage extends BackPageComponent{
     render(){
         return(
             <View>
-                <NavigationBar title="主题" isBackBtnOnLeft={true} leftBtnIcon="arrow-back" leftBtnPress={this._handleBack.bind(this)}/>
+                <NavigationBar
+                    title="主题"
+                    isBackBtnOnLeft={true}
+                    leftBtnIcon="arrow-back"
+                    leftBtnPress={this._handleBack.bind(this)}/>
             </View>
         );
     }

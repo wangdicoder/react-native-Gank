@@ -12,7 +12,7 @@ const initialState = {
     dataSource: {},
 };
 
-export default function data(state=initialState, action){
+export default function homeData(state=initialState, action){
     switch (action.type){
         case types.REQUEST_DATA:
             return Object.assign({}, state, {
@@ -25,13 +25,6 @@ export default function data(state=initialState, action){
                 loading: false,
                 hasData: true,
                 dataSource: action.dataSource,
-            });
-
-        case types.FETCH_FAILURE:
-            return Object.assign({}, state, {
-                ...state,
-                loading: false,
-                error: true
             });
 
         default:
