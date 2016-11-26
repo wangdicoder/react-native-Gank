@@ -15,6 +15,7 @@ import getDate from '../../utils/getCurrentDate';
 import * as Info from '../../utils/handleDataSource';
 import SimpleList from '../../components/SimpleListView';
 import colors from '../../constants/colors';
+import fetchUrl from '../../constants/fetchUrl';
 
 class HomeFragment extends Component{
     constructor(props){
@@ -78,12 +79,12 @@ class HomeFragment extends Component{
     }
 
     componentDidMount(){
-        this.props.actions.fetchData(getDate());
+        this.props.actions.fetchData(fetchUrl.daily+getDate());
     }
 
     _onPress(id) {
         if (id === 0)
-            this.props.actions.fetchData(getDate());
+            this.props.actions.fetchData(fetchUrl.daily+getDate());
         else if (id === 1)
             ;
     }

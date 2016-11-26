@@ -5,7 +5,8 @@
 
 import {combineReducers} from 'redux';
 import homeData from './homeData';
+import targetData from './targetData';
 
 export default combineReducers({
-    homeData
+    homeData, targetData
 });

@@ -34,7 +34,7 @@ export default class MeFragment extends Component{
                         <RowItem title="关于作者" icon="md-happy" renderSegment={false} onPress={this._itemClickCallback.bind(this)}/>
                     </View>
                     <View style={styles.block}>
-                        <RowItem title="关于Gank.io" icon="md-aperture" onPress={this._itemClickCallback.bind(this)}/>
+                        <RowItem title="关于Gank.io" icon="md-information-circle" onPress={this._itemClickCallback.bind(this)}/>
                         <RowItem title="反馈" icon="md-text" onPress={this._itemClickCallback.bind(this)}/>
                         <RowItem title="分享" icon="md-share" renderSegment={false} onPress={this._itemClickCallback.bind(this)}/>
                     </View>

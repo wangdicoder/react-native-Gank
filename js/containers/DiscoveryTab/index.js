@@ -16,7 +16,7 @@ import Avatar from '../../components/Avatar';
 export default class DiscoveryFragment extends Component{
     constructor(props){
         super(props);
-        this.tabNames = [['Android','iOS','前端'],['妹子','休息视频','扩展阅读']];
+        this.tabNames = [['Android','iOS','前端'],['妹子','休息视频','拓展资源']];
         this.tabIcon = [['logo-android','logo-apple','logo-chrome'],['ios-images','ios-film','ios-book']];
         this.tabColor = [['rgb(141,192,89)','#000','rgb(51,154,237)'],['rgb(249,89,58)','rgb(154,53,172)','rgb(65,87,175)']];
     }
@@ -32,7 +32,7 @@ export default class DiscoveryFragment extends Component{
                                 <View style={styles.btnRow} key={i}>
                                     {this.tabNames[i].map((subItem, index) => {
                                         return(
-                                            <View style={styles.btnCell} key={i+index}>
+                                            <View style={styles.btnCell} key={subItem}>
                                                 {Platform.OS === 'android' ?
                                                     <TouchableNativeFeedback
                                                         onPress={this._itemPressCallback.bind(this, i+index, subItem)}
@@ -68,13 +68,13 @@ export default class DiscoveryFragment extends Component{
     }
 
     _itemPressCallback(id, title){
-        switch(id){
-            case 3:  //福利Page
+        switch(title){
+            case '福利':  //福利Page
                 this._pushScene(ImageTabPage, title);
                 break;
-            case 4: //视频Page
-                this._pushScene(VideoTabPage, title);
-                break;
+            // case 4: //视频Page
+            //     this._pushScene(VideoTabPage, title);
+            //     break;
             default:
                 this._pushScene(TextTabPage, title);
                 break;
@@ -84,7 +84,7 @@ export default class DiscoveryFragment extends Component{
     _pushScene(component, title){
         this.props.navigator.push({
             component: component,
-            args: {title: title}
+            args: {title: title, navigator: this.props.navigator}
         });
     }
 }

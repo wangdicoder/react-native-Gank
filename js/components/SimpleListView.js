@@ -102,7 +102,7 @@ export default class SimpleListView extends Component{
                 return 2;
             case '休息视频':
                 return 3;
-            case '扩展阅读':
+            case '拓展资源':
                 return 4;
         }
     }

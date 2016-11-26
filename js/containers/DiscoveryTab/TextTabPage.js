@@ -6,11 +6,19 @@
 
 import React, {Component} from 'react';
 import {View, Text} from 'react-native';
+import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
+import * as Actions from '../../actions/requestData';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import BackPageComponent from '../BackPageComponent';
+import SimpleList from '../../components/SimpleListView';
+import fetchUrl from '../../constants/fetchUrl';
 
-export default class TextTabPage extends BackPageComponent{
+class TextTabPage extends BackPageComponent{
+    constructor(props){
+        super(props);
+    }
 
     render(){
         return(
@@ -20,7 +28,39 @@ export default class TextTabPage extends BackPageComponent{
                     isBackBtnOnLeft={true}
                     leftBtnIcon="arrow-back"
                     leftBtnPress={this._handleBack.bind(this)}/>
+                {this.props.loading ?
+                    <View>
+                        <Text>loading,,,,</Text>
+                    </View>
+                    :
+                    <SimpleList
+                        dataSource={this.props.dataSource}
+                        headerTitle={this.props.title}
+                        navigator={this.props.navigator}/>
+                }
             </View>
         );
     }
+
+    componentDidMount(){
+        this.props.actions.fetchData(fetchUrl.classified+ this.props.title +'/10/1');
+    }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        loading: state.targetData.loading,
+        dataSource: state.targetData.dataSource.results,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(TextTabPage);
+
+
+
