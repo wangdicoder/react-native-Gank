@@ -61,8 +61,8 @@ export default class DiscoveryFragment extends Component{
 
     _renderBtnContent(i, index){
         return(
-            <View style={{width:px2dp(100), height:px2dp(100), alignItems:'center', justifyContent:'center'}}>
-                <Avatar icon={this.tabIcon[i][index]} width={px2dp(70)} backgroundColor={this.tabColor[i][index]}/>
+            <View style={{width:px2dp(80), height:px2dp(80), alignItems:'center', justifyContent:'center'}}>
+                <Avatar icon={this.tabIcon[i][index]} width={px2dp(60)} backgroundColor={this.tabColor[i][index]}/>
             </View>
         );
     }
@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
         borderBottomWidth: theme.segment.width,
         borderTopColor: theme.segment.color,
         borderTopWidth: theme.segment.width,
-        padding: px2dp(10),
-        paddingBottom: px2dp(20)
+        padding: px2dp(15),
+        paddingBottom: px2dp(15)
     },
     btnRow: {
         flex: 1,

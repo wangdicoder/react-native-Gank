@@ -7,7 +7,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestData';
-import {StyleSheet, View, Text, ScrollView, Image, RefreshControl, ListView, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, Image, RefreshControl, ListView, TouchableOpacity} from 'react-native';
 import theme from '../../constants/theme';
 import px2dp from '../../utils/px2dp';
 import NavigationBar from '../../components/NavigationBar';
@@ -52,15 +52,15 @@ class HomeFragment extends Component{
                                     if(item !== '福利')
                                     return <SimpleList key={i} dataSource={Info.getTargetList(dataSource, item)} headerTitle={item}/>
                                 })}
-                            </View>
-                            <View style={{width: theme.screenWidth, alignItems: 'center', margin: px2dp(15)}}>
-                                <TouchableHighlight
-                                    onPress={this._onPress.bind(this, 1)}
-                                    underlayColor={theme.touchableHighlightUnderlayColor}>
-                                    <View style={styles.bottomBtn}>
-                                        <Text style={styles.btnLabel}>没看够？试试往期干货吧</Text>
-                                    </View>
-                                </TouchableHighlight>
+                                <View style={styles.footer}>
+                                    <TouchableOpacity
+                                        onPress={this._onPress.bind(this, 1)}
+                                        activeOpacity={theme.touchableOpacityActiveOpacity}>
+                                        <View style={styles.bottomBtn}>
+                                            <Text style={styles.btnLabel}>没看够？试试往期干货吧</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
                         </View>
                         :
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
         zIndex: 1
     },
     scrollContents: {
-        height: theme.screenHeight,
+        //height: theme.screenHeight+theme.toolbar.height,
     },
     img: {
         width: theme.screenWidth,
@@ -147,13 +147,20 @@ const styles = StyleSheet.create({
         marginRight: px2dp(20),
         fontWeight: 'bold'
     },
+    footer: {
+        width: theme.screenWidth,
+        height: px2dp(70),
+        alignItems: 'center',
+        backgroundColor: '#fff',
+        justifyContent: 'center'
+    },
     bottomBtn: {
         backgroundColor: colors.lightBlue,
         width: theme.screenWidth*0.8,
         height: px2dp(40),
         justifyContent:'center',
         alignItems:'center',
-        borderRadius: 3
+        borderRadius: 30,
     },
     btnLabel: {
         color: '#fff',
