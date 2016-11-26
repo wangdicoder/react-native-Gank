@@ -50,7 +50,13 @@ class HomeFragment extends Component{
                             <View style={styles.scrollContents}>
                                 {Info.getCategoryList(dataSource).map((item, i) => {
                                     if(item !== '福利')
-                                    return <SimpleList key={i} dataSource={Info.getTargetList(dataSource, item)} headerTitle={item}/>
+                                    return(
+                                        <SimpleList
+                                            key={i}
+                                            navigator={this.props.navigator}
+                                            dataSource={Info.getTargetList(dataSource, item)}
+                                            headerTitle={item}/>
+                                    );
                                 })}
                                 <View style={styles.footer}>
                                     <TouchableOpacity
@@ -156,7 +162,7 @@ const styles = StyleSheet.create({
     },
     bottomBtn: {
         backgroundColor: colors.lightBlue,
-        width: theme.screenWidth*0.8,
+        width: theme.screenWidth*0.9,
         height: px2dp(40),
         justifyContent:'center',
         alignItems:'center',

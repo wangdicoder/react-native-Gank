@@ -4,10 +4,12 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text, ListView, PixelRatio} from 'react-native';
+import {StyleSheet, View, Text, ListView, PixelRatio, Platform, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
 import px2dp from '../utils/px2dp';
 import theme from '../constants/theme';
 import Avatar from './Avatar';
+import Icon from 'react-native-vector-icons/Ionicons';
+import WebView from './WebView';
 
 export default class SimpleListView extends Component{
     static propTypes = {
@@ -29,16 +31,40 @@ export default class SimpleListView extends Component{
                     dataSource={this.ds.cloneWithRows(this.props.dataSource)}
                     renderRow={this._renderRow.bind(this)}
                     renderHeader={this._renderHeader.bind(this)}
-                    renderSeparator={this._renderSeparator.bind(this)}
+                    //renderSeparator={this._renderSeparator.bind(this)}
                 />
             </View>
         );
     }
 
     _renderRow(rowData, sectionID, rowID, highlightRow){
+        if(Platform.OS === 'android') {
+            return(
+                <TouchableNativeFeedback
+                    key={rowID}
+                    onPress={this._itemOnPress.bind(this, rowData)}>
+                    {this._renderRowContent(rowData)}
+                </TouchableNativeFeedback>
+            );
+        }else if(Platform.OS === 'ios'){
+            return(
+                <TouchableHighlight
+                    key={rowID}
+                    onPress={this._itemOnPress.bind(this, rowData)}
+                    underlayColor={theme.touchableHighlightUnderlayColor}>
+                    {this._renderRowContent(rowData)}
+                </TouchableHighlight>
+            );
+        }
+    }
+
+    _renderRowContent(rowData){
         return(
-            <View key={rowID} style={styles.rowItem}>
-                <Text style={styles.rowContent} numberOfLines={3}>{rowData.desc}</Text>
+            <View style={styles.rowItem}>
+                <View style={{flexDirection:'row', alignItems:'center'}}>
+                    <Icon name="md-happy"/><Text style={{fontSize: px2dp(10)}}> {rowData.who}</Text>
+                </View>
+                <Text style={styles.rowContent} numberOfLines={2}>{rowData.desc}</Text>
             </View>
         );
     }
@@ -57,6 +83,13 @@ export default class SimpleListView extends Component{
         return(
             <View key={rowID} style={{backgroundColor: theme.segment.color, height: theme.segment.width}}/>
         );
+    }
+
+    _itemOnPress(rowData){
+        this.props.navigator.push({
+            component: WebView,
+            args: {rowData: rowData}
+        });
     }
 
     _judgeIconAttribute(hearderLabel){
@@ -78,6 +111,8 @@ export default class SimpleListView extends Component{
 const styles = StyleSheet.create({
     container: {
         marginBottom: 10,
+        borderBottomColor: theme.segment.color,
+        borderBottomWidth: theme.segment.width
     },
     header: {
         flexDirection: 'row',
@@ -98,9 +133,14 @@ const styles = StyleSheet.create({
     },
     rowItem: {
         backgroundColor: '#fff',
-        padding: px2dp(10)
+        paddingTop: px2dp(10),
+        paddingBottom: px2dp(10),
+        paddingLeft: px2dp(15),
+        paddingRight: px2dp(15),
+        justifyContent: 'center'
     },
     rowContent: {
-        fontSize: px2dp(15)
+        fontSize: px2dp(15),
+        color: '#000'
     }
 });
