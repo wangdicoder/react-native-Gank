@@ -8,21 +8,19 @@ import fetchUrl from '../constants/fetchUrl';
 import fetchWithTimeout from '../utils/fetchWithTimeout';
 
 function requestData() {
-    return {
-        type: types.REQUEST_DATA,
-    };
+
 }
 
 function receiveData(responseData){
     return {
-        type: types.RECEIVE_DATA,
+        type: types.FETCH_TARGET_DATA_SUCCESS,
         dataSource: responseData
     }
 }
 
 function fetchFailure() {
     return {
-        type: types.FETCH_FAILURE
+        type: types.FETCH_TARGET_DATA_FAILURE
     }
 }
 

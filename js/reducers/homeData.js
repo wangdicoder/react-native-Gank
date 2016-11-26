@@ -15,12 +15,12 @@ const initialState = {
 
 export default function homeData(state=initialState, action){
     switch (action.type){
-        case types.REQUEST_DATA:
+        case types.REQUEST_HOME_DATA:
             return Object.assign({}, state, {
                 ...state,
             });
 
-        case types.RECEIVE_DATA:
+        case types.RECEIVE_HOME_DATA:
             return Object.assign({}, state, {
                 ...state,
                 loading: false,

@@ -79,6 +79,7 @@ class HomeFragment extends Component{
     }
 
     componentDidMount(){
+        console.log('didMount');
         this.props.actions.fetchData(getCurrentDate());
     }
 

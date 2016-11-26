@@ -13,14 +13,14 @@ const initialState = {
 
 export default function targetData(state=initialState, action) {
     switch(action.type){
-        case types.RECEIVE_DATA:
+        case types.FETCH_TARGET_DATA_SUCCESS:
             return Object.assign({}, state, {
                 ...state,
                 loading: false,
                 dataSource: action.dataSource
             });
 
-        case types.FETCH_FAILURE:
+        case types.FETCH_TARGET_DATA_FAILURE:
             return Object.assign({}, state, {
                 ...state,
                 loading: false,

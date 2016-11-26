@@ -9,13 +9,13 @@ import {getYesterdayFromDate} from '../utils/getDate';
 
 function requestData() {
     return {
-        type: types.REQUEST_DATA,
+        type: types.REQUEST_HOME_DATA,
     };
 }
 
 function receiveData(json, date){
     return {
-        type: types.RECEIVE_DATA,
+        type: types.RECEIVE_HOME_DATA,
         dataSource: json,
         dataTime: date
     }
