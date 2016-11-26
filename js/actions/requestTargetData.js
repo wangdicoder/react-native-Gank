@@ -5,7 +5,7 @@
 
 import * as types from './actionTypes';
 import fetchUrl from '../constants/fetchUrl';
-import {getYesterdayFromDate} from '../utils/getDate';
+import fetchWithTimeout from '../utils/fetchWithTimeout';
 
 function requestData() {
     return {
@@ -20,25 +20,32 @@ function receiveData(responseData){
     }
 }
 
+function fetchFailure() {
+    return {
+        type: types.FETCH_FAILURE
+    }
+}
+
 function isValidData(responseData) {
-    if(responseData.category.length > 0)
+    if(responseData.results.length > 0)
         return true;
     return false;
 }
 
-export function fetchData(date) {
-    const url = fetchUrl.daily + date;
+export function fetchData(category) {
+    const url = fetchUrl.category + category;
     return function (dispatch) {
-        //dispatch(requestData());
-        return fetch(url)
+
+        return fetchWithTimeout(5000, fetch(url))
             .then(response => response.json())
             .then(json => {
-                //if today's data hasn't updated yet, it will fetch yesterday's data
                 if(isValidData(json)){
                     dispatch(receiveData(json));
                 }else{
-                    dispatch(fetchData(getYesterdayFromDate(date)));
+                    dispatch(fetchFailure());
                 }
+            }).catch((error) => {
+                dispatch(fetchFailure());
             });
     }
 }

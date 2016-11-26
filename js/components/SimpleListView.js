@@ -127,8 +127,8 @@ const styles = StyleSheet.create({
         fontSize: px2dp(17),
         marginLeft: px2dp(7),
         textShadowColor: 'rgba(0,0,0,.4)',
-        textShadowOffset: {height: 6, width: 2},
-        textShadowRadius: 17
+        textShadowOffset: {height: 5, width: 1},
+        textShadowRadius: 20
     },
     rowItem: {
         backgroundColor: '#fff',
