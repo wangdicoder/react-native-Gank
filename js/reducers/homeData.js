@@ -10,6 +10,7 @@ const initialState = {
     hasData: false,
     error: false,
     dataSource: {},
+    dataTime: '',
 };
 
 export default function homeData(state=initialState, action){
@@ -25,6 +26,7 @@ export default function homeData(state=initialState, action){
                 loading: false,
                 hasData: true,
                 dataSource: action.dataSource,
+                dataTime: action.dataTime
             });
 
         default:

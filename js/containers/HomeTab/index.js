@@ -6,16 +6,15 @@
 import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/requestData';
+import * as Actions from '../../actions/requestHomeData';
 import {StyleSheet, View, Text, ScrollView, Image, RefreshControl, ListView, TouchableOpacity} from 'react-native';
 import theme from '../../constants/theme';
 import px2dp from '../../utils/px2dp';
 import NavigationBar from '../../components/NavigationBar';
-import getDate from '../../utils/getCurrentDate';
+import {getCurrentDate} from '../../utils/getDate';
 import * as Info from '../../utils/handleDataSource';
 import SimpleList from '../../components/SimpleListView';
 import colors from '../../constants/colors';
-import fetchUrl from '../../constants/fetchUrl';
 
 class HomeFragment extends Component{
     constructor(props){
@@ -41,12 +40,13 @@ class HomeFragment extends Component{
                             refreshing={this.props.loading}
                             onRefresh={this._onPress.bind(this, 0)}/>
                     }>
-                    {this.props.hasData ?
+                    {/*prevent the length of data is equal to 0*/}
+                    {this.props.hasData && Info.getCategoryList(dataSource).length > 0 ?
                         <View>
                             <View style={{height: this.imageHeight, width: theme.screenWidth}}>
                                 <ImageView
                                     imgUrl={Info.getFuLiUrl(dataSource)}
-                                    labelTime={getDate()}/>
+                                    labelTime={this.props.dataTime}/>
                             </View>
                             <View style={styles.scrollContents}>
                                 {Info.getCategoryList(dataSource).map((item, i) => {
@@ -79,12 +79,12 @@ class HomeFragment extends Component{
     }
 
     componentDidMount(){
-        this.props.actions.fetchData(fetchUrl.daily+getDate());
+        this.props.actions.fetchData(getCurrentDate());
     }
 
     _onPress(id) {
         if (id === 0)
-            this.props.actions.fetchData(fetchUrl.daily+getDate());
+            this.props.actions.fetchData(getCurrentDate());
         else if (id === 1)
             ;
     }
@@ -182,6 +182,7 @@ const mapStateToProps = (state) => {
         loading: state.homeData.loading,
         hasData: state.homeData.hasData,
         dataSource: state.homeData.dataSource,
+        dataTime: state.homeData.dataTime
     };
 };
 

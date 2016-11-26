@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/requestData';
+import * as Actions from '../../actions/requestHomeData';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import BackPageComponent from '../BackPageComponent';
@@ -43,7 +43,7 @@ class TextTabPage extends BackPageComponent{
     }
 
     componentDidMount(){
-        this.props.actions.fetchData(fetchUrl.classified+ this.props.title +'/10/1');
+       // this.props.actions.fetchData(fetchUrl.classified+ this.props.title +'/10/1');
     }
 }
 
