@@ -127,16 +127,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     image: {
-        width: 52,
-        height: 52,
+        width: px2dp(52),
+        height: px2dp(52),
         resizeMode: 'cover',
         backgroundColor: '#f1f1f1',
     },
     txtPart: {
         flex: 80,
-        paddingTop: 10,
-        paddingRight: 10,
-        paddingBottom: 10
+        paddingTop: px2dp(10),
+        paddingRight: px2dp(10),
+        paddingBottom: px2dp(10)
     },
     titlePart: {
         flex: 70,
@@ -150,8 +150,8 @@ const styles = StyleSheet.create({
         color: '#000'
     },
     detailsTxt: {
-        marginLeft: 3,
-        marginRight: 13,
-        fontSize: 10
+        marginLeft: px2dp(3),
+        marginRight: px2dp(13),
+        fontSize: px2dp(10)
     }
 });

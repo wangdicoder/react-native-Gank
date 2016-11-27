@@ -54,6 +54,9 @@ export default class DiscoveryFragment extends Component{
                             );
                         })}
                     </View>
+                    <View>
+
+                    </View>
                 </ScrollView>
             </View>
         );

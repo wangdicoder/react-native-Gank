@@ -8,7 +8,7 @@ import {StyleSheet, Platform, View, Text, Image} from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
 import HomeFragment from './HomeTab/index';
 import DiscoveryFragment from './DiscoveryTab/index';
-import MeFragment from './MoreTab/index';
+import MoreFragment from './MoreTab/index';
 import CollectionFragment from './CollectionTab/index';
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
@@ -73,7 +73,7 @@ class BottomTabBar extends Component{
                     renderIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.moreNormal} />}
                     renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.moreSelected} />}
                     onPress={() => this.setState({ selectedTab: 'me' })}>
-                    {<MeFragment navigator={navigator}/>}
+                    {<MoreFragment navigator={navigator}/>}
                 </TabNavigator.Item>
             </TabNavigator>
         );

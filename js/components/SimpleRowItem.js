@@ -13,12 +13,14 @@ export default class SimpleRowItem extends Component{
     static propTypes = {
         title: PropTypes.string.isRequired,
         icon: PropTypes.string,
+        iconColor: PropTypes.string,
         onPress: PropTypes.func,
         renderSegment: PropTypes.bool
     };
 
     static defaultProps = {
-        renderSegment: true
+        renderSegment: true,
+        iconColor: theme.mainThemeColor
     }
 
     render(){
@@ -40,11 +42,11 @@ export default class SimpleRowItem extends Component{
     }
 
     _renderContent(){
-        const {title, icon, renderSegment} = this.props;
+        const {title, icon, renderSegment, iconColor} = this.props;
         return(
             <View style={styles.container}>
                 <View style={styles.leftCell}>
-                    <View style={styles.iconBorder}>
+                    <View style={[styles.iconBorder, {backgroundColor: iconColor}]}>
                         <Icon name={icon} color="#fff" size={px2dp(16)}/>
                     </View>
                 </View>
@@ -77,7 +79,6 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
     iconBorder: {
-        backgroundColor: theme.mainThemeColor,
         borderRadius: 5,
         width: px2dp(23),
         height: px2dp(23),

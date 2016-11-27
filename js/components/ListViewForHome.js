@@ -64,7 +64,7 @@ export default class ListViewForHome extends Component{
         return(
             <View style={styles.rowItem}>
                 <View style={{flexDirection:'row', alignItems:'center'}}>
-                    <Icon name="md-happy"/><Text style={{fontSize: px2dp(10)}}> {rowData.who}</Text>
+                    <Icon name="ios-create-outline"/><Text style={{fontSize: px2dp(10)}}> {rowData.who ? rowData.who : 'null'}</Text>
                 </View>
                 <Text style={styles.rowContent} numberOfLines={2}>{rowData.desc}</Text>
             </View>
