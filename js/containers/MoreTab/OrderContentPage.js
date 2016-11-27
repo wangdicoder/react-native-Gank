@@ -15,6 +15,7 @@ export default class OrderContentPage extends BackPageComponent{
     constructor(props){
         super(props);
         this.names = ['Android','iOS','前端','拓展资源','休息视频'];
+        this.items = [];
     }
 
     render(){
@@ -24,39 +25,20 @@ export default class OrderContentPage extends BackPageComponent{
                     title="首页内容展示顺序"
                     isBackBtnOnLeft={true}
                     leftBtnIcon="arrow-back"
-                    leftBtnPress={this._handleBack.bind(this)}/>
+                    leftBtnPress={this._handleBack.bind(this)}
+                />
                 {this.names.map((item, i)=>{
                     return (
-                        <Item key={i} id={i} name={item} top={(i+1)*49}/>
+                        <View
+                            {...this._panResponder.panHandlers}
+                            ref={(ref) => this.items[i] = ref}
+                            key={i}
+                            style={[styles.item, {top: (i+1)*49}]}>
+                            <Icon name="ios-menu" size={px2dp(25)} color="#ccc"/>
+                            <Text style={styles.itemTitle}>{item}</Text>
+                        </View>
                     );
                 })}
-            </View>
-        );
-    }
-}
-
-class Item extends Component{
-    static propTypes = {
-        name: PropTypes.string.isRequired,
-        top: PropTypes.number.isRequired
-    };
-
-    constructor(props){
-        super(props);
-        this.item = [];
-        this.state = {
-            top: this.props.top
-        };
-    }
-
-    render(){
-        return(
-            <View
-                {...this._panResponder.panHandlers}
-                ref={(ref) => this.item[this.props.id] = (ref)}
-                style={[styles.item, {top: this.state.top}]}>
-                <Icon name="ios-menu" size={px2dp(25)} color="#ccc"/>
-                <Text style={styles.itemTitle}>{this.props.name}</Text>
             </View>
         );
     }
@@ -66,29 +48,37 @@ class Item extends Component{
             onStartShouldSetPanResponder: (evt, gestureState) => true,
             onMoveShouldSetPanResponder: (evt, gestureState) => true,
             onPanResponderGrant: (evt, gestureState) => {
-                const {pageY} = evt.nativeEvent;
-                this.index = this._computeId(pageY);
+                const {pageY, locationY} = evt.nativeEvent;
+                this.index = this._getIdByPosition(pageY);
+                this.preY = pageY - locationY;
                 //get the taped item and highlight it
-                if(this.index != -1) {
-                    let item = this.item[this.index];
-                    item.setNativeProps({
-                        style: {
-                            shadowColor: "#000",
-                            shadowOpacity: 0.3,
-                            shadowRadius: 5,
-                            shadowOffset: {height: 0, width: 2},
-                            elevation: 5
-                        }
-                    });
-                }
+                let item = this.items[this.index];
+                item.setNativeProps({
+                    style: {
+                        shadowColor: "#000",
+                        shadowOpacity: 0.3,
+                        shadowRadius: 5,
+                        shadowOffset: {height: 0, width: 2},
+                        elevation: 5
+                    }
+                });
             },
             onPanResponderMove: (evt, gestureState) => {
-                var top = gestureState.dy;
-                if(this.index != -1) {
-                    let item = this.item[this.index];
-                    item.setNativeProps({
-                        style: {top: top}
+                let top = this.preY + gestureState.dy;
+                let item = this.items[this.index];
+                item.setNativeProps({
+                    style: {top: top}
+                });
+
+                let collideIndex = this._getIdByPosition(evt.nativeEvent.pageY);
+                if(collideIndex !== this.index && collideIndex !== -1) {
+                    let collideItem = this.items[collideIndex];
+                    collideItem.setNativeProps({
+                        style: {top: this._getTopValueYById(this.index)}
                     });
+
+                    // [this.item[this.index], this.item[collideIndex]] = [this.item[collideIndex], this.item[this.index]];
+                    // this.index = collideIndex;
                 }
             },
             onPanResponderTerminationRequest: (evt, gestureState) => true,
@@ -100,12 +90,10 @@ class Item extends Component{
                     shadowOffset: {height: 0, width: 0,},
                     elevation: 0
                 };
-                if(this.index != -1) {
-                    let item = this.item[this.index];
-                    item.setNativeProps({
-                        style: {...shadowStyle}
-                    });
-                }
+                let item = this.items[this.index];
+                item.setNativeProps({
+                    style: {...shadowStyle}
+                });
             },
             onPanResponderTerminate: (evt, gestureState) => {
                 // Another component has become the responder, so this gesture
@@ -114,7 +102,7 @@ class Item extends Component{
         });
     }
 
-    _computeId(pageY){
+    _getIdByPosition(pageY){
         var id = -1;
         const height = px2dp(49);
 
@@ -130,6 +118,11 @@ class Item extends Component{
             id = 4;
 
         return id;
+    }
+
+    _getTopValueYById(id){
+        const height = px2dp(49);
+        return (id + 1) * height;
     }
 }
 
