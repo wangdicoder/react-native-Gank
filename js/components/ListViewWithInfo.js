@@ -71,15 +71,15 @@ export default class ListViewWithInfo extends Component{
                     <View style={styles.infoPart}>
                         {this.props.renderTag ?
                             <View>
-                                <Icon name="ios-pricetag-outline"/>
+                                <Icon name="ios-pricetag-outline" color="#aaa"/>
                                 <Text style={styles.detailsTxt}>{rowData.type}</Text>
                             </View>
                             :
                             null
                         }
-                        <Icon name="ios-create-outline"/>
+                        <Icon name="ios-create-outline" color="#aaa"/>
                         <Text style={styles.detailsTxt}>{rowData.who ? rowData.who : 'null'}</Text>
-                        <Icon name="ios-time-outline"/>
+                        <Icon name="ios-time-outline" color="#aaa"/>
                         <Text style={styles.detailsTxt}>{this._handleCreateTime(rowData.publishedAt)}</Text>
                     </View>
                 </View>
@@ -152,6 +152,7 @@ const styles = StyleSheet.create({
     detailsTxt: {
         marginLeft: px2dp(3),
         marginRight: px2dp(13),
-        fontSize: px2dp(10)
+        fontSize: px2dp(10),
+        color: '#aaa'
     }
 });

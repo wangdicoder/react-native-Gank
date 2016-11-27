@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text, ListView, PixelRatio, Platform, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, ListView, PixelRatio, Platform, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
 import px2dp from '../utils/px2dp';
 import theme from '../constants/theme';
 import Avatar from './Avatar';
@@ -64,7 +64,8 @@ export default class ListViewForHome extends Component{
         return(
             <View style={styles.rowItem}>
                 <View style={{flexDirection:'row', alignItems:'center'}}>
-                    <Icon name="ios-create-outline"/><Text style={{fontSize: px2dp(10)}}> {rowData.who ? rowData.who : 'null'}</Text>
+                    <Icon name="ios-create-outline" color="#aaa"/>
+                    <Text style={{fontSize: px2dp(10), color: "#aaa"}}> {rowData.who ? rowData.who : 'null'}</Text>
                 </View>
                 <Text style={styles.rowContent} numberOfLines={2}>{rowData.desc}</Text>
             </View>

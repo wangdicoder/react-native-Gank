@@ -7,7 +7,7 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestHomeData';
-import {StyleSheet, View, Text, ScrollView, Image, RefreshControl, ListView, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, Animated, Image, RefreshControl, ListView, TouchableOpacity} from 'react-native';
 import theme from '../../constants/theme';
 import px2dp from '../../utils/px2dp';
 import NavigationBar from '../../components/NavigationBar';
@@ -20,7 +20,7 @@ class HomeFragment extends Component{
     constructor(props){
         super(props);
         this.state = {
-            opacity: 0,
+            opacity: new Animated.Value(0),
         };
         this.imageHeight = px2dp(400);
     }
@@ -29,9 +29,9 @@ class HomeFragment extends Component{
         const dataSource = this.props.dataSource;
         return(
             <View style={styles.container}>
-                <View style={[styles.toolbar, {opacity: this.state.opacity}]}>
+                <Animated.View style={[styles.toolbar, {opacity: this.state.opacity}]}>
                     <NavigationBar title="今日干货" rightBtnIcon="calendar" rightBtnPress={this._onPress.bind(this, 0)}/>
-                </View>
+                </Animated.View>
                 <ScrollView
                     scrollEnabled={this.state.scrollEnabled}
                     onScroll={this._onScroll.bind(this)}
@@ -79,7 +79,6 @@ class HomeFragment extends Component{
     }
 
     componentDidMount(){
-        console.log('didMount');
         this.props.actions.fetchData(getCurrentDate());
     }
 
