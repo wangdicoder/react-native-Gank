@@ -69,7 +69,7 @@ export default class DiscoveryFragment extends Component{
 
     _itemPressCallback(id, title){
         switch(title){
-            case '福利':  //福利Page
+            case '妹子':  //福利Page
                 this._pushScene(ImageTabPage, title);
                 break;
             // case 4: //视频Page

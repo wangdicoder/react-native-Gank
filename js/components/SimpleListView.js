@@ -41,6 +41,7 @@ export default class SimpleListView extends Component{
         if(Platform.OS === 'android') {
             return(
                 <TouchableNativeFeedback
+                    overflow="hidden"
                     key={rowID}
                     onPress={this._itemOnPress.bind(this, rowData)}>
                     {this._renderRowContent(rowData)}
@@ -49,6 +50,7 @@ export default class SimpleListView extends Component{
         }else if(Platform.OS === 'ios'){
             return(
                 <TouchableHighlight
+                    overflow="hidden"
                     key={rowID}
                     onPress={this._itemOnPress.bind(this, rowData)}
                     underlayColor={theme.touchableHighlightUnderlayColor}>

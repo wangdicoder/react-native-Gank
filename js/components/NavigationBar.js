@@ -95,7 +95,8 @@ class IconButton extends Component{
 const styles = StyleSheet.create({
     container: { //in order to display the shadow on home tab
         height: theme.toolbar.height + px2dp(4),
-        width: theme.screenWidth
+        width: theme.screenWidth,
+        backgroundColor: 'rgba(0,0,0,0)'
     },
     toolbar: {
         height: theme.toolbar.height,

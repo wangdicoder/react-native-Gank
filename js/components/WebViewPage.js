@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, WebView} from 'react-native';
+import {StyleSheet, View, WebView, InteractionManager} from 'react-native';
 import theme from '../constants/theme';
 import NavigationBar from './NavigationBar';
 import BackPageComponent from '../containers/BackPageComponent';
@@ -21,41 +21,55 @@ export default class WebViewPage extends BackPageComponent{
         const navigationBarTitle = 'via: '+this.props.rowData.who;
         return(
             <View style={{flex: 1, backgroundColor: theme.pageBackgroundColor}}>
-                <NavigationBar
-                    title={navigationBarTitle}
-                    isBackBtnOnLeft={true}
-                    leftBtnIcon="arrow-back"
-                    leftBtnPress={this._handleBack.bind(this)}
-                    rightBtnIcon={"heart-outline"}
-                    rightBtnPress={this._collectionOnPressCallback.bind(this)}
-                />
-                {this.state.didMount ?
-                    <WebView
-                        style={styles.webView}
-                        source={{uri: this.props.rowData.url}}
+                <View style={styles.toolbar}>
+                    <NavigationBar
+                        title={navigationBarTitle}
+                        isBackBtnOnLeft={true}
+                        leftBtnIcon="arrow-back"
+                        leftBtnPress={this._handleBack.bind(this)}
+                        rightBtnIcon={"refresh"}
+                        rightBtnPress={this._refreshOnPressCallback.bind(this)}
                     />
-                    :
-                    null
-                }
+                </View>
+                <View style={styles.contentContainer}>
+                    {this.state.didMount ?
+                        <WebView
+                            style={styles.webView}
+                            source={{uri: this.props.rowData.url}}
+                        />
+                        :
+                        null
+                    }
+                </View>
             </View>
         );
     }
 
     componentDidMount(){
-        setTimeout(()=>{
+        InteractionManager.runAfterInteractions(() => {
             this.setState({
                 didMount: true
             });
-        }, 1000);
+        });
     }
 
-    _collectionOnPressCallback(){
+    _refreshOnPressCallback(){
 
     }
 }
 
 const styles = StyleSheet.create({
-   webView: {
-       flex: 1
-   }
+    contentContainer: {
+        marginTop: theme.toolbar.height,
+        flex: 1
+    },
+    toolbar: {
+        position: 'absolute',
+        width: theme.screenWidth,
+        zIndex: 1
+    },
+    webView: {
+        flex: 1,
+        backgroundColor: theme.pageBackgroundColor
+    }
 });
