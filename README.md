@@ -38,9 +38,9 @@ A cross platform App which shows the data from [gank.io](http://gank.io)
 
 # Screenshot
 
-* ![homeTab](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/hometab.gif)
+![homeTab](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/hometab.gif)
 
-* ![moreTab](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/moretab.png)
+![moreTab](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/moretab.png)
 
 # License
 
