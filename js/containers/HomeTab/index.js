@@ -13,7 +13,7 @@ import px2dp from '../../utils/px2dp';
 import NavigationBar from '../../components/NavigationBar';
 import {getCurrentDate} from '../../utils/getDate';
 import * as Info from '../../utils/handleDataSource';
-import SimpleList from '../../components/SimpleListView';
+import ListViewForHome from '../../components/ListViewForHome';
 import colors from '../../constants/colors';
 
 class HomeFragment extends Component{
@@ -52,7 +52,7 @@ class HomeFragment extends Component{
                                 {Info.getCategoryList(dataSource).map((item, i) => {
                                     if(item !== '福利')
                                     return(
-                                        <SimpleList
+                                        <ListViewForHome
                                             key={i}
                                             navigator={this.props.navigator}
                                             dataSource={Info.getTargetList(dataSource, item)}

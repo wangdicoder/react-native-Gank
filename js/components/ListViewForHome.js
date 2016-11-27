@@ -11,7 +11,7 @@ import Avatar from './Avatar';
 import Icon from 'react-native-vector-icons/Ionicons';
 import WebViewPage from './WebViewPage';
 
-export default class SimpleListView extends Component{
+export default class ListViewForHome extends Component{
     static propTypes = {
         dataSource: PropTypes.array,
         headerTitle: PropTypes.string

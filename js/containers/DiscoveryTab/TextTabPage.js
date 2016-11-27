@@ -12,7 +12,7 @@ import * as Actions from '../../actions/requestTargetData';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import BackPageComponent from '../BackPageComponent';
-import SimpleList from '../../components/SimpleListView';
+import ListViewWithInfo from '../../components/ListViewWithInfo';
 
 class TextTabPage extends BackPageComponent{
     constructor(props){
@@ -35,9 +35,8 @@ class TextTabPage extends BackPageComponent{
                             <Text>loading,,,,</Text>
                         </View>
                         :
-                        <SimpleList
+                        <ListViewWithInfo
                             dataSource={this.props.dataSource}
-                            headerTitle={this.props.title}
                             navigator={this.props.navigator}/>
                     }
                 </View>
