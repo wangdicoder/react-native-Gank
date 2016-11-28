@@ -16,6 +16,7 @@ export default class OrderContentPage extends BackPageComponent{
         super(props);
         this.names = ['Android','iOS','前端','拓展资源','休息视频'];
         this.items = [];
+        this.order = [];
     }
 
     render(){
@@ -28,6 +29,7 @@ export default class OrderContentPage extends BackPageComponent{
                     leftBtnPress={this._handleBack.bind(this)}
                 />
                 {this.names.map((item, i)=>{
+                    this.order.push(item);
                     return (
                         <View
                             {...this._panResponder.panHandlers}
@@ -76,9 +78,10 @@ export default class OrderContentPage extends BackPageComponent{
                     collideItem.setNativeProps({
                         style: {top: this._getTopValueYById(this.index)}
                     });
-
-                    // [this.item[this.index], this.item[collideIndex]] = [this.item[collideIndex], this.item[this.index]];
-                    // this.index = collideIndex;
+                    //swap two values
+                    [this.items[this.index], this.items[collideIndex]] = [this.items[collideIndex], this.items[this.index]];
+                    [this.order[this.index], this.order[collideIndex]] = [this.order[collideIndex], this.order[this.index]];
+                    this.index = collideIndex;
                 }
             },
             onPanResponderTerminationRequest: (evt, gestureState) => true,
@@ -91,9 +94,11 @@ export default class OrderContentPage extends BackPageComponent{
                     elevation: 0
                 };
                 let item = this.items[this.index];
+                //go back the correct position
                 item.setNativeProps({
-                    style: {...shadowStyle}
+                    style: {...shadowStyle, top: this._getTopValueYById(this.index)}
                 });
+                console.log(this.order);
             },
             onPanResponderTerminate: (evt, gestureState) => {
                 // Another component has become the responder, so this gesture
