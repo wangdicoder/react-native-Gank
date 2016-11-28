@@ -24,7 +24,6 @@ export default class WebViewPage extends BackPageComponent{
                 <View style={styles.toolbar}>
                     <NavigationBar
                         title={navigationBarTitle}
-                        isBackBtnOnLeft={true}
                         leftBtnIcon="arrow-back"
                         leftBtnPress={this._handleBack.bind(this)}
                         rightBtnIcon={"refresh"}

@@ -13,7 +13,6 @@ export default class AboutGankPage extends BackPageComponent{
             <View>
                 <NavigationBar
                     title="关于Gank.io"
-                    isBackBtnOnLeft={true}
                     leftBtnIcon="arrow-back"
                     leftBtnPress={this._handleBack.bind(this)}/>
             </View>

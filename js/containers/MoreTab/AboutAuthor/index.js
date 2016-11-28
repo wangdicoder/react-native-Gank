@@ -13,7 +13,6 @@ export default class AboutAuthorPage extends BackPageComponent{
             <View>
                 <NavigationBar
                     title="关于作者"
-                    isBackBtnOnLeft={true}
                     leftBtnIcon="arrow-back"
                     leftBtnPress={this._handleBack.bind(this)}/>
             </View>

@@ -13,9 +13,12 @@ export default class ThemeColorPage extends BackPageComponent{
             <View>
                 <NavigationBar
                     title="主题"
-                    isBackBtnOnLeft={true}
-                    leftBtnIcon="arrow-back"
-                    leftBtnPress={this._handleBack.bind(this)}/>
+                    leftBtnText="取消"
+                    leftBtnPress={this._handleBack.bind(this)}
+                    rightBtnText="确定"/>
+                <View>
+
+                </View>
             </View>
         );
     }

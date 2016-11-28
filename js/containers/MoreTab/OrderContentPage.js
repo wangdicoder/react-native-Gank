@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text, PanResponder} from 'react-native';
+import {StyleSheet, View, Text, PanResponder, AsyncStorage} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BackPageComponent from '../BackPageComponent';
 import NavigationBar from '../../components/NavigationBar';
@@ -24,7 +24,6 @@ export default class OrderContentPage extends BackPageComponent{
             <View style={styles.container}>
                 <NavigationBar
                     title="首页内容展示顺序"
-                    isBackBtnOnLeft={true}
                     leftBtnIcon="arrow-back"
                     leftBtnPress={this._handleBack.bind(this)}
                 />
@@ -61,7 +60,8 @@ export default class OrderContentPage extends BackPageComponent{
                         shadowOpacity: 0.3,
                         shadowRadius: 5,
                         shadowOffset: {height: 0, width: 2},
-                        elevation: 5
+                        elevation: 5,
+                        zIndex: 1
                     }
                 });
             },
@@ -85,25 +85,24 @@ export default class OrderContentPage extends BackPageComponent{
                 }
             },
             onPanResponderTerminationRequest: (evt, gestureState) => true,
-            onPanResponderRelease: (evt, gestureState) => {
-                const shadowStyle = {
-                    shadowColor: "#000",
-                    shadowOpacity: 0,
-                    shadowRadius: 0,
-                    shadowOffset: {height: 0, width: 0,},
-                    elevation: 0
-                };
-                let item = this.items[this.index];
-                //go back the correct position
-                item.setNativeProps({
-                    style: {...shadowStyle, top: this._getTopValueYById(this.index)}
-                });
-                console.log(this.order);
-            },
-            onPanResponderTerminate: (evt, gestureState) => {
-                // Another component has become the responder, so this gesture
-                // should be cancelled
-            }
+            onPanResponderRelease: this._releaseAndTerminate.bind(this),
+            onPanResponderTerminate: this._releaseAndTerminate.bind(this)
+        });
+    }
+
+    _releaseAndTerminate(evt, gestureState){
+        const shadowStyle = {
+            shadowColor: "#000",
+            shadowOpacity: 0,
+            shadowRadius: 0,
+            shadowOffset: {height: 0, width: 0,},
+            elevation: 0,
+            zIndex: 0
+        };
+        let item = this.items[this.index];
+        //go back the correct position
+        item.setNativeProps({
+            style: {...shadowStyle, top: this._getTopValueYById(this.index)}
         });
     }
 
@@ -128,6 +127,10 @@ export default class OrderContentPage extends BackPageComponent{
     _getTopValueYById(id){
         const height = px2dp(49);
         return (id + 1) * height;
+    }
+
+    _storeOrder(){
+
     }
 }
 

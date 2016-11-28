@@ -7,7 +7,7 @@ import {Platform, Dimensions, PixelRatio} from 'react-native';
 import colors from './colors';
 import px2dp from '../utils/px2dp';
 
-const favoriteColor = colors.black;
+const favoriteColor = colors.limeGreen;
 
 export default {
     mainThemeColor: favoriteColor,
@@ -25,9 +25,10 @@ export default {
         normalColor: '#aaa'
     },
     toolbar: {
-        height: (Platform.OS === 'android') ? px2dp(45) : px2dp(49),
+        height: Platform.OS === 'android' ? px2dp(45) : px2dp(49),
         barColor: favoriteColor,
         titleColor: '#fff',
-        titleSize: px2dp(16)
+        titleSize: Platform.OS === 'android' ? px2dp(17) : px2dp(14),
+        textBtnSize: Platform.OS === 'android' ? px2dp(14) : px2dp(11)
     }
 }

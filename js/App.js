@@ -15,7 +15,7 @@ export default class App extends React.Component{
         return(
             <Provider store={store}>
                 <Navigator
-                    initialRoute={{component: Test}}
+                    initialRoute={{component: MainPage}}
                     renderScene={(route, navigator) =>
                         <route.component {...route.args} navigator={navigator} />
                     }

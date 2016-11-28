@@ -11,14 +11,11 @@ export default class NavigationBar extends Component{
     static propTypes = {
         title: PropTypes.string.isRequired,
         leftBtnIcon: PropTypes.string,
+        leftBtnText: PropTypes.string,
         leftBtnPress: PropTypes.func,
         rightBtnIcon: PropTypes.string,
-        rightBtnPress: PropTypes.func,
-        isBackBtnOnLeft: PropTypes.bool
-    };
-
-    static defaultProps = {
-        isBackBtnOnLeft: false
+        rightBtnText: PropTypes.string,
+        rightBtnPress: PropTypes.func
     };
 
     constructor(props) {
@@ -26,13 +23,13 @@ export default class NavigationBar extends Component{
     }
 
     render(){
-        const {title, leftBtnIcon, leftBtnPress, rightBtnIcon, rightBtnPress, isBackBtnOnLeft} = this.props;
+        const {title, leftBtnIcon, leftBtnText, leftBtnPress, rightBtnIcon, rightBtnText, rightBtnPress} = this.props;
         return (
             <View style={styles.container}>
                 <View style={styles.toolbar}>
                     <View style={styles.fixedCell}>
-                        {leftBtnIcon ?
-                            <IconButton icon={leftBtnIcon} onPress={leftBtnPress} isBackBtnOnLeft={isBackBtnOnLeft}/>
+                        {(leftBtnIcon || leftBtnText) ?
+                            <Button icon={leftBtnIcon} text={leftBtnText} onPress={leftBtnPress} />
                             :
                             null
                         }
@@ -41,8 +38,8 @@ export default class NavigationBar extends Component{
                         <Text style={styles.title}>{title}</Text>
                     </View>
                     <View style={styles.fixedCell}>
-                        {rightBtnIcon ?
-                            <IconButton icon={rightBtnIcon} onPress={rightBtnPress}/>
+                        {(rightBtnIcon || rightBtnText) ?
+                            <Button icon={rightBtnIcon} text={rightBtnText} onPress={rightBtnPress} />
                             :
                             null
                         }
@@ -53,39 +50,44 @@ export default class NavigationBar extends Component{
     }
 }
 
-class IconButton extends Component{
+class Button extends Component{
     static propTypes = {
-        icon: PropTypes.string.isRequired,
-        onPress: PropTypes.func,
-        isBackBtnOnLeft: PropTypes.bool
+        icon: PropTypes.string,
+        text: PropTypes.string,
+        onPress: PropTypes.func
     };
 
     render(){
+        var icon = null;
         if(Platform.OS === 'android'){
-            const icon = 'md-'+this.props.icon;
+            if(this.props.icon)
+                icon = 'md-'+this.props.icon;
             return(
                 <TouchableNativeFeedback
                     onPress={this.props.onPress}>
-                    <View style={styles.backBtn}>
-                        <Icon name={icon} color="#fff" size={px2dp(23)}/>
+                    <View style={styles.btn}>
+                        {icon ?
+                            <Icon name={icon} color="#fff" size={px2dp(23)}/>
+                            :
+                            <Text style={styles.btnText}>{this.props.text}</Text>
+                        }
                     </View>
                 </TouchableNativeFeedback>
             );
         }else if(Platform.OS === 'ios'){
-            const icon = 'ios-'+this.props.icon;
+            if(this.props.icon)
+                icon = 'ios-'+this.props.icon;
             return(
                 <TouchableOpacity
                     onPress={this.props.onPress}
                     activeOpacity={theme.touchableOpacityActiveOpacity}>
-                    {this.props.isBackBtnOnLeft ?
-                        <View style={[styles.backBtn, {paddingRight: px2dp(20)}]}>
+                    <View style={styles.btn}>
+                        {icon ?
                             <Icon name={icon} color="#fff" size={px2dp(23)}/>
-                        </View>
-                        :
-                        <View style={styles.backBtn}>
-                            <Icon name={icon} color="#fff" size={px2dp(23)}/>
-                        </View>
-                    }
+                            :
+                            <Text style={styles.btnText}>{this.props.text}</Text>
+                        }
+                    </View>
                 </TouchableOpacity>
             );
         }
@@ -124,11 +126,15 @@ const styles = StyleSheet.create({
         fontSize: theme.toolbar.titleSize,
         color: theme.toolbar.titleColor
     },
-    backBtn: {
+    btn: {
         justifyContent:'center',
         alignItems:'center',
         flex: 1,
         width: theme.toolbar.height,
         height: Platform.OS === 'android' ? theme.toolbar.height : theme.toolbar.height - px2dp(6),
+    },
+    btnText: {
+        color: theme.toolbar.titleColor,
+        fontSize: theme.toolbar.textBtnSize
     }
 });
