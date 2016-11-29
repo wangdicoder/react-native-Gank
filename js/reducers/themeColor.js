@@ -12,54 +12,9 @@ const initialState = {
 
 export default function themeColor(state=initialState, action) {
     switch(action.type){
-        case TYPES.CHANGE_TO_LIGHT_BLUE:
+        case TYPES.CHANGE_COLOR:
             return Object.assign({}, state, {
-                mainThemeColor: colors.lightBlue
-            });
-
-        case TYPES.CHANGE_TO_YELLOW:
-            return Object.assign({}, state, {
-                mainThemeColor: colors.yellow
-            });
-
-        case TYPES.CHANGE_TO_SEA_GREEN:
-            return Object.assign({}, state, {
-                mainThemeColor: colors.seaGreen
-            });
-
-        case TYPES.CHANGE_TO_PURPLE:
-            return Object.assign({}, state, {
-                mainThemeColor: colors.purple
-            });
-
-        case TYPES.CHANGE_TO_ORANGE_RED:
-            return Object.assign({}, state, {
-                mainThemeColor: colors.orangeRed
-            });
-
-        case TYPES.CHANGE_TO_BLACK:
-            return Object.assign({}, state, {
-                mainThemeColor: colors.black
-            });
-
-        case TYPES.CHANGE_TO_DODGER_BLUE:
-            return Object.assign({}, state, {
-                mainThemeColor: colors.dodgerBlue
-            });
-
-        case TYPES.CHANGE_TO_LIGHT_GREEN:
-            return Object.assign({}, state, {
-                mainThemeColor: colors.lightGreen
-            });
-
-        case TYPES.CHANGE_TO_LIME_GREEN:
-            return Object.assign({}, state, {
-                mainThemeColor: colors.limeGreen
-            });
-
-        case TYPES.CHANGE_TO_ORANGE:
-            return Object.assign({}, state, {
-                mainThemeColor: colors.orange
+                mainThemeColor: action.color
             });
 
         default:

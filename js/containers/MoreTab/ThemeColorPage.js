@@ -2,7 +2,7 @@
  * Created by wangdi on 24/11/16.
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image, Button} from 'react-native';
+import {StyleSheet, View, Text, Image, Button, ScrollView, TouchableOpacity} from 'react-native';
 import BackPageComponent from '../BackPageComponent';
 import NavigationBar from '../../components/NavigationBar';
 import theme from '../../constants/theme';
@@ -23,7 +23,20 @@ class ThemeColorPage extends BackPageComponent{
                     leftBtnPress={this._handleBack.bind(this)}
                     rightBtnText="确定"/>
                 <View style={styles.colorPickerView}>
-                    <Button onPress={this._onPress.bind(this)} title="change"/>
+                    <ScrollView
+                        style={{height: px2dp(80)}}
+                        horizontal={true}>
+                        {this._renderColorItem(colors.orangeRed)}
+                        {this._renderColorItem(colors.orange)}
+                        {this._renderColorItem(colors.yellow)}
+                        {this._renderColorItem(colors.lightGreen)}
+                        {this._renderColorItem(colors.limeGreen)}
+                        {this._renderColorItem(colors.seaGreen)}
+                        {this._renderColorItem(colors.lightBlue)}
+                        {this._renderColorItem(colors.dodgerBlue)}
+                        {this._renderColorItem(colors.purple)}
+                        {this._renderColorItem(colors.black)}
+                    </ScrollView>
                 </View>
                 <View style={[styles.colorPanel, {backgroundColor: this.props.mainThemeColor}]}/>
                 <Image
@@ -34,8 +47,18 @@ class ThemeColorPage extends BackPageComponent{
         );
     }
 
-    _onPress(){
-        store.dispatch(Actions.toLightBlue());
+    _renderColorItem(color){
+        return(
+            <TouchableOpacity
+                onPress={this._onPress.bind(this, color)}
+                activeOpacity={theme.touchableOpacityActiveOpacity}>
+                <View style={[styles.colorBlock, {backgroundColor: color}]} />
+            </TouchableOpacity>
+        );
+    }
+
+    _onPress(color){
+        store.dispatch(Actions.changeColor(color));
     }
 }
 
@@ -47,7 +70,9 @@ const styles = StyleSheet.create({
     },
     colorPickerView: {
         height: px2dp(80),
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        paddingLeft: px2dp(10),
+        paddingRight: px2dp(10)
     },
     img:{
         width: px2dp(250),
@@ -66,6 +91,13 @@ const styles = StyleSheet.create({
         borderColor: theme.segment.color,
         //elevation: 5,
     },
+    colorBlock: {
+        borderRadius: 5,
+        width: px2dp(50),
+        height: px2dp(50),
+        margin: px2dp(10),
+        alignSelf: 'center'
+    }
 });
 
 const mapStateToProps = (state) => {
