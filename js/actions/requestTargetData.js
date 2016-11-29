@@ -26,22 +26,9 @@ function receiveData(responseData){
     }
 }
 
-function receiveMoreData(responseData) {
-    return {
-        type: TYPES.FETCH_TARGET_MORE_DATA_SUCCESS,
-        dataSource: responseData.results
-    }
-}
-
 function fetchFailure() {
     return {
         type: TYPES.FETCH_TARGET_DATA_FAILURE
-    }
-}
-
-function fetchMoreDataFailure() {
-    return {
-        type: TYPES.FETCH_TARGET_MORE_DATA_FAILURE
     }
 }
 
@@ -80,10 +67,10 @@ export function fetchMoreData(category){
                     if(isValidData(json)){
                         dispatch(receiveData(json));
                     }else{
-                        dispatch(fetchMoreDataFailure());
+                        dispatch(fetchFailure());
                     }
                 }).catch((error) => {
-                    dispatch(fetchMoreDataFailure());
+                    dispatch(fetchFailure());
                 });
         }, 2000);
     }

@@ -40,15 +40,6 @@ export default function targetData(state=initialState, action) {
                 pageNumber: state.pageNumber + 1
             });
 
-        case TYPES.FETCH_TARGET_MORE_DATA_SUCCESS:
-            return Object.assign({}, state, {
-                ...state,
-                loading: false,
-                isRenderFooter: false,
-                dataSource: state.dataSource.concat(action.dataSource),
-                pageNumber: state.pageNumber + 1
-            });
-
         case TYPES.FETCH_TARGET_DATA_FAILURE:
             return Object.assign({}, state, {
                 ...state,
