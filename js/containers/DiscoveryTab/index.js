@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, ScrollView, Platform, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
+import {StyleSheet, View, Text, ScrollView, Platform, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
 import ImageTabPage from './ImageTabPage';
 import TextTabPage from './TextTabPage';
 import VideoTabPage from './VideoTabPage';
@@ -40,11 +40,11 @@ export default class DiscoveryFragment extends Component{
                                                         {this._renderBtnContent(i,index)}
                                                     </TouchableNativeFeedback>
                                                     :
-                                                    <TouchableHighlight
+                                                    <TouchableOpacity
                                                         onPress={this._itemPressCallback.bind(this, i+index, subItem)}
-                                                        underlayColor={theme.touchableHighlightUnderlayColor}>
+                                                        activeOpacity={theme.touchableOpacityActiveOpacity}>
                                                         {this._renderBtnContent(i,index)}
-                                                    </TouchableHighlight>
+                                                    </TouchableOpacity>
                                                 }
                                                 <Text style={styles.label}>{subItem}</Text>
                                             </View>
@@ -64,7 +64,7 @@ export default class DiscoveryFragment extends Component{
 
     _renderBtnContent(i, index){
         return(
-            <View style={{width:px2dp(80), height:px2dp(80), alignItems:'center', justifyContent:'center'}}>
+            <View style={{width:px2dp(60), height:px2dp(60), alignItems:'center', justifyContent:'center'}}>
                 <Avatar icon={this.tabIcon[i][index]} width={px2dp(60)} backgroundColor={this.tabColor[i][index]}/>
             </View>
         );
@@ -99,17 +99,14 @@ const styles = StyleSheet.create({
     },
     btnPanel: {
         backgroundColor: '#fff',
-        height: px2dp(210),
+        height: px2dp(215),
         width: theme.screenWidth,
         marginTop: px2dp(12),
         borderBottomColor: theme.segment.color,
         borderBottomWidth: theme.segment.width,
         borderTopColor: theme.segment.color,
         borderTopWidth: theme.segment.width,
-        paddingTop: px2dp(5),
-        paddingBottom: px2dp(15),
-        paddingLeft: px2dp(15),
-        paddingRight: px2dp(15),
+        padding: px2dp(17),
     },
     btnRow: {
         flex: 1,
@@ -122,7 +119,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     label: {
-        marginTop: px2dp(-5),
+        marginTop: px2dp(4),
         color: "#000"
     }
 });

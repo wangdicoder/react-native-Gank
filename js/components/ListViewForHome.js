@@ -128,10 +128,7 @@ const styles = StyleSheet.create({
     headerLabel: {
         color: 'steelblue',
         fontSize: px2dp(17),
-        marginLeft: px2dp(7),
-        textShadowColor: 'rgba(0,0,0,.4)',
-        textShadowOffset: {height: 5, width: 1},
-        textShadowRadius: 20
+        marginLeft: px2dp(7)
     },
     rowItem: {
         backgroundColor: '#fff',
