@@ -3,24 +3,45 @@
  */
 'use strict';
 
-import * as types from './actionTypes';
+import * as TYPES from './actionTypes';
 import fetchUrl from '../constants/fetchUrl';
 import fetchWithTimeout from '../utils/fetchWithTimeout';
 
 function requestData() {
+    return {
+        type: TYPES.FETCH_TARGET_DATA_REQUEST
+    }
+}
 
+function requestMoreData() {
+    return {
+        type: TYPES.FETCH_TARGET_MORE_DATA_REQUEST
+    }
 }
 
 function receiveData(responseData){
     return {
-        type: types.FETCH_TARGET_DATA_SUCCESS,
-        dataSource: responseData
+        type: TYPES.FETCH_TARGET_DATA_SUCCESS,
+        dataSource: responseData.results
+    }
+}
+
+function receiveMoreData(responseData) {
+    return {
+        type: TYPES.FETCH_TARGET_MORE_DATA_SUCCESS,
+        dataSource: responseData.results
     }
 }
 
 function fetchFailure() {
     return {
-        type: types.FETCH_TARGET_DATA_FAILURE
+        type: TYPES.FETCH_TARGET_DATA_FAILURE
+    }
+}
+
+function fetchMoreDataFailure() {
+    return {
+        type: TYPES.FETCH_TARGET_MORE_DATA_FAILURE
     }
 }
 
@@ -33,7 +54,7 @@ function isValidData(responseData) {
 export function fetchData(category) {
     const url = fetchUrl.category + category;
     return function (dispatch) {
-
+        dispatch(requestData());
         return fetchWithTimeout(5000, fetch(url))
             .then(response => response.json())
             .then(json => {
@@ -45,5 +66,25 @@ export function fetchData(category) {
             }).catch((error) => {
                 dispatch(fetchFailure());
             });
+    }
+}
+
+export function fetchMoreData(category){
+    const url = fetchUrl.category + category;
+    return function (dispatch) {
+        dispatch(requestMoreData());
+        setTimeout(()=>{
+            return fetchWithTimeout(5000, fetch(url))
+                .then(response => response.json())
+                .then(json => {
+                    if(isValidData(json)){
+                        dispatch(receiveData(json));
+                    }else{
+                        dispatch(fetchMoreDataFailure());
+                    }
+                }).catch((error) => {
+                    dispatch(fetchMoreDataFailure());
+                });
+        }, 2000);
     }
 }

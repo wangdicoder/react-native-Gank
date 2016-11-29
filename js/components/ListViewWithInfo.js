@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text, Image, ListView, Platform, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
+import {StyleSheet, View, Text, Image, ListView, Platform, ActivityIndicator, TouchableNativeFeedback, TouchableHighlight, ToastAndroid} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
@@ -19,7 +19,9 @@ export default class ListViewWithInfo extends Component{
     static propTypes = {
         dataSource: PropTypes.array,
         headerTitle: PropTypes.string,
-        renderTag: PropTypes.bool
+        renderTag: PropTypes.bool,
+        isRenderFooter: PropTypes.bool,
+        onEndReached: PropTypes.func
     };
 
     render(){
@@ -29,10 +31,30 @@ export default class ListViewWithInfo extends Component{
                 renderRow={this._renderRow.bind(this)}
                 renderHeader={this._renderHeader.bind(this)}
                 renderSeparator={this._renderSeparator.bind(this)}
+                renderFooter={this._renderFooter.bind(this)}
                 initialListSize={10}
                 pageSize={10}
+                onEndReached={this.props.onEndReached}
+                onEndReachedThreshold={5}
             />
         );
+    }
+
+    // _onEndReached(){
+    //     ToastAndroid.show('end', ToastAndroid.SHORT);
+    // }
+
+    _renderFooter(){
+        if(this.props.isRenderFooter)
+            return(
+                <View style={styles.footer}>
+                    <ActivityIndicator
+                        color={theme.mainThemeColor}
+                    />
+                    <Text style={{marginLeft: 10}}>Loading...</Text>
+                </View>
+            );
+        //return null;
     }
 
     _renderRow(rowData, sectionID, rowID, highlightRow){
@@ -154,5 +176,12 @@ const styles = StyleSheet.create({
         marginRight: px2dp(13),
         fontSize: px2dp(10),
         color: '#aaa'
+    },
+    footer: {
+        flexDirection: 'row',
+        width: theme.screenWidth,
+        height: px2dp(70),
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 });

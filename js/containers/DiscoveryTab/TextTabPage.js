@@ -37,7 +37,10 @@ class TextTabPage extends BackPageComponent{
                         :
                         <ListViewWithInfo
                             dataSource={this.props.dataSource}
-                            navigator={this.props.navigator}/>
+                            navigator={this.props.navigator}
+                            isRenderFooter={this.props.isRenderFooter}
+                            onEndReached={this._listViewOnEndReached.bind(this)}
+                        />
                     }
                 </View>
             </View>
@@ -48,6 +51,12 @@ class TextTabPage extends BackPageComponent{
         InteractionManager.runAfterInteractions(()=>{
             this.props.actions.fetchData(this.props.title +'/10/1');
         });
+    }
+
+    _listViewOnEndReached(){
+        if(!this.props.isRenderFooter) {
+            this.props.actions.fetchMoreData(this.props.title + '/10/2');
+        }
     }
 }
 
@@ -67,7 +76,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
     return {
         loading: state.targetData.loading,
-        dataSource: state.targetData.dataSource.results,
+        dataSource: state.targetData.dataSource,
+        isRenderFooter: state.targetData.isRenderFooter
     };
 };
 
