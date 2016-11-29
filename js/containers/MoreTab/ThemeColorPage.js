@@ -2,7 +2,7 @@
  * Created by wangdi on 24/11/16.
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image, Button} from 'react-native';
 import BackPageComponent from '../BackPageComponent';
 import NavigationBar from '../../components/NavigationBar';
 import theme from '../../constants/theme';
@@ -20,7 +20,7 @@ export default class ThemeColorPage extends BackPageComponent{
                     leftBtnPress={this._handleBack.bind(this)}
                     rightBtnText="确定"/>
                 <View style={styles.colorPickerView}>
-
+                    <Button onPress={this._onPress.bind(this)} title="bian"/>
                 </View>
                 <View style={[styles.colorPanel, {backgroundColor: theme.mainThemeColor}]}/>
                 <Image
@@ -29,6 +29,10 @@ export default class ThemeColorPage extends BackPageComponent{
                     resizeMode='stretch'/>
             </View>
         );
+    }
+
+    _onPress(){
+
     }
 }
 

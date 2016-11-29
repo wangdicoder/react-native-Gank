@@ -26,7 +26,7 @@ export default class NavigationBar extends Component{
         const {title, leftBtnIcon, leftBtnText, leftBtnPress, rightBtnIcon, rightBtnText, rightBtnPress} = this.props;
         return (
             <View style={styles.container}>
-                <View style={styles.toolbar}>
+                <View style={[styles.toolbar, {backgroundColor: theme.mainThemeColor}]}>
                     <View style={styles.fixedCell}>
                         {(leftBtnIcon || leftBtnText) ?
                             <Button icon={leftBtnIcon} text={leftBtnText} onPress={leftBtnPress} />
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     },
     toolbar: {
         height: theme.toolbar.height,
-        backgroundColor: theme.toolbar.barColor,
+        //backgroundColor: theme.toolbar.barColor,
         flexDirection: 'row',
         paddingTop: Platform.OS === 'android' ? 0 : px2dp(6),
         elevation: 3,

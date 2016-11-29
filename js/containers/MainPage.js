@@ -30,51 +30,37 @@ class BottomTabBar extends Component{
             selectedTab: 'discovery'
         };
         this.tabNames = ['首页', '发现', '收藏', '更多'];
+        this.selectedTab = ['home', 'discovery', 'collection', 'me'];
+        this.components = [HomeFragment, DiscoveryFragment, CollectionFragment, MoreFragment];
+        this.normalIcons = [this.state.homeNormal, this.state.compassNormal, this.state.collectionNormal, this.state.moreNormal];
+        this.selectedIcons = [this.state.homeSelected, this.state.compassSelected, this.state.collectionSelected, this.state.moreSelected];
+    }
+
+    _renderItem(Component, tab, tabName, normalIcon, selectedIcon){
+        const {navigator} = this.props;
+        return(
+            <TabNavigator.Item
+                selected={this.state.selectedTab === tab}
+                title={tabName}
+                selectedTitleStyle={{color: theme.tabButton.selectedColor}}
+                renderIcon={() => <Image style={styles.tabBarItemIcon} source={normalIcon} />}
+                renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={selectedIcon} />}
+                onPress={() => this.setState({ selectedTab: tab })}>
+                {<Component navigator={navigator}/>}
+            </TabNavigator.Item>
+        );
     }
 
     render(){
-        const {navigator} = this.props;
         return(
             <TabNavigator
                 hidesTabTouch={true}
                 tabBarStyle={styles.tabBarStyle}
                 sceneStyle={{paddingBottom: styles.tabBarStyle.height}}>
-                <TabNavigator.Item
-                    selected={this.state.selectedTab === 'home'}
-                    title={this.tabNames[0]}
-                    selectedTitleStyle={{color: theme.tabButton.selectedColor}}
-                    renderIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.homeNormal} />}
-                    renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.homeSelected} />}
-                    onPress={() => this.setState({ selectedTab: 'home' })}>
-                    {<HomeFragment navigator={navigator}/>}
-                </TabNavigator.Item>
-                <TabNavigator.Item
-                    selected={this.state.selectedTab === 'discovery'}
-                    title={this.tabNames[1]}
-                    selectedTitleStyle={{color: theme.tabButton.selectedColor}}
-                    renderIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.compassNormal} />}
-                    renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.compassSelected} />}
-                    onPress={() => this.setState({ selectedTab: 'discovery' })}>
-                    {<DiscoveryFragment navigator={navigator}/>}
-                </TabNavigator.Item>
-                <TabNavigator.Item
-                    selected={this.state.selectedTab === 'collection'}
-                    title={this.tabNames[2]}
-                    selectedTitleStyle={{color: theme.tabButton.selectedColor}}
-                    renderIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.collectionNormal} />}
-                    renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.collectionSelected} />}
-                    onPress={() => this.setState({ selectedTab: 'collection' })}>
-                    {<CollectionFragment navigator={navigator}/>}
-                </TabNavigator.Item>
-                <TabNavigator.Item
-                    selected={this.state.selectedTab === 'me'}
-                    title={this.tabNames[3]}
-                    selectedTitleStyle={{color: theme.tabButton.selectedColor}}
-                    renderIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.moreNormal} />}
-                    renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={this.state.moreSelected} />}
-                    onPress={() => this.setState({ selectedTab: 'me' })}>
-                    {<MoreFragment navigator={navigator}/>}
-                </TabNavigator.Item>
+                {this._renderItem(HomeFragment, 'home', '首页', this.state.homeNormal, this.state.homeSelected)}
+                {this._renderItem(DiscoveryFragment, 'discovery', '发现', this.state.compassNormal, this.state.compassSelected)}
+                {this._renderItem(CollectionFragment, 'collection', '收藏', this.state.collectionNormal, this.state.collectionSelected)}
+                {this._renderItem(MoreFragment, 'more', '更多', this.state.moreNormal, this.state.moreSelected)}
             </TabNavigator>
         );
     }
