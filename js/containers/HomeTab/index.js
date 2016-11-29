@@ -12,7 +12,7 @@ import theme from '../../constants/theme';
 import px2dp from '../../utils/px2dp';
 import NavigationBar from '../../components/NavigationBar';
 import {getCurrentDate} from '../../utils/getDate';
-import * as Info from '../../utils/handleDataSource';
+import * as Info from '../../utils/handleHomeDataSource';
 import ListViewForHome from '../../components/ListViewForHome';
 import colors from '../../constants/colors';
 

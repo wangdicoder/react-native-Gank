@@ -5,7 +5,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, InteractionManager} from 'react-native';
+import {StyleSheet, View, Text, InteractionManager, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestTargetData';
@@ -31,8 +31,11 @@ class TextTabPage extends BackPageComponent{
                 </View>
                 <View style={styles.contentContainer}>
                     {this.props.loading ?
-                        <View>
-                            <Text>loading,,,,</Text>
+                        <View style={styles.indicator}>
+                            <ActivityIndicator
+                                color={theme.mainThemeColor}
+                            />
+                            <Text style={{marginLeft: 10}}>Fetching...</Text>
                         </View>
                         :
                         <ListViewWithInfo
@@ -49,9 +52,9 @@ class TextTabPage extends BackPageComponent{
     }
 
     componentDidMount(){
-        InteractionManager.runAfterInteractions(()=>{
+        //InteractionManager.runAfterInteractions(()=>{
             this.props.actions.fetchData(this.props.title +'/10/1');
-        });
+        //});
     }
 
     _listViewOnEndReached(){
@@ -72,6 +75,13 @@ const styles = StyleSheet.create({
         width: theme.screenWidth,
         zIndex: 1
     },
+    indicator: {
+        flexDirection: 'row',
+        width: theme.screenWidth,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20
+    }
 });
 
 const mapStateToProps = (state) => {

@@ -41,10 +41,6 @@ export default class ListViewWithInfo extends Component{
         );
     }
 
-    // _onEndReached(){
-    //     ToastAndroid.show('end', ToastAndroid.SHORT);
-    // }
-
     _renderFooter(){
         if(this.props.isRenderFooter) {
             if (this.props.isFullData)

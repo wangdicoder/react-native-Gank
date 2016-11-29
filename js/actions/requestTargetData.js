@@ -48,17 +48,19 @@ export function fetchData(category) {
     const url = fetchUrl.category + category;
     return function (dispatch) {
         dispatch(requestData());
-        return fetchWithTimeout(5000, fetch(url))
-            .then(response => response.json())
-            .then(json => {
-                if(isValidData(json)){
-                    dispatch(receiveData(json));
-                }else{
+        setTimeout(()=> {
+            return fetchWithTimeout(5000, fetch(url))
+                .then(response => response.json())
+                .then(json => {
+                    if (isValidData(json)) {
+                        dispatch(receiveData(json));
+                    } else {
+                        dispatch(fetchFailure());
+                    }
+                }).catch((error) => {
                     dispatch(fetchFailure());
-                }
-            }).catch((error) => {
-                dispatch(fetchFailure());
-            });
+                });
+        }, 1000);//the server reaction is fast, add a timeout to show the refresh effect
     }
 }
 
@@ -78,6 +80,6 @@ export function fetchMoreData(category){
                 }).catch((error) => {
                     dispatch(fetchFailure());
                 });
-        }, 1000); //the server reaction is fast, add a timeout to show the refresh effect
+        }, 1000);
     }
 }
