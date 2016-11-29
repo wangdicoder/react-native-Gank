@@ -7,7 +7,7 @@ import {Platform, Dimensions, PixelRatio} from 'react-native';
 import colors from './colors';
 import px2dp from '../utils/px2dp';
 
-const favoriteColor = colors.black;
+const favoriteColor = colors.dodgerBlue;
 
 export default {
     mainThemeColor: favoriteColor,

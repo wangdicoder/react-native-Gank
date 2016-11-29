@@ -4,11 +4,12 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, WebView, InteractionManager, Text, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, WebView, InteractionManager, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
 import theme from '../constants/theme';
 import NavigationBar from '../components/NavigationBar';
 import BackPageComponent from './BackPageComponent';
 import Icon from 'react-native-vector-icons/Ionicons';
+import px2dp from '../utils/px2dp';
 
 export default class WebViewPage extends BackPageComponent{
     constructor(props){
@@ -22,6 +23,19 @@ export default class WebViewPage extends BackPageComponent{
         const rowData = this.props.rowData;
         return(
             <View style={{flex: 1, backgroundColor: theme.pageBackgroundColor}}>
+                <View style={styles.contentContainer}>
+                    {this.state.didMount ?
+                        <WebView
+                            style={styles.webView}
+                            source={{uri: rowData.url}}
+                            renderLoading={this._renderLoading.bind(this)}
+                            renderError={this._renderError.bind(this)}
+                            startInLoadingState={true}
+                        />
+                        :
+                        null
+                    }
+                </View>
                 <View style={styles.toolbar}>
                     <NavigationBar
                         title="详细内容"
@@ -30,16 +44,6 @@ export default class WebViewPage extends BackPageComponent{
                         rightBtnIcon={"refresh"}
                         rightBtnPress={this._btnOnPressCallback.bind(this, 0)}
                     />
-                </View>
-                <View style={styles.contentContainer}>
-                    {this.state.didMount ?
-                        <WebView
-                            style={styles.webView}
-                            source={{uri: rowData.url}}
-                        />
-                        :
-                        null
-                    }
                 </View>
                 <View style={styles.bottomInfoBar}>
                     <View style={{flex: 85, marginRight: 10}}>
@@ -58,6 +62,23 @@ export default class WebViewPage extends BackPageComponent{
                         </TouchableOpacity>
                     </View>
                 </View>
+            </View>
+        );
+    }
+
+    _renderLoading(){
+        return(
+            <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                <ActivityIndicator color={theme.mainThemeColor} size="large"/>
+                <Text style={{marginTop: 10, color: theme.mainThemeColor}}>玩命加载中...</Text>
+            </View>
+        );
+    }
+
+    _renderError(){
+        return(
+            <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
+                <Text>Ooooops~, try again please</Text>
             </View>
         );
     }
@@ -84,6 +105,7 @@ const styles = StyleSheet.create({
     toolbar: {
         position: 'absolute',
         width: theme.screenWidth,
+        top: 0,
         zIndex: 1
     },
     webView: {
