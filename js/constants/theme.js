@@ -10,7 +10,7 @@ import px2dp from '../utils/px2dp';
 var favoriteColor = colors.orangeRed;
 
 export default {
-    mainThemeColor: favoriteColor,
+    //mainThemeColor: favoriteColor,
     pageBackgroundColor: '#f4f4f4',
     screenHeight: Dimensions.get('window').height,
     screenWidth: Dimensions.get('window').width,
@@ -21,12 +21,11 @@ export default {
         width: 1/PixelRatio.get()
     },
     tabButton: {
-        selectedColor: favoriteColor,
         normalColor: '#aaa'
     },
     toolbar: {
         height: Platform.OS === 'android' ? px2dp(45) : px2dp(49),
-        barColor: favoriteColor,
+        //barColor: favoriteColor,
         titleColor: '#fff',
         titleSize: Platform.OS === 'android' ? px2dp(17) : px2dp(14),
         textBtnSize: Platform.OS === 'android' ? px2dp(14) : px2dp(11)

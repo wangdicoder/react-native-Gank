@@ -38,8 +38,12 @@ class HomeFragment extends Component{
                     refreshControl={
                         <RefreshControl
                             refreshing={this.props.loading}
-                            onRefresh={this._onPress.bind(this, 0)}/>
-                    }>
+                            onRefresh={this._onPress.bind(this, 0)}
+                            tintColor={this.props.mainThemeColor}
+                            colors={[this.props.mainThemeColor]}
+                            title="玩命加载中..."
+                        />}
+                    >
                     {/*prevent the length of data is equal to 0*/}
                     {this.props.hasData && Info.getCategoryList(dataSource).length > 0 ?
                         <View>
@@ -182,7 +186,8 @@ const mapStateToProps = (state) => {
         loading: state.homeData.loading,
         hasData: state.homeData.hasData,
         dataSource: state.homeData.dataSource,
-        dataTime: state.homeData.dataTime
+        dataTime: state.homeData.dataTime,
+        mainThemeColor: state.themeColor.mainThemeColor
     };
 };
 

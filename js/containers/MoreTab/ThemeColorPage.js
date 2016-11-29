@@ -10,8 +10,9 @@ import colors from '../../constants/colors';
 import px2dp from '../../utils/px2dp';
 import * as Actions from '../../actions/changeThemeColor';
 import {store} from '../../store/index';
+import {connect} from 'react-redux'
 
-export default class ThemeColorPage extends BackPageComponent{
+class ThemeColorPage extends BackPageComponent{
 
     render(){
         return(
@@ -24,7 +25,7 @@ export default class ThemeColorPage extends BackPageComponent{
                 <View style={styles.colorPickerView}>
                     <Button onPress={this._onPress.bind(this)} title="change"/>
                 </View>
-                <View style={[styles.colorPanel, {backgroundColor: theme.mainThemeColor}]}/>
+                <View style={[styles.colorPanel, {backgroundColor: this.props.mainThemeColor}]}/>
                 <Image
                     style={styles.img}
                     source={require('../../assets/model.png')}
@@ -66,3 +67,11 @@ const styles = StyleSheet.create({
         //elevation: 5,
     },
 });
+
+const mapStateToProps = (state) => {
+    return {
+        mainThemeColor: state.themeColor.mainThemeColor
+    };
+};
+
+export default connect(mapStateToProps)(ThemeColorPage);

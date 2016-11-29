@@ -10,8 +10,9 @@ import NavigationBar from '../components/NavigationBar';
 import BackPageComponent from './BackPageComponent';
 import Icon from 'react-native-vector-icons/Ionicons';
 import px2dp from '../utils/px2dp';
+import {connect} from 'react-redux'
 
-export default class WebViewPage extends BackPageComponent{
+class WebViewPage extends BackPageComponent{
     constructor(props){
         super(props);
         this.state = {
@@ -69,8 +70,8 @@ export default class WebViewPage extends BackPageComponent{
     _renderLoading(){
         return(
             <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                <ActivityIndicator color={theme.mainThemeColor} size="large"/>
-                <Text style={{marginTop: 10, color: theme.mainThemeColor}}>玩命加载中...</Text>
+                <ActivityIndicator color={this.props.mainThemeColor} size="large"/>
+                <Text style={{marginTop: 10, color: this.props.mainThemeColor}}>玩命加载中...</Text>
             </View>
         );
     }
@@ -131,3 +132,11 @@ const styles = StyleSheet.create({
         fontSize: 12
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        mainThemeColor: state.themeColor.mainThemeColor
+    };
+};
+
+export default connect(mapStateToProps)(WebViewPage);

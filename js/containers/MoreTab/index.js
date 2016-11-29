@@ -12,13 +12,14 @@ import RowItem from '../../components/SimpleRowItem';
 import px2dp from '../../utils/px2dp';
 import Avatar from '../../components/Avatar';
 import colors from '../../constants/colors';
+import {connect} from 'react-redux'
 
 import ThemeColorPage from './ThemeColorPage';
 import OrderContentPage from './OrderContentPage';
 import AboutGankPage from './AboutGankPage';
 import AboutAuthorPage from './AboutAuthor/index';
 
-export default class MoreFragment extends Component{
+class MoreFragment extends Component{
     constructor(props){
         super(props);
     }
@@ -46,7 +47,7 @@ export default class MoreFragment extends Component{
                         <RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple} renderSegment={false} onPress={this._itemClickCallback.bind(this, 3)}/>
                     </View>
                     <View style={styles.block}>
-                        <RowItem title="关于作者" icon="md-happy" renderSegment={false} onPress={this._itemClickCallback.bind(this, 4)}/>
+                        <RowItem title="关于作者" icon="md-happy" iconColor={this.props.mainThemeColor} renderSegment={false} onPress={this._itemClickCallback.bind(this, 4)}/>
                     </View>
                     <View style={styles.block}>
                         <RowItem title="Gank主页" icon="md-browsers"  iconColor={colors.lightBlue} onPress={this._itemClickCallback.bind(this, 5)}/>
@@ -62,7 +63,7 @@ export default class MoreFragment extends Component{
         return(
             <View style={[styles.block, styles.intro]}>
                 <View style={styles.introLeft}>
-                    <Avatar text="Gank" width={px2dp(50)} backgroundColor={theme.mainThemeColor}/>
+                    <Avatar text="Gank" width={px2dp(50)} backgroundColor={this.props.mainThemeColor}/>
                 </View>
                 <View style={styles.introRight}>
                     <Text style={styles.title}>Gank.io</Text>
@@ -147,3 +148,11 @@ const styles = StyleSheet.create({
         borderTopWidth: theme.segment.width
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        mainThemeColor: state.themeColor.mainThemeColor
+    };
+};
+
+export default connect(mapStateToProps)(MoreFragment);

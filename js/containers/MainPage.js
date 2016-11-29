@@ -13,8 +13,9 @@ import CollectionFragment from './CollectionTab/index';
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
+import {connect} from 'react-redux'
 
-export default class MainPage extends Component{
+class MainPage extends Component{
 
     render(){
         return(
@@ -37,9 +38,9 @@ class BottomTabBar extends Component{
             <TabNavigator.Item
                 selected={this.state.selectedTab === tab}
                 title={tabName}
-                selectedTitleStyle={{color: theme.tabButton.selectedColor}}
+                selectedTitleStyle={{color: this.props.mainThemeColor}}
                 renderIcon={() => <Image style={styles.tabBarItemIcon} source={normalIcon} />}
-                renderSelectedIcon={() => <Image style={styles.tabBarItemIcon} source={selectedIcon} />}
+                renderSelectedIcon={() => <Image style={[styles.tabBarItemIcon, {tintColor: this.props.mainThemeColor}]} source={selectedIcon} />}
                 onPress={() => this.setState({ selectedTab: tab })}>
                 {<Component navigator={navigator}/>}
             </TabNavigator.Item>
@@ -61,24 +62,25 @@ class BottomTabBar extends Component{
     }
 
     componentWillMount(){
+        const mainThemeColor = this.props.mainThemeColor;
         if(Platform.OS === 'ios') {
             Icon.getImageSource('ios-home-outline', 100, theme.tabButton.normalColor).then((source) => this.setState({homeNormal: source}));
-            Icon.getImageSource('ios-home-outline', 100, theme.tabButton.selectedColor).then((source) => this.setState({homeSelected: source}));
+            Icon.getImageSource('ios-home-outline', 100, mainThemeColor).then((source) => this.setState({homeSelected: source}));
             Icon.getImageSource('ios-compass-outline', 100, theme.tabButton.normalColor).then((source) => this.setState({compassNormal: source}));
-            Icon.getImageSource('ios-compass-outline', 100, theme.tabButton.selectedColor).then((source) => this.setState({compassSelected: source}));
+            Icon.getImageSource('ios-compass-outline', 100, mainThemeColor).then((source) => this.setState({compassSelected: source}));
             Icon.getImageSource('ios-list-box-outline', 100, theme.tabButton.normalColor).then((source) => this.setState({moreNormal: source}));
-            Icon.getImageSource('ios-list-box-outline', 100, theme.tabButton.selectedColor).then((source) => this.setState({moreSelected: source}));
+            Icon.getImageSource('ios-list-box-outline', 100, mainThemeColor).then((source) => this.setState({moreSelected: source}));
             Icon.getImageSource('ios-cube-outline', 100, theme.tabButton.normalColor).then((source) => this.setState({collectionNormal: source}));
-            Icon.getImageSource('ios-cube-outline', 100, theme.tabButton.selectedColor).then((source) => this.setState({collectionSelected: source}));
+            Icon.getImageSource('ios-cube-outline', 100, mainThemeColor).then((source) => this.setState({collectionSelected: source}));
         }else if(Platform.OS === 'android'){
             Icon.getImageSource('md-home', 100, theme.tabButton.normalColor).then((source) => this.setState({homeNormal: source}));
-            Icon.getImageSource('md-home', 100, theme.tabButton.selectedColor).then((source) => this.setState({homeSelected: source}));
+            Icon.getImageSource('md-home', 100, mainThemeColor).then((source) => this.setState({homeSelected: source}));
             Icon.getImageSource('md-compass', 100, theme.tabButton.normalColor).then((source) => this.setState({compassNormal: source}));
-            Icon.getImageSource('md-compass', 100, theme.tabButton.selectedColor).then((source) => this.setState({compassSelected: source}));
+            Icon.getImageSource('md-compass', 100, mainThemeColor).then((source) => this.setState({compassSelected: source}));
             Icon.getImageSource('md-list-box', 100, theme.tabButton.normalColor).then((source) => this.setState({moreNormal: source}));
-            Icon.getImageSource('md-list-box', 100, theme.tabButton.selectedColor).then((source) => this.setState({moreSelected: source}));
+            Icon.getImageSource('md-list-box', 100, mainThemeColor).then((source) => this.setState({moreSelected: source}));
             Icon.getImageSource('md-cube', 100, theme.tabButton.normalColor).then((source) => this.setState({collectionNormal: source}));
-            Icon.getImageSource('md-cube', 100, theme.tabButton.selectedColor).then((source) => this.setState({collectionSelected: source}));
+            Icon.getImageSource('md-cube', 100, mainThemeColor).then((source) => this.setState({collectionSelected: source}));
         }
     }
 }
@@ -95,3 +97,11 @@ const styles = {
         paddingTop: Platform.OS === 'android' ? px2dp(6) : px2dp(3)
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        mainThemeColor: state.themeColor.mainThemeColor
+    };
+};
+
+export default connect(mapStateToProps)(MainPage);

@@ -33,9 +33,9 @@ class TextTabPage extends BackPageComponent{
                     {this.props.loading ?
                         <View style={styles.indicator}>
                             <ActivityIndicator
-                                color={theme.mainThemeColor}
+                                color={this.props.mainThemeColor}
                             />
-                            <Text style={{marginLeft: 10, color: theme.mainThemeColor}}>Fetching...</Text>
+                            <Text style={{marginLeft: 10, color: this.props.mainThemeColor}}>Fetching...</Text>
                         </View>
                         :
                         <ListViewWithInfo
@@ -90,7 +90,8 @@ const mapStateToProps = (state) => {
         dataSource: state.targetData.dataSource,
         isRenderFooter: state.targetData.isRenderFooter,
         pageNumber: state.targetData.pageNumber,
-        isFullData: state.targetData.isFullData
+        isFullData: state.targetData.isFullData,
+        mainThemeColor: state.themeColor.mainThemeColor
     };
 };
 
