@@ -32,6 +32,12 @@ function fetchFailure() {
     }
 }
 
+function fetchedFullData(){
+    return {
+        type: TYPES.FETCH_TARGET_DATA_IS_FULL
+    }
+}
+
 function isValidData(responseData) {
     if(responseData.results.length > 0)
         return true;
@@ -67,11 +73,11 @@ export function fetchMoreData(category){
                     if(isValidData(json)){
                         dispatch(receiveData(json));
                     }else{
-                        dispatch(fetchFailure());
+                        dispatch(fetchedFullData());
                     }
                 }).catch((error) => {
                     dispatch(fetchFailure());
                 });
-        }, 2000);
+        }, 1000); //the server reaction is fast, add a timeout to show the refresh effect
     }
 }

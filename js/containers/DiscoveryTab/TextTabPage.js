@@ -40,6 +40,7 @@ class TextTabPage extends BackPageComponent{
                             navigator={this.props.navigator}
                             isRenderFooter={this.props.isRenderFooter}
                             onEndReached={this._listViewOnEndReached.bind(this)}
+                            isFullData={this.props.isFullData}
                         />
                     }
                 </View>
@@ -55,7 +56,7 @@ class TextTabPage extends BackPageComponent{
 
     _listViewOnEndReached(){
         if(!this.props.isRenderFooter) {
-            this.props.actions.fetchMoreData(this.props.title + '/10/2');
+            this.props.actions.fetchMoreData(this.props.title + '/10/'+this.props.pageNumber);
         }
     }
 }
@@ -77,7 +78,9 @@ const mapStateToProps = (state) => {
     return {
         loading: state.targetData.loading,
         dataSource: state.targetData.dataSource,
-        isRenderFooter: state.targetData.isRenderFooter
+        isRenderFooter: state.targetData.isRenderFooter,
+        pageNumber: state.targetData.pageNumber,
+        isFullData: state.targetData.isFullData
     };
 };
 

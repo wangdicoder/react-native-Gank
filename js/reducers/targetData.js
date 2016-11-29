@@ -9,7 +9,8 @@ const initialState = {
     loading: true,
     dataSource: [],
     isRenderFooter: false,
-    pageNumber: 0,
+    pageNumber: 1,
+    isFullData: false,
     error: false
 };
 
@@ -20,6 +21,8 @@ export default function targetData(state=initialState, action) {
                 ...state,
                 loading: true,
                 isRenderFooter: false,
+                isFullData: false,
+                pageNumber: 1,
                 dataSource: [],
             });
 
@@ -46,6 +49,14 @@ export default function targetData(state=initialState, action) {
                 loading: false,
                 isRenderFooter: false,
                 error: true
+            });
+
+        case TYPES.FETCH_TARGET_DATA_IS_FULL:
+            return Object.assign({}, state, {
+                ...state,
+                loading: false,
+                isRenderFooter: true,
+                isFullData: true
             });
 
         default:

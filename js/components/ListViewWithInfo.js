@@ -21,7 +21,8 @@ export default class ListViewWithInfo extends Component{
         headerTitle: PropTypes.string,
         renderTag: PropTypes.bool,
         isRenderFooter: PropTypes.bool,
-        onEndReached: PropTypes.func
+        onEndReached: PropTypes.func,
+        isFullData: PropTypes.bool
     };
 
     render(){
@@ -45,15 +46,23 @@ export default class ListViewWithInfo extends Component{
     // }
 
     _renderFooter(){
-        if(this.props.isRenderFooter)
-            return(
-                <View style={styles.footer}>
-                    <ActivityIndicator
-                        color={theme.mainThemeColor}
-                    />
-                    <Text style={{marginLeft: 10}}>Loading...</Text>
-                </View>
-            );
+        if(this.props.isRenderFooter) {
+            if (this.props.isFullData)
+                return (
+                    <View style={styles.footer}>
+                        <Text>已加载全部</Text>
+                    </View>
+                );
+            else
+                return (
+                    <View style={styles.footer}>
+                        <ActivityIndicator
+                            color={theme.mainThemeColor}
+                        />
+                        <Text style={{marginLeft: 10}}>Loading...</Text>
+                    </View>
+                );
+        }
         //return null;
     }
 
