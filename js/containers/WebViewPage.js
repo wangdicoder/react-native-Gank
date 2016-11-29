@@ -54,7 +54,7 @@ class WebViewPage extends BackPageComponent{
                         <TouchableOpacity
                             onPress={this._btnOnPressCallback.bind(this, 1)}
                             activeOpacity={theme.touchableOpacityActiveOpacity}>
-                            <Icon name="md-share" size={20} />
+                            <Icon name="md-share" color="#ccc" size={20} />
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={this._btnOnPressCallback.bind(this, 1)}

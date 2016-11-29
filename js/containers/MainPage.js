@@ -19,7 +19,7 @@ class MainPage extends Component{
 
     render(){
         return(
-            <BottomTabBar navigator={this.props.navigator}/>
+            <BottomTabBar navigator={this.props.navigator} mainThemeColor={this.props.mainThemeColor}/>
         );
     }
 }
@@ -33,14 +33,14 @@ class BottomTabBar extends Component{
     }
 
     _renderItem(Component, tab, tabName, normalIcon, selectedIcon){
-        const {navigator} = this.props;
+        const {navigator, mainThemeColor} = this.props;
         return(
             <TabNavigator.Item
                 selected={this.state.selectedTab === tab}
                 title={tabName}
-                selectedTitleStyle={{color: this.props.mainThemeColor}}
+                selectedTitleStyle={{color: mainThemeColor}}
                 renderIcon={() => <Image style={styles.tabBarItemIcon} source={normalIcon} />}
-                renderSelectedIcon={() => <Image style={[styles.tabBarItemIcon, {tintColor: this.props.mainThemeColor}]} source={selectedIcon} />}
+                renderSelectedIcon={() => <Image style={[styles.tabBarItemIcon, {tintColor: mainThemeColor}]} source={selectedIcon} />}
                 onPress={() => this.setState({ selectedTab: tab })}>
                 {<Component navigator={navigator}/>}
             </TabNavigator.Item>
