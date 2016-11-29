@@ -35,7 +35,7 @@ class TextTabPage extends BackPageComponent{
                             <ActivityIndicator
                                 color={theme.mainThemeColor}
                             />
-                            <Text style={{marginLeft: 10}}>Fetching...</Text>
+                            <Text style={{marginLeft: 10, color: theme.mainThemeColor}}>Fetching...</Text>
                         </View>
                         :
                         <ListViewWithInfo
