@@ -2,7 +2,7 @@
  * Created by wangdi on 23/11/16.
  */
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, Platform, View, Text, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
+import {StyleSheet, Platform, View, Text, StatusBar, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -27,6 +27,7 @@ class NavigationBar extends Component{
         const {title, leftBtnIcon, leftBtnText, leftBtnPress, rightBtnIcon, rightBtnText, rightBtnPress} = this.props;
         return (
             <View style={styles.container}>
+                <StatusBar translucent={true} backgroundColor={this.props.mainThemeColor} />
                 <View style={[styles.toolbar, {backgroundColor: this.props.mainThemeColor}]}>
                     <View style={styles.fixedCell}>
                         {(leftBtnIcon || leftBtnText) ?
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
         height: theme.toolbar.height,
         //backgroundColor: theme.toolbar.barColor,
         flexDirection: 'row',
-        paddingTop: Platform.OS === 'android' ? 0 : px2dp(6),
+        paddingTop: Platform.OS === 'android' ? px2dp(-3) : px2dp(6),
         elevation: 3,
         shadowColor: 'rgb(0,0,0)',
         shadowOffset: {height: 2, width: 1},

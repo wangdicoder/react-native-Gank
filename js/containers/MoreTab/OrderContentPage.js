@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, Text, PanResponder, AsyncStorage} from 'react-native';
+import {StyleSheet, View, Platform, Text, PanResponder, AsyncStorage} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BackPageComponent from '../BackPageComponent';
 import NavigationBar from '../../components/NavigationBar';
@@ -109,16 +109,17 @@ export default class OrderContentPage extends BackPageComponent{
     _getIdByPosition(pageY){
         var id = -1;
         const height = px2dp(49);
+        const offset = (Platform.OS === 'android') ? px2dp(20) : px2dp(7);
 
-        if(pageY >= height && pageY < height*2)
+        if(pageY >= height + offset && pageY < height*2 + offset)
             id = 0;
-        else if(pageY >= height*2 && pageY < height*3)
+        else if(pageY >= height*2 + offset && pageY < height*3 + offset)
             id = 1;
-        else if(pageY >= height*3 && pageY < height*4)
+        else if(pageY >= height*3 + offset && pageY < height*4 + offset)
             id = 2;
-        else if(pageY >= height*4 && pageY < height*5)
+        else if(pageY >= height*4 + offset && pageY < height*5 + offset)
             id = 3;
-        else if(pageY >= height*5 && pageY < height*6)
+        else if(pageY >= height*5 + offset && pageY < height*6 + offset)
             id = 4;
 
         return id;
@@ -126,7 +127,7 @@ export default class OrderContentPage extends BackPageComponent{
 
     _getTopValueYById(id){
         const height = px2dp(49);
-        return (id + 1) * height;
+        return (id + 1) * height + ((Platform.OS === 'android') ? px2dp(20) : px2dp(7));
     }
 
     _storeOrder(){
@@ -137,7 +138,8 @@ export default class OrderContentPage extends BackPageComponent{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: theme.pageBackgroundColor
+        backgroundColor: theme.pageBackgroundColor,
+        paddingTop: theme.toolbar.paddingTop,
     },
     item: {
         flexDirection: 'row',

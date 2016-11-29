@@ -52,7 +52,9 @@ class BottomTabBar extends Component{
             <TabNavigator
                 hidesTabTouch={true}
                 tabBarStyle={styles.tabBarStyle}
-                sceneStyle={{paddingBottom: styles.tabBarStyle.height}}>
+                sceneStyle={{
+                    paddingTop: Platform.OS === 'android' ? px2dp(25) : 0, //immersive experience
+                    paddingBottom: styles.tabBarStyle.height}}>
                 {this._renderItem(HomeFragment, 'home', '首页', this.state.homeNormal, this.state.homeSelected)}
                 {this._renderItem(DiscoveryFragment, 'discovery', '发现', this.state.compassNormal, this.state.compassSelected)}
                 {this._renderItem(CollectionFragment, 'collection', '收藏', this.state.collectionNormal, this.state.collectionSelected)}

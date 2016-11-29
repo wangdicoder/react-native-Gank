@@ -7,7 +7,7 @@ import colors from '../constants/colors';
 import * as TYPES from '../actions/actionTypes';
 
 const initialState = {
-    mainThemeColor: colors.black
+    mainThemeColor: colors.dodgerBlue
 }
 
 export default function themeColor(state=initialState, action) {

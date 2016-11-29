@@ -2,7 +2,7 @@
  * Created by wangdi on 24/11/16.
  */
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, Image, Button, ScrollView, TouchableOpacity} from 'react-native';
+import {StyleSheet, Platform, View, Text, Image, Button, ScrollView, TouchableOpacity} from 'react-native';
 import BackPageComponent from '../BackPageComponent';
 import NavigationBar from '../../components/NavigationBar';
 import theme from '../../constants/theme';
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: theme.pageBackgroundColor,
+        paddingTop: theme.toolbar.paddingTop,
         justifyContent: 'space-between'
     },
     colorPickerView: {
@@ -78,14 +79,14 @@ const styles = StyleSheet.create({
         width: px2dp(250),
         height: px2dp(390),
         position: 'absolute',
-        top: px2dp(70),
+        top: (theme.screenHeight-px2dp(420))/2,
         left: (theme.screenWidth-px2dp(250))/2,
     },
     colorPanel: {
         width: px2dp(250),
         height: px2dp(390),
         position: 'absolute',
-        top: px2dp(70),
+        top: (theme.screenHeight-px2dp(420))/2,
         left: (theme.screenWidth-px2dp(250))/2,
         borderWidth: theme.segment.width,
         borderColor: theme.segment.color,

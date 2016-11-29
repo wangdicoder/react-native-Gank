@@ -24,7 +24,8 @@ export default {
         normalColor: '#aaa'
     },
     toolbar: {
-        height: Platform.OS === 'android' ? px2dp(45) : px2dp(49),
+        height: Platform.OS === 'android' ? px2dp(40) : px2dp(49),
+        paddingTop: Platform.OS === 'android' ? px2dp(25) : 0,
         //barColor: favoriteColor,
         titleColor: '#fff',
         titleSize: Platform.OS === 'android' ? px2dp(17) : px2dp(14),

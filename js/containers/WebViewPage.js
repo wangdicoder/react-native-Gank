@@ -101,7 +101,8 @@ class WebViewPage extends BackPageComponent{
 const styles = StyleSheet.create({
     contentContainer: {
         marginTop: theme.toolbar.height,
-        flex: 1
+        flex: 1,
+        paddingTop: theme.toolbar.paddingTop
     },
     toolbar: {
         position: 'absolute',

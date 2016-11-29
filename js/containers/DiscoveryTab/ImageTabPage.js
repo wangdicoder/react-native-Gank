@@ -15,7 +15,7 @@ export default class ImageTabPage extends BackPageComponent{
 
     render(){
         return(
-            <View style={{flex: 1, backgroundColor: theme.pageBackgroundColor}}>
+            <View style={styles.container}>
                 <View style={styles.toolbar}>
                     <NavigationBar
                         title={this.props.title}
@@ -44,6 +44,11 @@ export default class ImageTabPage extends BackPageComponent{
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: theme.pageBackgroundColor,
+        paddingTop: theme.toolbar.paddingTop
+    },
     toolbar: {
         position: 'absolute',
         width: theme.screenWidth,

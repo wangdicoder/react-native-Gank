@@ -21,7 +21,7 @@ class TextTabPage extends BackPageComponent{
 
     render(){
         return(
-            <View style={{flex: 1, backgroundColor: theme.pageBackgroundColor}}>
+            <View style={styles.container}>
                 <View style={styles.toolbar}>
                     <NavigationBar
                         title={this.props.title}
@@ -66,6 +66,11 @@ class TextTabPage extends BackPageComponent{
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: theme.pageBackgroundColor,
+        paddingTop: theme.toolbar.paddingTop
+    },
     contentContainer: {
         marginTop: theme.toolbar.height,
         flex: 1,
