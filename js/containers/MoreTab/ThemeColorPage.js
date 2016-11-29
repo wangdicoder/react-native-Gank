@@ -35,7 +35,7 @@ class ThemeColorPage extends BackPageComponent{
     }
 
     _onPress(){
-        store.dispatch(Actions.blue());
+        store.dispatch(Actions.toLightBlue());
     }
 }
 

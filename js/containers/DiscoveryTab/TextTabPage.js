@@ -44,6 +44,7 @@ class TextTabPage extends BackPageComponent{
                             isRenderFooter={this.props.isRenderFooter}
                             onEndReached={this._listViewOnEndReached.bind(this)}
                             isFullData={this.props.isFullData}
+                            mainThemeColor={this.props.mainThemeColor}
                         />
                     }
                 </View>

@@ -46,16 +46,16 @@ export default class ListViewWithInfo extends Component{
             if (this.props.isFullData)
                 return (
                     <View style={styles.footer}>
-                        <Text style={{color: theme.mainThemeColor}}>已加载全部</Text>
+                        <Text style={{color: this.props.mainThemeColor}}>已加载全部</Text>
                     </View>
                 );
             else
                 return (
                     <View style={styles.footer}>
                         <ActivityIndicator
-                            color={theme.mainThemeColor}
+                            color={this.props.mainThemeColor}
                         />
-                        <Text style={{marginLeft: 10, color: theme.mainThemeColor}}>玩命获取中...</Text>
+                        <Text style={{marginLeft: 10, color: this.props.mainThemeColor}}>玩命获取中...</Text>
                     </View>
                 );
         }
