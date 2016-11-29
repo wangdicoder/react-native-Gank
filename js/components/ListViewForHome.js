@@ -9,7 +9,7 @@ import px2dp from '../utils/px2dp';
 import theme from '../constants/theme';
 import Avatar from './Avatar';
 import Icon from 'react-native-vector-icons/Ionicons';
-import WebViewPage from './WebViewPage';
+import WebViewPage from '../containers/WebViewPage';
 
 export default class ListViewForHome extends Component{
     static propTypes = {

@@ -8,7 +8,7 @@ import {StyleSheet, View, Text, Image, ListView, Platform, ActivityIndicator, To
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
-import WebViewPage from './WebViewPage';
+import WebViewPage from '../containers/WebViewPage';
 
 export default class ListViewWithInfo extends Component{
     constructor(props){

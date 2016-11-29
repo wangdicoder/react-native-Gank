@@ -34,7 +34,7 @@ export default class OrderContentPage extends BackPageComponent{
                             {...this._panResponder.panHandlers}
                             ref={(ref) => this.items[i] = ref}
                             key={i}
-                            style={[styles.item, {top: (i+1)*49}]}>
+                            style={[styles.item, {top: this._getTopValueYById(i)}]}>
                             <Icon name="ios-menu" size={px2dp(25)} color="#ccc"/>
                             <Text style={styles.itemTitle}>{item}</Text>
                         </View>

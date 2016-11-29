@@ -60,7 +60,7 @@ export function fetchData(category) {
                 }).catch((error) => {
                     dispatch(fetchFailure());
                 });
-        }, 1000);//the server reaction is fast, add a timeout to show the refresh effect
+        }, 500);//the server reaction is fast, add a timeout to show the refresh effect
     }
 }
 
