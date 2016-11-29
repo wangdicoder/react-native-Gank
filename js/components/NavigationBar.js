@@ -6,8 +6,9 @@ import {StyleSheet, Platform, View, Text, TouchableNativeFeedback, TouchableOpac
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {connect} from 'react-redux'
 
-export default class NavigationBar extends Component{
+class NavigationBar extends Component{
     static propTypes = {
         title: PropTypes.string.isRequired,
         leftBtnIcon: PropTypes.string,
@@ -26,7 +27,7 @@ export default class NavigationBar extends Component{
         const {title, leftBtnIcon, leftBtnText, leftBtnPress, rightBtnIcon, rightBtnText, rightBtnPress} = this.props;
         return (
             <View style={styles.container}>
-                <View style={[styles.toolbar, {backgroundColor: theme.mainThemeColor}]}>
+                <View style={[styles.toolbar, {backgroundColor: this.props.mainThemeColor}]}>
                     <View style={styles.fixedCell}>
                         {(leftBtnIcon || leftBtnText) ?
                             <Button icon={leftBtnIcon} text={leftBtnText} onPress={leftBtnPress} />
@@ -138,3 +139,11 @@ const styles = StyleSheet.create({
         fontSize: theme.toolbar.textBtnSize
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        mainThemeColor: state.themeColor.mainThemeColor
+    };
+};
+
+export default connect(mapStateToProps)(NavigationBar);

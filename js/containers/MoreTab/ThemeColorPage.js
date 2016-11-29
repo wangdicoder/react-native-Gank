@@ -8,6 +8,8 @@ import NavigationBar from '../../components/NavigationBar';
 import theme from '../../constants/theme';
 import colors from '../../constants/colors';
 import px2dp from '../../utils/px2dp';
+import * as Actions from '../../actions/changeThemeColor';
+import {store} from '../../store/index';
 
 export default class ThemeColorPage extends BackPageComponent{
 
@@ -20,7 +22,7 @@ export default class ThemeColorPage extends BackPageComponent{
                     leftBtnPress={this._handleBack.bind(this)}
                     rightBtnText="确定"/>
                 <View style={styles.colorPickerView}>
-                    <Button onPress={this._onPress.bind(this)} title="bian"/>
+                    <Button onPress={this._onPress.bind(this)} title="change"/>
                 </View>
                 <View style={[styles.colorPanel, {backgroundColor: theme.mainThemeColor}]}/>
                 <Image
@@ -32,7 +34,7 @@ export default class ThemeColorPage extends BackPageComponent{
     }
 
     _onPress(){
-
+        store.dispatch(Actions.blue());
     }
 }
 

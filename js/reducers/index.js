@@ -6,7 +6,8 @@
 import {combineReducers} from 'redux';
 import homeData from './homeData';
 import targetData from './targetData';
+import themeColor from './themeColor';
 
 export default combineReducers({
-    homeData, targetData
+    homeData, targetData, themeColor
 });

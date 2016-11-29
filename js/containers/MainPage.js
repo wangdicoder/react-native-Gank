@@ -29,11 +29,6 @@ class BottomTabBar extends Component{
         this.state = {
             selectedTab: 'discovery'
         };
-        this.tabNames = ['首页', '发现', '收藏', '更多'];
-        this.selectedTab = ['home', 'discovery', 'collection', 'me'];
-        this.components = [HomeFragment, DiscoveryFragment, CollectionFragment, MoreFragment];
-        this.normalIcons = [this.state.homeNormal, this.state.compassNormal, this.state.collectionNormal, this.state.moreNormal];
-        this.selectedIcons = [this.state.homeSelected, this.state.compassSelected, this.state.collectionSelected, this.state.moreSelected];
     }
 
     _renderItem(Component, tab, tabName, normalIcon, selectedIcon){
