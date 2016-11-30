@@ -30,7 +30,7 @@ class HomeFragment extends Component{
         return(
             <View style={styles.container}>
                 <Animated.View style={[styles.toolbar, {opacity: this.state.opacity}]}>
-                    <NavigationBar title="今日干货" rightBtnIcon="calendar" rightBtnPress={this._onPress.bind(this, 0)}/>
+                    <NavigationBar title="今日干货"/>
                 </Animated.View>
                 <ScrollView
                     scrollEnabled={this.state.scrollEnabled}

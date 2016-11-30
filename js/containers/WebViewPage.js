@@ -10,7 +10,7 @@ import NavigationBar from '../components/NavigationBar';
 import BackPageComponent from './BackPageComponent';
 import Icon from 'react-native-vector-icons/Ionicons';
 import px2dp from '../utils/px2dp';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
 
 class WebViewPage extends BackPageComponent{
     constructor(props){
@@ -23,7 +23,7 @@ class WebViewPage extends BackPageComponent{
     render(){
         const rowData = this.props.rowData;
         return(
-            <View style={{flex: 1, backgroundColor: theme.pageBackgroundColor}}>
+            <View style={styles.container}>
                 <View style={styles.contentContainer}>
                     {this.state.didMount ?
                         <WebView
@@ -47,19 +47,19 @@ class WebViewPage extends BackPageComponent{
                     />
                 </View>
                 <View style={styles.bottomInfoBar}>
-                    <View style={{flex: 85, marginRight: 10}}>
+                    <View style={{flex: 85, marginRight: px2dp(10)}}>
                         <Text style={styles.contentTitle} numberOfLines={2}>{rowData.desc}</Text>
                     </View>
                     <View style={{flex: 15, flexDirection: 'row', justifyContent: 'space-between'}}>
                         <TouchableOpacity
                             onPress={this._btnOnPressCallback.bind(this, 1)}
                             activeOpacity={theme.touchableOpacityActiveOpacity}>
-                            <Icon name="md-share" color="#ccc" size={20} />
+                            <Icon name="md-share" color="#ccc" size={px2dp(20)} />
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={this._btnOnPressCallback.bind(this, 1)}
                             activeOpacity={theme.touchableOpacityActiveOpacity}>
-                            <Icon name="md-heart" color="#32cd32" size={20} />
+                            <Icon name="md-heart" color="#32cd32" size={px2dp(20)} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -71,7 +71,7 @@ class WebViewPage extends BackPageComponent{
         return(
             <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
                 <ActivityIndicator color={this.props.mainThemeColor} size="large"/>
-                <Text style={{marginTop: 10, color: this.props.mainThemeColor}}>玩命加载中...</Text>
+                <Text style={{marginTop: px2dp(10), color: this.props.mainThemeColor}}>玩命加载中...</Text>
             </View>
         );
     }
@@ -99,6 +99,10 @@ class WebViewPage extends BackPageComponent{
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: theme.pageBackgroundColor,
+    },
     contentContainer: {
         marginTop: theme.toolbar.height,
         flex: 1,
@@ -107,6 +111,7 @@ const styles = StyleSheet.create({
     toolbar: {
         position: 'absolute',
         width: theme.screenWidth,
+        marginTop: theme.toolbar.paddingTop,
         top: 0,
         zIndex: 1
     },
@@ -118,19 +123,19 @@ const styles = StyleSheet.create({
         position: 'absolute',
         backgroundColor: 'rgba(255,255,255,.9)',
         bottom: 0,
-        height: 45,
+        height: px2dp(45),
         width: theme.screenWidth,
         borderTopWidth: theme.segment.width,
         borderTopColor: theme.segment.color,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: 10,
-        paddingRight: 10,
+        paddingLeft: px2dp(10),
+        paddingRight: px2dp(10),
         zIndex: 1
     },
     contentTitle: {
         color: '#000',
-        fontSize: 12
+        fontSize: px2dp(12)
     }
 });
 

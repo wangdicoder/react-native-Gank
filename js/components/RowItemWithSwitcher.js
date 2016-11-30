@@ -4,45 +4,30 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, Platform, View, Text, TouchableNativeFeedback, TouchableHighlight, TouchableOpacity} from 'react-native';
+import {StyleSheet, Platform, View, Text, Switch} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
 
-export default class SimpleRowItem extends Component{
+export default class RowItemWithSwitcher extends Component{
     static propTypes = {
         title: PropTypes.string.isRequired,
         icon: PropTypes.string,
         iconColor: PropTypes.string,
-        onPress: PropTypes.func,
-        renderSegment: PropTypes.bool
+        renderSegment: PropTypes.bool,
+        switcherValue: PropTypes.bool,
+        onValueChange: PropTypes.func,
+        onTintColor: PropTypes.string
     };
 
     static defaultProps = {
         renderSegment: true,
-        iconColor: '#000'
+        iconColor: '#000',
+        switcherValue: true
     }
 
     render(){
-        if(Platform.OS === 'android') {
-            return (
-                <TouchableNativeFeedback onPress={this.props.onPress}>
-                    {this._renderContent()}
-                </TouchableNativeFeedback>
-            );
-        }else if(Platform.OS === 'ios'){
-            return(
-                <TouchableHighlight
-                    onPress={this.props.onPress}
-                    underlayColor={theme.touchableHighlightUnderlayColor}>
-                    {this._renderContent()}
-                </TouchableHighlight>
-            );
-        }
-    }
-
-    _renderContent(){
-        const {title, icon, renderSegment, iconColor} = this.props;
+        const {title, icon, renderSegment, iconColor, switcherValue, onValueChange, onTintColor} = this.props;
         return(
             <View style={styles.container}>
                 <View style={styles.leftCell}>
@@ -53,7 +38,7 @@ export default class SimpleRowItem extends Component{
                 <View style={styles.rightCell}>
                     <View style={styles.cell}>
                         <Text style={styles.title}>{title}</Text>
-                        <Icon name="ios-arrow-forward" color={theme.segment.color} size={px2dp(18)}/>
+                        <Switch value={switcherValue} onValueChange={onValueChange} onTintColor={onTintColor}/>
                     </View>
                     { renderSegment ?
                         <View style={styles.segmentLine}/>

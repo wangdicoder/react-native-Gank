@@ -9,6 +9,7 @@ import theme from '../../constants/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import NavigationBar from '../../components/NavigationBar';
 import RowItem from '../../components/SimpleRowItem';
+import RowItemWithSwitcher from '../../components/RowItemWithSwitcher';
 import px2dp from '../../utils/px2dp';
 import Avatar from '../../components/Avatar';
 import colors from '../../constants/colors';
@@ -44,7 +45,8 @@ class MoreFragment extends Component{
                     <View style={styles.block}>
                         <RowItem title="首页内容展示顺序" icon="md-reorder" iconColor={colors.dodgerBlue} onPress={this._itemClickCallback.bind(this, 1)}/>
                         <RowItem title="自定义主题" icon="md-brush" iconColor={colors.orange} onPress={this._itemClickCallback.bind(this, 2)}/>
-                        <RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple} renderSegment={false} onPress={this._itemClickCallback.bind(this, 3)}/>
+                        <RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple}  onPress={this._itemClickCallback.bind(this, 3)}/>
+                        <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor={colors.seaGreen} renderSegment={false} onTintColor={this.props.mainThemeColor} />
                     </View>
                     <View style={styles.block}>
                         <RowItem title="关于作者" icon="md-happy" iconColor={this.props.mainThemeColor} renderSegment={false} onPress={this._itemClickCallback.bind(this, 4)}/>

@@ -13,6 +13,12 @@ import {store} from '../../store/index';
 import {connect} from 'react-redux'
 
 class ThemeColorPage extends BackPageComponent{
+    constructor(props){
+        super(props);
+        this.state = {
+            testColor: this.props.mainThemeColor
+        };
+    }
 
     render(){
         return(
@@ -21,7 +27,9 @@ class ThemeColorPage extends BackPageComponent{
                     title="主题"
                     leftBtnText="取消"
                     leftBtnPress={this._handleBack.bind(this)}
-                    rightBtnText="确定"/>
+                    rightBtnText="确定"
+                    rightBtnPress={this._okBtnPressCallback.bind(this)}
+                />
                 <View style={styles.colorPickerView}>
                     <ScrollView
                         style={{height: px2dp(80)}}
@@ -38,7 +46,7 @@ class ThemeColorPage extends BackPageComponent{
                         {this._renderColorItem(colors.black)}
                     </ScrollView>
                 </View>
-                <View style={[styles.colorPanel, {backgroundColor: this.props.mainThemeColor}]}/>
+                <View style={[styles.colorPanel, {backgroundColor: this.state.testColor}]}/>
                 <Image
                     style={styles.img}
                     source={require('../../assets/model.png')}
@@ -50,15 +58,22 @@ class ThemeColorPage extends BackPageComponent{
     _renderColorItem(color){
         return(
             <TouchableOpacity
-                onPress={this._onPress.bind(this, color)}
+                onPress={this._colorBtnOnPressCallback.bind(this, color)}
                 activeOpacity={theme.touchableOpacityActiveOpacity}>
                 <View style={[styles.colorBlock, {backgroundColor: color}]} />
             </TouchableOpacity>
         );
     }
 
-    _onPress(color){
-        store.dispatch(Actions.changeColor(color));
+    _colorBtnOnPressCallback(color){
+        this.setState({
+            testColor: color
+        });
+    }
+
+    _okBtnPressCallback(){
+        store.dispatch(Actions.changeColor(this.state.testColor));
+        this._handleBack();
     }
 }
 
