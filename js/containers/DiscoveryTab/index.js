@@ -16,8 +16,8 @@ import Avatar from '../../components/Avatar';
 export default class DiscoveryFragment extends Component{
     constructor(props){
         super(props);
-        this.tabNames = [['Android','iOS','前端'],['妹子','休息视频','拓展资源']];
-        this.tabIcon = [['logo-android','logo-apple','logo-chrome'],['ios-images','ios-film','ios-book']];
+        this.tabNames = [['Android','iOS','前端'],['App','休息视频','拓展资源']];
+        this.tabIcon = [['logo-android','logo-apple','logo-chrome'],['ios-apps','ios-film','ios-book']];
         this.tabColor = [['rgb(141,192,89)','#000','rgb(51,154,237)'],['rgb(249,89,58)','rgb(154,53,172)','rgb(65,87,175)']];
     }
 
@@ -35,13 +35,13 @@ export default class DiscoveryFragment extends Component{
                                             <View style={styles.btnCell} key={subItem}>
                                                 {Platform.OS === 'android' ?
                                                     <TouchableNativeFeedback
-                                                        onPress={this._itemPressCallback.bind(this, i+index, subItem)}
+                                                        onPress={this._itemPressCallback.bind(this, subItem)}
                                                         background={TouchableNativeFeedback.Ripple('rgba(0,0,0,.2)', true)}>
                                                         {this._renderBtnContent(i,index)}
                                                     </TouchableNativeFeedback>
                                                     :
                                                     <TouchableOpacity
-                                                        onPress={this._itemPressCallback.bind(this, i+index, subItem)}
+                                                        onPress={this._itemPressCallback.bind(this, subItem)}
                                                         activeOpacity={theme.touchableOpacityActiveOpacity}>
                                                         {this._renderBtnContent(i,index)}
                                                     </TouchableOpacity>
@@ -70,18 +70,8 @@ export default class DiscoveryFragment extends Component{
         );
     }
 
-    _itemPressCallback(id, title){
-        switch(title){
-            case '妹子':  //福利Page
-                this._pushScene(ImageTabPage, title);
-                break;
-            // case 4: //视频Page
-            //     this._pushScene(VideoTabPage, title);
-            //     break;
-            default:
-                this._pushScene(TextTabPage, title);
-                break;
-        }
+    _itemPressCallback(title){
+       this._pushScene(TextTabPage, title);
     }
 
     _pushScene(component, title){

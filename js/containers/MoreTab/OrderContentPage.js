@@ -14,7 +14,7 @@ import theme from '../../constants/theme';
 export default class OrderContentPage extends BackPageComponent{
     constructor(props){
         super(props);
-        this.names = ['Android','iOS','前端','拓展资源','休息视频'];
+        this.names = ['Android','iOS','前端','拓展资源','休息视频','App'];
         this.items = [];
         this.order = [];
     }
@@ -121,6 +121,8 @@ export default class OrderContentPage extends BackPageComponent{
             id = 3;
         else if(pageY >= height*5 + offset && pageY < height*6 + offset)
             id = 4;
+        else if(pageY >= height*6 + offset && pageY < height*7 + offset)
+            id = 5;
 
         return id;
     }

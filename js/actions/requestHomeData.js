@@ -6,6 +6,7 @@
 import * as types from './actionTypes';
 import fetchUrl from '../constants/fetchUrl';
 import {getYesterdayFromDate} from '../utils/getDate';
+import HomeDataDAO from '../dao/HomeDataDAO';
 
 function requestData() {
     return {
@@ -14,6 +15,8 @@ function requestData() {
 }
 
 function receiveData(json, date){
+    // var homeDataDao = new HomeDataDAO();
+    // homeDataDao.save('dddddd');
     return {
         type: types.FETCH_HOME_DATA_SUCCESS,
         dataSource: json,
@@ -29,6 +32,7 @@ function isValidData(responseData) {
 
 export function fetchData(date) {
     const url = fetchUrl.daily + date;
+    console.log(url);
     return function (dispatch) {
         //dispatch(requestData());
         return fetch(url)

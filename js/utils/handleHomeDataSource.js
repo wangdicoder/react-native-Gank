@@ -19,6 +19,10 @@ export function getTargetList(dataSource, target) {
             return dataSource.results.休息视频;
         case '拓展资源':
             return dataSource.results.拓展资源;
+        case 'App':
+            return dataSource.results.App;
+        default:
+            return null;
     }
 }
 

@@ -54,7 +54,7 @@ class HomeFragment extends Component{
                             </View>
                             <View style={styles.scrollContents}>
                                 {Info.getCategoryList(dataSource).map((item, i) => {
-                                    if(item !== '福利')
+                                    if(item !== '福利' && Info.getTargetList(dataSource, item) != null)
                                     return(
                                         <ListViewForHome
                                             key={i}

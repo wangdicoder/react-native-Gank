@@ -20,8 +20,8 @@ export default class ListViewForHome extends Component{
     constructor(props){
         super(props);
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.tabIcon = ['logo-android','logo-apple','logo-chrome', 'ios-film','ios-book'];
-        this.tabColor = ['rgb(141,192,89)','#000','rgb(51,154,237)', 'rgb(154,53,172)','rgb(65,87,175)'];
+        this.tabIcon = ['logo-android','logo-apple','logo-chrome','ios-film','ios-book','ios-apps'];
+        this.tabColor = ['rgb(141,192,89)','#000','rgb(51,154,237)', 'rgb(154,53,172)','rgb(65,87,175)','rgb(249,89,58)'];
     }
 
     render(){
@@ -107,6 +107,8 @@ export default class ListViewForHome extends Component{
                 return 3;
             case '拓展资源':
                 return 4;
+            case 'App':
+                return 5;
         }
     }
 }

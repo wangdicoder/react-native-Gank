@@ -43,7 +43,10 @@ class MoreFragment extends Component{
                         </TouchableHighlight>
                     }
                     <View style={styles.block}>
-                        <RowItem title="首页内容展示顺序" icon="md-reorder" iconColor={colors.dodgerBlue} onPress={this._itemClickCallback.bind(this, 1)}/>
+                        <RowItem title="福利" icon="md-images" iconColor='lightpink' renderSegment={false} onPress={this._itemClickCallback.bind(this, 8)}/>
+                    </View>
+                    <View style={styles.block}>
+                        <RowItem title="首页内容展示顺序" icon="md-reorder" iconColor='lightskyblue' onPress={this._itemClickCallback.bind(this, 1)}/>
                         <RowItem title="自定义主题" icon="md-brush" iconColor={colors.orange} onPress={this._itemClickCallback.bind(this, 2)}/>
                         <RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple}  onPress={this._itemClickCallback.bind(this, 3)}/>
                         <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor={colors.seaGreen} renderSegment={false} onTintColor={this.props.mainThemeColor} />
