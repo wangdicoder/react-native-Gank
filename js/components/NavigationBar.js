@@ -2,7 +2,7 @@
  * Created by wangdi on 23/11/16.
  */
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, Platform, View, Text, StatusBar, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
+import {StyleSheet, Platform, View, Text, StatusBar, TouchableOpacity} from 'react-native';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -61,38 +61,26 @@ class Button extends Component{
 
     render(){
         var icon = null;
-        if(Platform.OS === 'android'){
-            if(this.props.icon)
-                icon = 'md-'+this.props.icon;
-            return(
-                <TouchableNativeFeedback
-                    onPress={this.props.onPress}>
-                    <View style={styles.btn}>
-                        {icon ?
-                            <Icon name={icon} color="#fff" size={px2dp(23)}/>
-                            :
-                            <Text style={styles.btnText}>{this.props.text}</Text>
-                        }
-                    </View>
-                </TouchableNativeFeedback>
-            );
-        }else if(Platform.OS === 'ios'){
-            if(this.props.icon)
-                icon = 'ios-'+this.props.icon;
-            return(
-                <TouchableOpacity
-                    onPress={this.props.onPress}
-                    activeOpacity={theme.touchableOpacityActiveOpacity}>
-                    <View style={styles.btn}>
-                        {icon ?
-                            <Icon name={icon} color="#fff" size={px2dp(23)}/>
-                            :
-                            <Text style={styles.btnText}>{this.props.text}</Text>
-                        }
-                    </View>
-                </TouchableOpacity>
-            );
+        if(this.props.icon) {
+            if (Platform.OS === 'android') {
+                icon = 'md-' + this.props.icon;
+            } else if (Platform.OS === 'ios') {
+                icon = 'ios-' + this.props.icon;
+            }
         }
+        return(
+            <TouchableOpacity
+                onPress={this.props.onPress}
+                activeOpacity={theme.touchableOpacityActiveOpacity}>
+                <View style={styles.btn}>
+                    {icon ?
+                        <Icon name={icon} color="#fff" size={px2dp(23)}/>
+                        :
+                        <Text style={styles.btnText}>{this.props.text}</Text>
+                    }
+                </View>
+            </TouchableOpacity>
+        );
     }
 }
 
@@ -106,7 +94,7 @@ const styles = StyleSheet.create({
         height: theme.toolbar.height,
         //backgroundColor: theme.toolbar.barColor,
         flexDirection: 'row',
-        paddingTop: Platform.OS === 'android' ? px2dp(-3) : px2dp(6),
+        paddingTop: Platform.OS === 'android' ? 0 : px2dp(6),
         elevation: 3,
         shadowColor: 'rgb(0,0,0)',
         shadowOffset: {height: 2, width: 1},

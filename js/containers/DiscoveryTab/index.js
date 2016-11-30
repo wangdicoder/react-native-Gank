@@ -33,19 +33,11 @@ export default class DiscoveryFragment extends Component{
                                     {this.tabNames[i].map((subItem, index) => {
                                         return(
                                             <View style={styles.btnCell} key={subItem}>
-                                                {Platform.OS === 'android' ?
-                                                    <TouchableNativeFeedback
-                                                        onPress={this._itemPressCallback.bind(this, subItem)}
-                                                        background={TouchableNativeFeedback.Ripple('rgba(0,0,0,.2)', true)}>
-                                                        {this._renderBtnContent(i,index)}
-                                                    </TouchableNativeFeedback>
-                                                    :
-                                                    <TouchableOpacity
-                                                        onPress={this._itemPressCallback.bind(this, subItem)}
-                                                        activeOpacity={theme.touchableOpacityActiveOpacity}>
-                                                        {this._renderBtnContent(i,index)}
-                                                    </TouchableOpacity>
-                                                }
+                                                <TouchableOpacity
+                                                    onPress={this._itemPressCallback.bind(this, subItem)}
+                                                    activeOpacity={theme.touchableOpacityActiveOpacity}>
+                                                    {this._renderBtnContent(i,index)}
+                                                </TouchableOpacity>
                                                 <Text style={styles.label}>{subItem}</Text>
                                             </View>
                                         );

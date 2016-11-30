@@ -43,7 +43,7 @@ class MoreFragment extends Component{
                         </TouchableHighlight>
                     }
                     <View style={styles.block}>
-                        <RowItem title="福利" icon="md-images" iconColor='lightpink' renderSegment={false} onPress={this._itemClickCallback.bind(this, 8)}/>
+                        <RowItem title="福利" icon="md-images" iconColor='lightpink' renderSegment={false} onPress={this._itemClickCallback.bind(this, 5)}/>
                     </View>
                     <View style={styles.block}>
                         <RowItem title="首页内容展示顺序" icon="md-reorder" iconColor='lightskyblue' onPress={this._itemClickCallback.bind(this, 1)}/>
@@ -55,10 +55,11 @@ class MoreFragment extends Component{
                         <RowItem title="关于作者" icon="md-happy" iconColor={this.props.mainThemeColor} renderSegment={false} onPress={this._itemClickCallback.bind(this, 4)}/>
                     </View>
                     <View style={styles.block}>
-                        <RowItem title="Gank主页" icon="md-browsers"  iconColor={colors.lightBlue} onPress={this._itemClickCallback.bind(this, 5)}/>
+                        <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' onTintColor={this.props.mainThemeColor} switcherValue={false} />
                         <RowItem title="反馈" icon="md-text" iconColor={colors.lightGreen} onPress={this._itemClickCallback.bind(this, 6)}/>
                         <RowItem title="分享" icon="md-share" iconColor={colors.orangeRed} renderSegment={false} onPress={this._itemClickCallback.bind(this, 7)}/>
                     </View>
+                    <View style={{height: px2dp(15)}}/>
                 </ScrollView>
             </View>
         );

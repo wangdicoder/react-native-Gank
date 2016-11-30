@@ -53,7 +53,7 @@ class BottomTabBar extends Component{
                 hidesTabTouch={true}
                 tabBarStyle={styles.tabBarStyle}
                 sceneStyle={{
-                    paddingTop: Platform.OS === 'android' ? px2dp(25) : 0, //immersive experience
+                    paddingTop: theme.toolbar.paddingTop, //immersive experience
                     paddingBottom: styles.tabBarStyle.height}}>
                 {this._renderItem(HomeFragment, 'home', '首页', this.state.homeNormal, this.state.homeSelected)}
                 {this._renderItem(DiscoveryFragment, 'discovery', '发现', this.state.compassNormal, this.state.compassSelected)}

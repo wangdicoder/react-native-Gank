@@ -32,7 +32,6 @@ function isValidData(responseData) {
 
 export function fetchData(date) {
     const url = fetchUrl.daily + date;
-    console.log(url);
     return function (dispatch) {
         //dispatch(requestData());
         return fetch(url)

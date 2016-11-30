@@ -25,10 +25,10 @@ export default {
     },
     toolbar: {
         height: Platform.OS === 'android' ? px2dp(40) : px2dp(49),
-        paddingTop: Platform.OS === 'android' ? px2dp(25) : 0,
+        paddingTop: Platform.Version >= 21 ? px2dp(20) : 0,
         //barColor: favoriteColor,
         titleColor: '#fff',
-        titleSize: Platform.OS === 'android' ? px2dp(17) : px2dp(14),
-        textBtnSize: Platform.OS === 'android' ? px2dp(14) : px2dp(11)
+        titleSize: Platform.OS === 'android' ? px2dp(16) : px2dp(14),
+        textBtnSize: Platform.OS === 'android' ? px2dp(12) : px2dp(11)
     }
 }
