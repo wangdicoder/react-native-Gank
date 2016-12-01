@@ -4,20 +4,30 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, WebView, InteractionManager, Text, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, WebView, InteractionManager, Text, TouchableOpacity, ActivityIndicator, Alert, Linking, Clipboard} from 'react-native';
 import theme from '../constants/theme';
 import NavigationBar from '../components/NavigationBar';
 import BackPageComponent from './BackPageComponent';
 import Icon from 'react-native-vector-icons/Ionicons';
 import px2dp from '../utils/px2dp';
 import {connect} from 'react-redux';
+import Toast from 'react-native-root-toast';
+import ShareUtil from '../utils/ShareUtil';
 
 class WebViewPage extends BackPageComponent{
     constructor(props){
         super(props);
         this.state = {
             didMount: false
-        }
+        };
+        this.bottomIconNames = ['ios-arrow-back-outline',
+                                'ios-arrow-forward-outline',
+                                'ios-refresh-outline',
+                                'ios-copy-outline',
+                                'ios-browsers-outline',
+                                'ios-share-outline'
+                                ];
+        this.bottomIconSize = [px2dp(25),px2dp(25),px2dp(32),px2dp(25), px2dp(25),px2dp(25)];
     }
 
     render(){
@@ -43,24 +53,27 @@ class WebViewPage extends BackPageComponent{
                         title="详细内容"
                         leftBtnIcon="arrow-back"
                         leftBtnPress={this._handleBack.bind(this)}
-                        rightBtnIcon={"refresh"}
+                        rightBtnText="标题"
                         rightBtnPress={this._btnOnPressCallback.bind(this, 0)}
                     />
                 </View>
                 <View style={styles.bottomInfoBar}>
-                    <View style={{flex: 85, marginRight: px2dp(10)}}>
-                        <Text style={styles.contentTitle} numberOfLines={2}>{rowData.desc}</Text>
-                    </View>
-                    <View style={{flex: 15, flexDirection: 'row', justifyContent: 'space-between'}}>
+                    {this.bottomIconNames.map((item, i)=>{
+                        return(
+                            <View key={i} style={{flex: 1, alignItems: 'center'}}>
+                                <TouchableOpacity
+                                    onPress={this._btnOnPressCallback.bind(this, i+1)}
+                                    activeOpacity={theme.touchableOpacityActiveOpacity}>
+                                    <Icon name={item} color="#1e90ff" size={this.bottomIconSize[i]} />
+                                </TouchableOpacity>
+                            </View>
+                        );
+                    })}
+                    <View style={{flex: 1, alignItems: 'center'}}>
                         <TouchableOpacity
-                            onPress={this._btnOnPressCallback.bind(this, 1)}
+                            onPress={this._btnOnPressCallback.bind(this, 6)}
                             activeOpacity={theme.touchableOpacityActiveOpacity}>
-                            <Icon name="md-share" color="#ccc" size={px2dp(20)} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={this._btnOnPressCallback.bind(this, 2)}
-                            activeOpacity={theme.touchableOpacityActiveOpacity}>
-                            <Icon name="md-heart" color="#32cd32" size={px2dp(20)} />
+                            <Icon name='ios-heart-outline' color="#32cd32" size={px2dp(25)} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -95,12 +108,31 @@ class WebViewPage extends BackPageComponent{
 
     _btnOnPressCallback(id){
         if(id === 0){
-            this.webView.reload();
+            Alert.alert('', this.props.rowData.desc, [{text: '好的', onPress: ()=>{}}]);
         }else if(id === 1){
             this.webView.goBack();
         }else if(id === 2){
             this.webView.goForward();
+        }else if(id === 3){
+            this.webView.reload();
+        }else if(id === 4){
+            Clipboard.setString(this.props.rowData.url);
+            Toast.show('已复制到剪贴板!', {position: px2dp(-80)});
+        }else if(id === 5){
+            Linking.canOpenURL(this.props.rowData.url).then(supported => {
+                if (supported) {
+                    Linking.openURL(this.props.rowData.url);
+                } else {
+                    Toast.show('Cannot open it', {position: px2dp(-80)});
+                }
+            });
+        }else if(id === 6){
+            var share = new ShareUtil();
+            share.share(this.props.rowData.desc, this.props.rowData.url);
+        }else if(id === 7){
+            Toast.show('收藏成功!', {position: px2dp(-80)});
         }
+
     }
 
 }
@@ -136,8 +168,6 @@ const styles = StyleSheet.create({
         borderTopColor: theme.segment.color,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: px2dp(10),
-        paddingRight: px2dp(10),
         zIndex: 1
     },
     contentTitle: {
