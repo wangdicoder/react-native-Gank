@@ -7,6 +7,7 @@ import * as types from './actionTypes';
 import fetchUrl from '../constants/fetchUrl';
 import {getYesterdayFromDate} from '../utils/getDate';
 import HomeDataDAO from '../dao/HomeDataDAO';
+import {ToastAndroid} from 'react-native';
 
 function requestData() {
     return {
@@ -15,8 +16,6 @@ function requestData() {
 }
 
 function receiveData(json, date){
-    // var homeDataDao = new HomeDataDAO();
-    // homeDataDao.save('dddddd');
     return {
         type: types.FETCH_HOME_DATA_SUCCESS,
         dataSource: json,
@@ -32,17 +31,29 @@ function isValidData(responseData) {
 
 export function fetchData(date) {
     const url = fetchUrl.daily + date;
-    return function (dispatch) {
+    return (dispatch) => {
         //dispatch(requestData());
-        return fetch(url)
-            .then(response => response.json())
-            .then(json => {
-                //if today's data hasn't updated yet, it will fetch yesterday's data
-                if(isValidData(json)){
-                    dispatch(receiveData(json, date));
-                }else{
-                    dispatch(fetchData(getYesterdayFromDate(date)));
-                }
-            });
+        var dao = new HomeDataDAO();
+        dao.fetchLocalData().then((localData) => {
+            ToastAndroid.show('localData', ToastAndroid.SHORT);
+            dispatch(receiveData(localData, date));
+        }, (localData)=>{
+            ToastAndroid.show('netData', ToastAndroid.SHORT);
+            fetch(url)
+                .then(response => response.json())
+                .then(json => {
+                    //if today's data hasn't updated yet, it will fetch yesterday's data
+                    if(isValidData(json)){
+                        //if localData is same as serverData, serverData will not be saved
+                        if(JSON.stringify(json) !== JSON.stringify(localData)) {
+                            dao.save(json);
+                        }
+                        dispatch(receiveData(json, date));
+                    }else{
+                        dispatch(fetchData(getYesterdayFromDate(date)));
+                    }
+                });
+        });
+
     }
 }
