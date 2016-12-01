@@ -27,6 +27,7 @@ class WebViewPage extends BackPageComponent{
                 <View style={styles.contentContainer}>
                     {this.state.didMount ?
                         <WebView
+                            ref={(ref)=>{this.webView = ref}}
                             style={styles.webView}
                             source={{uri: rowData.url}}
                             renderLoading={this._renderLoading.bind(this)}
@@ -57,7 +58,7 @@ class WebViewPage extends BackPageComponent{
                             <Icon name="md-share" color="#ccc" size={px2dp(20)} />
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={this._btnOnPressCallback.bind(this, 1)}
+                            onPress={this._btnOnPressCallback.bind(this, 2)}
                             activeOpacity={theme.touchableOpacityActiveOpacity}>
                             <Icon name="md-heart" color="#32cd32" size={px2dp(20)} />
                         </TouchableOpacity>
@@ -93,7 +94,13 @@ class WebViewPage extends BackPageComponent{
     }
 
     _btnOnPressCallback(id){
-
+        if(id === 0){
+            this.webView.reload();
+        }else if(id === 1){
+            this.webView.goBack();
+        }else if(id === 2){
+            this.webView.goForward();
+        }
     }
 
 }

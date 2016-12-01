@@ -34,23 +34,27 @@ export function fetchData(date) {
     return (dispatch) => {
         //dispatch(requestData());
         var dao = new HomeDataDAO();
-        dao.fetchLocalData().then((localData) => {
-            ToastAndroid.show('localData', ToastAndroid.SHORT);
+        dao.fetchLocalData(date).then((localData) => {
+            ToastAndroid.show('local Data', ToastAndroid.SHORT);
             dispatch(receiveData(localData, date));
         }, (localData)=>{
-            ToastAndroid.show('netData', ToastAndroid.SHORT);
             fetch(url)
                 .then(response => response.json())
                 .then(json => {
-                    //if today's data hasn't updated yet, it will fetch yesterday's data
                     if(isValidData(json)){
-                        //if localData is same as serverData, serverData will not be saved
-                        if(JSON.stringify(json) !== JSON.stringify(localData)) {
-                            dao.save(json);
-                        }
+                        //save data action is only triggered once for one day
+                        ToastAndroid.show('server Data', ToastAndroid.SHORT);
+                        dao.save(json, date);
                         dispatch(receiveData(json, date));
                     }else{
-                        dispatch(fetchData(getYesterdayFromDate(date)));
+                        if(localData === null) {
+                            //if today's data is also null, it will fetch yesterday's data
+                            ToastAndroid.show('yesterday data', ToastAndroid.SHORT);
+                            dispatch(fetchData(getYesterdayFromDate(date)));
+                        }else {
+                            ToastAndroid.show('server Data has not updated yet', ToastAndroid.SHORT);
+                            dispatch(receiveData(localData, date));
+                        }
                     }
                 });
         });

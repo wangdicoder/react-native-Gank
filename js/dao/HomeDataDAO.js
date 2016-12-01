@@ -6,7 +6,6 @@
 const HOME_DATA = 'homeData';
 
 import {AsyncStorage, ToastAndroid} from 'react-native';
-import {getCurrentDate} from '../utils/getDate';
 
 export default class HomeDataDAO{
 
@@ -30,22 +29,25 @@ export default class HomeDataDAO{
      * if false, it also returns the local data, 'requestHomeData.js' will fetch server data, but it will judge
      * whether the server data is same as local data, which determines whether to save server data.
      */
-    fetchLocalData(){
-        const time = getCurrentDate();
+    fetchLocalData(time){
         return new Promise((resolve, reject) => {
             AsyncStorage.getItem(HOME_DATA, (error, result)=>{
                 if(!error){
                     const data = JSON.parse(result);
                     //judge whether the data is updated
-                    if(data.time == time) {
-                        ToastAndroid.show('fetchLocalSuccess', ToastAndroid.SHORT);
-                        resolve(data.content);
-                    }else{
-                        reject(data.content);
+                    if(data) {
+                        if (data.time.toString() === time) {
+                            //ToastAndroid.show('fetchLocalSuccess', ToastAndroid.SHORT);
+                            resolve(data.content);
+                        } else {
+                            reject(data.content);
+                        }
+                    }else{ //no any data records
+                        reject(null);
                     }
-                }else{
-                    ToastAndroid.show('fetchLocalFailed', ToastAndroid.SHORT);
-                    reject(error);
+                }else{ // must fetch server data
+                    //ToastAndroid.show('fetchLocalFailed', ToastAndroid.SHORT);
+                    reject(null);
                 }
             });
         });

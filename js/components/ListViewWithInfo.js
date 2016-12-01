@@ -55,7 +55,7 @@ export default class ListViewWithInfo extends Component{
                         <ActivityIndicator
                             color={this.props.mainThemeColor}
                         />
-                        <Text style={{marginLeft: 10, color: this.props.mainThemeColor}}>玩命获取中...</Text>
+                        <Text style={{marginLeft: 10, color: this.props.mainThemeColor}}>拼命获取中...</Text>
                     </View>
                 );
         }
