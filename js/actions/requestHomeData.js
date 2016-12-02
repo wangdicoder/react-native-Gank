@@ -7,7 +7,7 @@ import * as types from './actionTypes';
 import fetchUrl from '../constants/fetchUrl';
 import {getYesterdayFromDate} from '../utils/getDate';
 import HomeDataDAO from '../dao/HomeDataDAO';
-import {ToastAndroid} from 'react-native';
+import Toast from 'react-native-root-toast';
 
 function requestData() {
     return {
@@ -35,7 +35,7 @@ export function fetchData(date) {
         //dispatch(requestData());
         var dao = new HomeDataDAO();
         dao.fetchLocalData(date).then((localData) => {
-            ToastAndroid.show('local Data', ToastAndroid.SHORT);
+            Toast.show('local Data', {position: -80});
             dispatch(receiveData(localData, date));
         }, (localData)=>{
             fetch(url)
@@ -43,16 +43,16 @@ export function fetchData(date) {
                 .then(json => {
                     if(isValidData(json)){
                         //save data action is only triggered once for one day
-                        ToastAndroid.show('server Data', ToastAndroid.SHORT);
+                        Toast.show('server Data', {position: -80});
                         dao.save(json, date);
                         dispatch(receiveData(json, date));
                     }else{
                         if(localData === null) {
                             //if today's data is also null, it will fetch yesterday's data
-                            ToastAndroid.show('yesterday data', ToastAndroid.SHORT);
+                            Toast.show('yesterday data', {position: -80});
                             dispatch(fetchData(getYesterdayFromDate(date)));
                         }else {
-                            ToastAndroid.show('server Data has not updated yet', ToastAndroid.SHORT);
+                            Toast.show('server Data has not updated yet', {position: -80});
                             dispatch(receiveData(localData, date));
                         }
                     }

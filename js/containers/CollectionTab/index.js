@@ -4,11 +4,14 @@
 'use strict';
 
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {View, Text, Button} from 'react-native';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
+import ListViewForHome from '../../components/ListViewForHome';
+import FavouriteDataDAO from '../../dao/FavouriteDataDAO';
 
-export default class CollectionFragment extends Component{
+class CollectionFragment extends Component{
     constructor(props){
         super(props);
 
@@ -18,7 +21,10 @@ export default class CollectionFragment extends Component{
         return(
             <View style={{flex: 1, backgroundColor: theme.pageBackgroundColor}}>
                 <NavigationBar title="收藏"/>
-                <Button onPress={this._onPress.bind(this)} title="fetch"/>
+                <ListViewForHome
+                    dataSource={this.props.dataSource}
+                    navigator={this.props.navigator}
+                />
             </View>
         );
     }
@@ -29,3 +35,11 @@ export default class CollectionFragment extends Component{
 
 
 }
+
+const mapStateToProps = (state) => {
+    return {
+        dataSource: state.favorData.dataSource
+    };
+};
+
+export default connect(mapStateToProps)(CollectionFragment);

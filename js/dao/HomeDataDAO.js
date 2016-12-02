@@ -5,7 +5,7 @@
 
 const HOME_DATA = 'homeData';
 
-import {AsyncStorage, ToastAndroid} from 'react-native';
+import {AsyncStorage} from 'react-native';
 
 export default class HomeDataDAO{
 
@@ -17,9 +17,8 @@ export default class HomeDataDAO{
 
         try {
             AsyncStorage.setItem(HOME_DATA, JSON.stringify(data));
-            ToastAndroid.show('save success', ToastAndroid.SHORT);
         } catch (error) {
-            ToastAndroid.show('save error', ToastAndroid.SHORT);
+            //
         }
     }
 

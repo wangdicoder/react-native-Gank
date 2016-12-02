@@ -5,22 +5,22 @@
 
 import {PixelRatio} from 'react-native';
 
-export default function getCorrectImageUrl(url){
-    return url + '?imageView2/0/w/' + judgeSuitableSize();
+export default function getCorrectImageSizeUrl(url){
+    return url + '?imageMogr2/format/png/thumbnail/x'+judgeSuitableSize();
 }
 
 function judgeSuitableSize() {
     switch(PixelRatio.get()){
         case 1:
-            return 100;
+            return 50;
         case 1.5:
-            return 200;
+            return 100;
         case 2:
-            return 300;
+            return 200;
         case 3:
-            return 500;
+            return 250;
         case 4:
-            return 600;
+            return 300;
         default:
             return 300;
     }

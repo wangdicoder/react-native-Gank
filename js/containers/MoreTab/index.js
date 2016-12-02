@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, ScrollView, Platform, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
+import {StyleSheet, Text, View, ScrollView, Platform, TouchableNativeFeedback, TouchableHighlight, Linking} from 'react-native';
 import theme from '../../constants/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import NavigationBar from '../../components/NavigationBar';
@@ -14,6 +14,7 @@ import px2dp from '../../utils/px2dp';
 import Avatar from '../../components/Avatar';
 import colors from '../../constants/colors';
 import {connect} from 'react-redux'
+import ShareUtil from '../../utils/ShareUtil';
 
 import ThemeColorPage from './ThemeColorPage';
 import OrderContentPage from './OrderContentPage';
@@ -48,7 +49,7 @@ class MoreFragment extends Component{
                     <View style={styles.block}>
                         <RowItem title="首页内容展示顺序" icon="md-reorder" iconColor='lightskyblue' onPress={this._itemClickCallback.bind(this, 1)}/>
                         <RowItem title="自定义主题" icon="md-brush" iconColor={colors.orange} onPress={this._itemClickCallback.bind(this, 2)}/>
-                        <RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple}  onPress={this._itemClickCallback.bind(this, 3)}/>
+                        {/*<RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple}  onPress={this._itemClickCallback.bind(this, 3)}/>*/}
                         <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor={colors.seaGreen} renderSegment={false} onTintColor={this.props.mainThemeColor} />
                     </View>
                     <View style={styles.block}>
@@ -56,8 +57,8 @@ class MoreFragment extends Component{
                     </View>
                     <View style={styles.block}>
                         <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' onTintColor={this.props.mainThemeColor} switcherValue={false} />
-                        <RowItem title="反馈" icon="md-text" iconColor={colors.lightGreen} onPress={this._itemClickCallback.bind(this, 6)}/>
-                        <RowItem title="分享" icon="md-share" iconColor={colors.orangeRed} renderSegment={false} onPress={this._itemClickCallback.bind(this, 7)}/>
+                        <RowItem title="反馈" icon="md-text" iconColor={colors.lightGreen} onPress={this._itemClickCallback.bind(this, 6)} isShowRightArrow={false}/>
+                        <RowItem title="分享" icon="md-share" iconColor={colors.orangeRed} renderSegment={false} onPress={this._itemClickCallback.bind(this, 7)} isShowRightArrow={false}/>
                     </View>
                     <View style={{height: px2dp(15)}}/>
                 </ScrollView>
@@ -100,10 +101,13 @@ class MoreFragment extends Component{
 
                 break;
             case 6:
-
+                Linking.canOpenURL('mailto:wangdicoder@gmail.com').then(supported => {
+                    if (supported) Linking.openURL('mailto:wangdicoder@gmail.com');
+                });
                 break;
             case 7:
-
+                let share = new ShareUtil();
+                share.share('一款码农必备开源神器，快来试试','https://github.com/wangdicoder/JueJinClient');
                 break;
         }
 

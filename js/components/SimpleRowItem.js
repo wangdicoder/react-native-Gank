@@ -15,12 +15,14 @@ export default class SimpleRowItem extends Component{
         icon: PropTypes.string,
         iconColor: PropTypes.string,
         onPress: PropTypes.func,
-        renderSegment: PropTypes.bool
+        renderSegment: PropTypes.bool,
+        isShowRightArrow: PropTypes.bool
     };
 
     static defaultProps = {
         renderSegment: true,
-        iconColor: '#000'
+        iconColor: '#000',
+        isShowRightArrow: true
     }
 
     render(){
@@ -42,7 +44,7 @@ export default class SimpleRowItem extends Component{
     }
 
     _renderContent(){
-        const {title, icon, renderSegment, iconColor} = this.props;
+        const {title, icon, renderSegment, iconColor, isShowRightArrow} = this.props;
         return(
             <View style={styles.container}>
                 <View style={styles.leftCell}>
@@ -53,7 +55,11 @@ export default class SimpleRowItem extends Component{
                 <View style={styles.rightCell}>
                     <View style={styles.cell}>
                         <Text style={styles.title}>{title}</Text>
-                        <Icon name="ios-arrow-forward" color={theme.segment.color} size={px2dp(18)}/>
+                        {isShowRightArrow ?
+                            <Icon name="ios-arrow-forward" color={theme.segment.color} size={px2dp(18)}/>
+                            :
+                            null
+                        }
                     </View>
                     { renderSegment ?
                         <View style={styles.segmentLine}/>

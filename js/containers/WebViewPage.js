@@ -11,8 +11,11 @@ import BackPageComponent from './BackPageComponent';
 import Icon from 'react-native-vector-icons/Ionicons';
 import px2dp from '../utils/px2dp';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as Actions from '../actions/starData';
 import Toast from 'react-native-root-toast';
 import ShareUtil from '../utils/ShareUtil';
+import FavouriteDataDAO from '../dao/FavouriteDataDAO';
 
 class WebViewPage extends BackPageComponent{
     constructor(props){
@@ -71,7 +74,7 @@ class WebViewPage extends BackPageComponent{
                     })}
                     <View style={{flex: 1, alignItems: 'center'}}>
                         <TouchableOpacity
-                            onPress={this._btnOnPressCallback.bind(this, 6)}
+                            onPress={this._btnOnPressCallback.bind(this, 7)}
                             activeOpacity={theme.touchableOpacityActiveOpacity}>
                             <Icon name='ios-heart-outline' color="#32cd32" size={px2dp(25)} />
                         </TouchableOpacity>
@@ -127,10 +130,17 @@ class WebViewPage extends BackPageComponent{
                 }
             });
         }else if(id === 6){
-            var share = new ShareUtil();
+            let share = new ShareUtil();
             share.share(this.props.rowData.desc, this.props.rowData.url);
         }else if(id === 7){
-            Toast.show('收藏成功!', {position: px2dp(-80)});
+            //var dao = new FavouriteDataDAO();
+            // dao.save(this.props.rowData).then((msg)=>{
+            //     Toast.show(msg, {position: px2dp(-80)});
+            // },(msg)=>{
+            //     Toast.show(msg, {position: px2dp(-80)});
+            // });
+
+            this.props.actions.star(this.props.rowData);
         }
 
     }
@@ -182,4 +192,10 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(WebViewPage);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(WebViewPage);

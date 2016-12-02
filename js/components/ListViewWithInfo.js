@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
 import WebViewPage from '../containers/WebViewPage';
+import getCorrectImageSizeUrl from '../utils/imageFactory';
 
 export default class ListViewWithInfo extends Component{
     constructor(props){
@@ -89,7 +90,11 @@ export default class ListViewWithInfo extends Component{
         return(
             <View style={styles.itemContainer}>
                 <View style={styles.imgPart}>
-                    <Image style={styles.image} source={require('../assets/user_article_no_data.png')}/>
+                    {rowData.images ?
+                        <Image style={styles.image} source={{uri: getCorrectImageSizeUrl(rowData.images[0])}} />
+                        :
+                        <Image style={styles.image} source={require('../assets/user_article_no_data.png')}/>
+                    }
                 </View>
                 <View style={styles.txtPart}>
                     <View style={styles.titlePart}>
@@ -185,7 +190,7 @@ const styles = StyleSheet.create({
     footer: {
         flexDirection: 'row',
         width: theme.screenWidth,
-        height: px2dp(70),
+        height: px2dp(60),
         alignItems: 'center',
         justifyContent: 'center',
     }

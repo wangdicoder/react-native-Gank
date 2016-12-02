@@ -11,15 +11,15 @@ export default class ShareUtil{
 
     share(content, url){
         Share.share({
-            message: content,
+            message: url,
             url: url,
-            title: '分享'
+            title: content
         }).then(this._showResult).catch((error)=>{Toast.show('分享失败', {position: px2dp(-80)})});
     }
 
     _showResult(result) {
         if (result.action === Share.sharedAction) {
-            Toast.show('分享成功',{position: px2dp(-80)});
+            //Toast.show('分享成功',{position: px2dp(-80)});
         }
     }
 }
