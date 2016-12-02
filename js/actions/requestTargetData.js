@@ -66,7 +66,7 @@ export function fetchData(category) {
 
 export function fetchMoreData(category){
     const url = fetchUrl.category + category;
-    return function (dispatch) {
+    return (dispatch) => {
         dispatch(requestMoreData());
         setTimeout(()=>{
             return fetchWithTimeout(5000, fetch(url))

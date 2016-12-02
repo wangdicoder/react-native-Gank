@@ -28,6 +28,7 @@ export default class ListViewForHome extends Component{
         return(
             <View style={styles.container}>
                 <ListView
+                    enableEmptySections={true}
                     dataSource={this.ds.cloneWithRows(this.props.dataSource)}
                     renderRow={this._renderRow.bind(this)}
                     renderHeader={this._renderHeader.bind(this)}

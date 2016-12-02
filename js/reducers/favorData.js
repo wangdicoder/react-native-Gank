@@ -6,19 +6,28 @@
 import * as TYPES from '../actions/actionTypes';
 
 const initialState = {
-    dataSource: []
+    dataSource: [],
+    isStarred: false
 };
 
 export default function favorData(state=initialState, action) {
     switch(action.type){
-        case TYPES.STAR_A_DATA:
+        case TYPES.UPDATE_STAR_LIST:
             return Object.assign({}, state, {
-                dataSource: state.dataSource.push(action.data)
+                ...state,
+                dataSource: action.list
             });
 
-        case TYPES.UNSTAR_A_DATA:
+        case TYPES.STAR_DATA_SUCCESS:
             return Object.assign({}, state, {
+                isStarred: true,
+                dataSource: action.list
+            });
 
+        case TYPES.UPDATA_STAR_STATE:
+            return Object.assign({}, state, {
+                ...state,
+                isStarred: action.isStarred
             });
 
         default:

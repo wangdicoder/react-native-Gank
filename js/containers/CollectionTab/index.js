@@ -5,10 +5,12 @@
 
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import {View, Text, Button} from 'react-native';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import ListViewForHome from '../../components/ListViewForHome';
+import * as Actions from '../../actions/requestCollectionData';
 import FavouriteDataDAO from '../../dao/FavouriteDataDAO';
 
 class CollectionFragment extends Component{
@@ -33,7 +35,9 @@ class CollectionFragment extends Component{
 
     }
 
-
+    componentDidMount(){
+        this.props.actions.fetchStarList();
+    }
 }
 
 const mapStateToProps = (state) => {
@@ -42,4 +46,10 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(CollectionFragment);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CollectionFragment);

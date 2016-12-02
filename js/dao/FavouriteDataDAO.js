@@ -9,29 +9,15 @@ import {AsyncStorage} from 'react-native';
 
 export default class FavouriteDataDAO{
 
-    save(rowData){
-        var totalList = [];
-        totalList.push(rowData);
-
-        //function setValue() {
-            return new Promise((resolve, reject) => {
-                AsyncStorage.setItem(FAVOR_DATA, JSON.stringify(totalList), (error)=>{
-                    if(!error)
-                        resolve('star success');
-                    else
-                        reject('star failed');
-                });
+    save(dataList){
+        return new Promise((resolve, reject) => {
+            AsyncStorage.setItem(FAVOR_DATA, JSON.stringify(dataList), (error)=>{
+                if(!error)
+                    resolve('收藏成功');
+                else
+                    reject('收藏失败');
             });
-        //}
-
-        // this.getFavouriteList().then((list)=>{
-        //     totalList = list;
-        //     totalList.push(rowData);
-        //     console.log(totalList);
-        // }, (error)=>{
-        //     totalList.push(rowData);
-        //     console.log(totalList);
-        // });
+        });
     }
 
     getFavouriteList(){

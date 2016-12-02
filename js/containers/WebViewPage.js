@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import px2dp from '../utils/px2dp';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/starData';
+import * as Actions from '../actions/requestCollectionData';
 import Toast from 'react-native-root-toast';
 import ShareUtil from '../utils/ShareUtil';
 import FavouriteDataDAO from '../dao/FavouriteDataDAO';
@@ -73,11 +73,19 @@ class WebViewPage extends BackPageComponent{
                         );
                     })}
                     <View style={{flex: 1, alignItems: 'center'}}>
-                        <TouchableOpacity
-                            onPress={this._btnOnPressCallback.bind(this, 7)}
-                            activeOpacity={theme.touchableOpacityActiveOpacity}>
-                            <Icon name='ios-heart-outline' color="#32cd32" size={px2dp(25)} />
-                        </TouchableOpacity>
+                        {this.props.isStarred ?
+                            <TouchableOpacity
+                                onPress={this._btnOnPressCallback.bind(this, 7)}
+                                activeOpacity={theme.touchableOpacityActiveOpacity}>
+                                <Icon name='ios-heart' color="#32cd32" size={px2dp(25)}/>
+                            </TouchableOpacity>
+                            :
+                            <TouchableOpacity
+                                onPress={this._btnOnPressCallback.bind(this, 8)}
+                                activeOpacity={theme.touchableOpacityActiveOpacity}>
+                                <Icon name='ios-heart-outline' color="#32cd32" size={px2dp(25)}/>
+                            </TouchableOpacity>
+                        }
                     </View>
                 </View>
             </View>
@@ -106,6 +114,7 @@ class WebViewPage extends BackPageComponent{
             this.setState({
                 didMount: true
             });
+            this.props.actions.getStarState(this.props.rowData);
         });
     }
 
@@ -120,7 +129,7 @@ class WebViewPage extends BackPageComponent{
             this.webView.reload();
         }else if(id === 4){
             Clipboard.setString(this.props.rowData.url);
-            Toast.show('已复制到剪贴板!', {position: px2dp(-80)});
+            Toast.show('已复制到剪贴板', {position: px2dp(-80)});
         }else if(id === 5){
             Linking.canOpenURL(this.props.rowData.url).then(supported => {
                 if (supported) {
@@ -133,14 +142,9 @@ class WebViewPage extends BackPageComponent{
             let share = new ShareUtil();
             share.share(this.props.rowData.desc, this.props.rowData.url);
         }else if(id === 7){
-            //var dao = new FavouriteDataDAO();
-            // dao.save(this.props.rowData).then((msg)=>{
-            //     Toast.show(msg, {position: px2dp(-80)});
-            // },(msg)=>{
-            //     Toast.show(msg, {position: px2dp(-80)});
-            // });
 
-            this.props.actions.star(this.props.rowData);
+        }else if(id === 8){
+            this.props.actions.starData(this.props.rowData);
         }
 
     }
@@ -188,7 +192,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        mainThemeColor: state.themeColor.mainThemeColor
+        mainThemeColor: state.themeColor.mainThemeColor,
+        isStarred: state.favorData.isStarred
     };
 };
 
