@@ -50,10 +50,10 @@ class MoreFragment extends Component{
                         <RowItem title="首页内容展示顺序" icon="md-reorder" iconColor='lightskyblue' onPress={this._itemClickCallback.bind(this, 1)}/>
                         <RowItem title="自定义主题" icon="md-brush" iconColor={colors.orange} onPress={this._itemClickCallback.bind(this, 2)}/>
                         {/*<RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple}  onPress={this._itemClickCallback.bind(this, 3)}/>*/}
-                        <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor={colors.seaGreen} renderSegment={false} onTintColor={this.props.mainThemeColor} />
+                        <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor="#7b68ee" renderSegment={false} onTintColor={this.props.mainThemeColor} />
                     </View>
                     <View style={styles.block}>
-                        <RowItem title="关于作者" icon="md-happy" iconColor={this.props.mainThemeColor} renderSegment={false} onPress={this._itemClickCallback.bind(this, 4)}/>
+                        <RowItem title="关于作者" icon="md-happy" iconColor="#9acd32" renderSegment={false} onPress={this._itemClickCallback.bind(this, 4)}/>
                     </View>
                     <View style={styles.block}>
                         <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' onTintColor={this.props.mainThemeColor} switcherValue={false} />
@@ -107,7 +107,7 @@ class MoreFragment extends Component{
                 break;
             case 7:
                 let share = new ShareUtil();
-                share.share('一款码农必备开源神器，快来试试','https://github.com/wangdicoder/GankIO');
+                share.share('一款码农必备获取开源信息的神器，快来试试','https://github.com/wangdicoder/GankIO');
                 break;
         }
 

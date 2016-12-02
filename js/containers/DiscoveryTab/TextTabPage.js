@@ -5,7 +5,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, InteractionManager, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, Text, InteractionManager, ActivityIndicator, Button} from 'react-native';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestTargetData';
@@ -30,22 +30,29 @@ class TextTabPage extends BackPageComponent{
                         leftBtnPress={this._handleBack.bind(this)}/>
                 </View>
                 <View style={styles.contentContainer}>
-                    {this.props.loading ?
+                    {this.props.error ?
                         <View style={styles.indicator}>
-                            <ActivityIndicator
-                                color={this.props.mainThemeColor}
-                            />
-                            <Text style={{marginLeft: 10, color: this.props.mainThemeColor}}>获取中...</Text>
+                            <Text style={{color: this.props.mainThemeColor}}>Ooops, 获取数据失败~ </Text>
+                            <Button onPress={this._fethchData.bind(this)} title="重新获取"/>
                         </View>
                         :
-                        <ListViewWithInfo
-                            dataSource={this.props.dataSource}
-                            navigator={this.props.navigator}
-                            isRenderFooter={this.props.isRenderFooter}
-                            onEndReached={this._listViewOnEndReached.bind(this)}
-                            isFullData={this.props.isFullData}
-                            mainThemeColor={this.props.mainThemeColor}
-                        />
+                        (this.props.loading ?
+                            <View style={styles.indicator}>
+                                <ActivityIndicator
+                                    color={this.props.mainThemeColor}
+                                />
+                                <Text style={{marginLeft: 10, color: this.props.mainThemeColor}}>获取中...</Text>
+                            </View>
+                            :
+                            <ListViewWithInfo
+                                dataSource={this.props.dataSource}
+                                navigator={this.props.navigator}
+                                isRenderFooter={this.props.isRenderFooter}
+                                onEndReached={this._listViewOnEndReached.bind(this)}
+                                isFullData={this.props.isFullData}
+                                mainThemeColor={this.props.mainThemeColor}
+                            />
+                        )
                     }
                 </View>
             </View>
@@ -54,8 +61,12 @@ class TextTabPage extends BackPageComponent{
 
     componentDidMount(){
         //InteractionManager.runAfterInteractions(()=>{
-            this.props.actions.fetchData(this.props.title +'/10/1');
+        this._fethchData();
         //});
+    }
+
+    _fethchData(){
+        this.props.actions.fetchData(this.props.title +'/10/1');
     }
 
     _listViewOnEndReached(){
@@ -97,6 +108,7 @@ const mapStateToProps = (state) => {
         isRenderFooter: state.targetData.isRenderFooter,
         pageNumber: state.targetData.pageNumber,
         isFullData: state.targetData.isFullData,
+        error: state.targetData.error,
         mainThemeColor: state.themeColor.mainThemeColor
     };
 };

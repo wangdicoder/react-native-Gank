@@ -6,6 +6,8 @@
 import * as TYPES from './actionTypes';
 import fetchUrl from '../constants/fetchUrl';
 import fetchWithTimeout from '../utils/fetchWithTimeout';
+import Toast from 'react-native-root-toast';
+import px2dp from '../utils/px2dp';
 
 function requestData() {
     return {
@@ -32,6 +34,12 @@ function fetchFailure() {
     }
 }
 
+function fetchMoreDataFailure() {
+    return {
+        type: TYPES.FETCH_TARGET_MORE_DATA_FAILURE
+    }
+}
+
 function fetchedFullData(){
     return {
         type: TYPES.FETCH_TARGET_DATA_IS_FULL
@@ -49,7 +57,7 @@ export function fetchData(category) {
     return function (dispatch) {
         dispatch(requestData());
         setTimeout(()=> {
-            return fetchWithTimeout(5000, fetch(url))
+            fetchWithTimeout(5000, fetch(url))
                 .then(response => response.json())
                 .then(json => {
                     if (isValidData(json)) {
@@ -69,7 +77,7 @@ export function fetchMoreData(category){
     return (dispatch) => {
         dispatch(requestMoreData());
         setTimeout(()=>{
-            return fetchWithTimeout(5000, fetch(url))
+            fetchWithTimeout(5000, fetch(url))
                 .then(response => response.json())
                 .then(json => {
                     if(isValidData(json)){
@@ -78,7 +86,8 @@ export function fetchMoreData(category){
                         dispatch(fetchedFullData());
                     }
                 }).catch((error) => {
-                    dispatch(fetchFailure());
+                    Toast.show('获取数据失败', {position: px2dp(-80)});
+                    dispatch(fetchMoreDataFailure());
                 });
         }, 1000);
     }

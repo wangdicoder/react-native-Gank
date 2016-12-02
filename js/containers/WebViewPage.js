@@ -103,7 +103,7 @@ class WebViewPage extends BackPageComponent{
     _renderError(){
         return(
             <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                <Text>Ooooops~, try again please</Text>
+                <Text>Oooops~, 出错了, 重新刷新下吧～</Text>
             </View>
         );
     }

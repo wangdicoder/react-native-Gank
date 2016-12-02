@@ -18,12 +18,12 @@ export default function targetData(state=initialState, action) {
     switch(action.type){
         case TYPES.FETCH_TARGET_DATA_REQUEST:
             return Object.assign({}, state, {
-                ...state,
                 loading: true,
                 isRenderFooter: false,
                 isFullData: false,
                 pageNumber: 1,
                 dataSource: [],
+                error: false
             });
 
         case TYPES.FETCH_TARGET_MORE_DATA_REQUEST:
@@ -32,6 +32,7 @@ export default function targetData(state=initialState, action) {
                 loading: false,
                 isRenderFooter: true,
                 dataSource: state.dataSource,
+                error: false
             });
 
         case TYPES.FETCH_TARGET_DATA_SUCCESS:
@@ -49,6 +50,12 @@ export default function targetData(state=initialState, action) {
                 loading: false,
                 isRenderFooter: false,
                 error: true
+            });
+
+        case TYPES.FETCH_TARGET_MORE_DATA_FAILURE:
+            return Object.assign({}, state, {
+                ...state,
+                isRenderFooter: false
             });
 
         case TYPES.FETCH_TARGET_DATA_IS_FULL:

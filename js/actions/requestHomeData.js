@@ -8,6 +8,7 @@ import fetchUrl from '../constants/fetchUrl';
 import {getYesterdayFromDate} from '../utils/getDate';
 import HomeDataDAO from '../dao/HomeDataDAO';
 import Toast from 'react-native-root-toast';
+import px2dp from '../utils/px2dp';
 
 function requestData() {
     return {
@@ -35,7 +36,7 @@ export function fetchData(date) {
         //dispatch(requestData());
         var dao = new HomeDataDAO();
         dao.fetchLocalData(date).then((localData) => {
-            Toast.show('local Data', {position: -80});
+            Toast.show('已是最新数据了', {position: px2dp(-80)});
             dispatch(receiveData(localData, date));
         }, (localData)=>{
             fetch(url)
@@ -43,16 +44,16 @@ export function fetchData(date) {
                 .then(json => {
                     if(isValidData(json)){
                         //save data action is only triggered once for one day
-                        Toast.show('server Data', {position: -80});
+                        Toast.show('欢迎阅读新干货', {position: px2dp(-80)});
                         dao.save(json, date);
                         dispatch(receiveData(json, date));
                     }else{
                         if(localData === null) {
                             //if today's data is also null, it will fetch yesterday's data
-                            Toast.show('yesterday data', {position: -80});
+                            Toast.show('今日未更新，为您获取往日干货', {position: px2dp(-80)});
                             dispatch(fetchData(getYesterdayFromDate(date)));
                         }else {
-                            Toast.show('server Data has not updated yet', {position: -80});
+                            Toast.show('今日干货还没更新哎～', {position: px2dp(-80)});
                             dispatch(receiveData(localData, date));
                         }
                     }

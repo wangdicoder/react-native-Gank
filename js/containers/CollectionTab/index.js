@@ -21,12 +21,18 @@ class CollectionFragment extends Component{
         return(
             <View style={{flex: 1, backgroundColor: theme.pageBackgroundColor}}>
                 <NavigationBar title="收藏"/>
-                <ScrollView>
-                    <ListViewForCollection
-                        dataSource={this.props.dataSource}
-                        navigator={this.props.navigator}
-                    />
-                </ScrollView>
+                {this.props.dataSource.length > 0 ?
+                    <ScrollView>
+                        <ListViewForCollection
+                            dataSource={this.props.dataSource}
+                            navigator={this.props.navigator}
+                        />
+                    </ScrollView>
+                    :
+                    <View style={{flex: 1, justifyContent:'center', alignItems: 'center'}}>
+                        <Text>还没有任何收藏数据，找篇文章收藏吧～</Text>
+                    </View>
+                }
             </View>
         );
     }

@@ -110,6 +110,7 @@ export default class ListViewForCollection extends Component{
 
     _itemRemoveOnPress(rowData){
         store.dispatch(unStarData(rowData));
+        this.forceUpdate(); //must refresh dom
     }
 
     _handleCreateTime(time){
@@ -147,7 +148,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row-reverse',
         alignItems: 'center',
-        backgroundColor: theme.pageBackgroundColor,
+        backgroundColor: '#fff',
     },
     removeBtn: {
         height: px2dp(75),
@@ -157,6 +158,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     removeBtnLabel:{
-        color: '#fff'
+        color: '#fff',
+        fontSize: px2dp(16)
     }
 });
