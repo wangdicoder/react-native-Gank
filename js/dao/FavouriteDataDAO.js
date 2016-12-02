@@ -13,9 +13,9 @@ export default class FavouriteDataDAO{
         return new Promise((resolve, reject) => {
             AsyncStorage.setItem(FAVOR_DATA, JSON.stringify(dataList), (error)=>{
                 if(!error)
-                    resolve('收藏成功');
+                    resolve('操作成功');
                 else
-                    reject('收藏失败');
+                    reject('操作失败');
             });
         });
     }

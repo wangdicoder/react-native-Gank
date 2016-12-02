@@ -15,7 +15,6 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/requestCollectionData';
 import Toast from 'react-native-root-toast';
 import ShareUtil from '../utils/ShareUtil';
-import FavouriteDataDAO from '../dao/FavouriteDataDAO';
 
 class WebViewPage extends BackPageComponent{
     constructor(props){
@@ -142,7 +141,7 @@ class WebViewPage extends BackPageComponent{
             let share = new ShareUtil();
             share.share(this.props.rowData.desc, this.props.rowData.url);
         }else if(id === 7){
-
+            this.props.actions.unStarData(this.props.rowData);
         }else if(id === 8){
             this.props.actions.starData(this.props.rowData);
         }

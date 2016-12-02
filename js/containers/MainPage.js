@@ -13,7 +13,9 @@ import CollectionFragment from './CollectionTab/index';
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import {store} from '../store/index';
+import {fetchStarList} from '../actions/requestCollectionData'
 
 class MainPage extends Component{
 
@@ -84,6 +86,10 @@ class BottomTabBar extends Component{
             Icon.getImageSource('md-cube', 100, theme.tabButton.normalColor).then((source) => this.setState({collectionNormal: source}));
             Icon.getImageSource('md-cube', 100, mainThemeColor).then((source) => this.setState({collectionSelected: source}));
         }
+    }
+
+    componentDidMount(){
+        store.dispatch(fetchStarList());
     }
 }
 

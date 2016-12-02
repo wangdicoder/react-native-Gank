@@ -6,38 +6,34 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {View, Text, Button} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import ListViewForHome from '../../components/ListViewForHome';
 import * as Actions from '../../actions/requestCollectionData';
-import FavouriteDataDAO from '../../dao/FavouriteDataDAO';
 
 class CollectionFragment extends Component{
     constructor(props){
         super(props);
-
     }
 
     render(){
         return(
             <View style={{flex: 1, backgroundColor: theme.pageBackgroundColor}}>
                 <NavigationBar title="收藏"/>
-                <ListViewForHome
-                    dataSource={this.props.dataSource}
-                    navigator={this.props.navigator}
-                />
+                <ScrollView>
+                    <ListViewForHome
+                        dataSource={this.props.dataSource}
+                        navigator={this.props.navigator}
+                    />
+                </ScrollView>
             </View>
         );
     }
 
-    _onPress(){
-
-    }
-
-    componentDidMount(){
-        this.props.actions.fetchStarList();
-    }
+    // componentDidMount(){
+    //     this.props.actions.fetchStarList();
+    // }
 }
 
 const mapStateToProps = (state) => {

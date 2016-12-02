@@ -20,12 +20,19 @@ function starDataSuccess(list) {
     return {
         type: TYPES.STAR_DATA_SUCCESS,
         list: list
-    }
+    };
+}
+
+function unStarDataSuccess(list) {
+    return {
+        type: TYPES.UNSTAR_DATA_SUCCESS,
+        list: list
+    };
 }
 
 function updateStarState(state) {
     return {
-        type: TYPES.UPDATA_STAR_STATE,
+        type: TYPES.UPDATE_STAR_STATE,
         isStarred: state
     }
 }
@@ -52,43 +59,20 @@ export function getStarState(rowData) {
             }
         }
         dispatch(updateStarState(false));
-
-        // let dao = new FavouriteDataDAO();
-        // dao.getFavouriteList().then((result)=>{
-        //     for(let i in result){
-        //         if(result[i]._id === rowData._id) {
-        //             dispatch(updateStarState(true));
-        //             return;
-        //         }
-        //     }
-        //     dispatch(updateStarState(false));
-        // },(nullList)=>{
-        //     dispatch(updateStarState(false));
-        // });
     };
 }
 
 export function starData(rowData) {
     return (dispatch) => {
         let dao = new FavouriteDataDAO();
-        dao.getFavouriteList().then((result)=>{
-            result.unshift(rowData);
-            dao.save(result).then((msg)=>{
-                dispatch(starDataSuccess(result));
-                Toast.show(msg, {position: -80});
-            },(msg)=>{
-                result.shift();  //save failed, pop the data from the list
-                Toast.show(msg, {position: -80});
-            });
-        }, (nullList)=>{
-            nullList.unshift(rowData);
-            dao.save(nullList).then((msg)=>{
-                dispatch(starDataSuccess(nullList));
-                Toast.show(msg, {position: -80});
-            },(msg)=>{
-                nullList.shift(); //save failed
-                Toast.show(msg, {position: -80});
-            });
+
+        starList.unshift(rowData);
+        dao.save(starList).then((msg) => {
+            dispatch(starDataSuccess(starList));
+            Toast.show(msg, {position: -80});
+        },(msg) => {
+            starList.shift();  //save failed, pop the data from the list
+            Toast.show(msg, {position: -80});
         });
     };
 }
@@ -96,16 +80,19 @@ export function starData(rowData) {
 export function unStarData(rowData) {
     return (dispatch) => {
         let dao = new FavouriteDataDAO();
-        dao.getFavouriteList().then((result)=>{
-            for(let i in result){
-                if(result[i]._id === rowData._id) {
-                    result.splice(i, 1);
+        for(let i in starList){
+            if(starList[i]._id === rowData._id) {
+                starList.splice(i, 1);
+                dao.save(starList).then((msg) => {
+                    dispatch(unStarDataSuccess(starList));
                     dispatch(updateStarState(false));
-                    return;
-                }
+                    Toast.show(msg, {position: -80});
+                }, (msg) => {
+                    starList.splice(i, 1, rowData); //if save failed, roll back the list
+                    Toast.show(msg, {position: -80});
+                });
+                return;
             }
-        }, (nullList)=>{
-
-        });
+        }
     }
 }
