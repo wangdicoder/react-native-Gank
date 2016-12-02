@@ -10,7 +10,7 @@ import {View, Text, ScrollView} from 'react-native';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import ListViewForCollection from '../../components/ListViewForCollection';
-import * as Actions from '../../actions/requestCollectionData';
+import * as Actions from '../../actions/handleCollectionData';
 
 class CollectionFragment extends Component{
     constructor(props){

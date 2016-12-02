@@ -15,7 +15,7 @@ import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
 import {connect} from 'react-redux';
 import {store} from '../store/index';
-import {fetchStarList} from '../actions/requestCollectionData'
+import {fetchStarList} from '../actions/handleCollectionData'
 
 class MainPage extends Component{
 

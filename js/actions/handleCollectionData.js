@@ -6,6 +6,7 @@
 import * as TYPES from './actionTypes';
 import FavouriteDataDAO from '../dao/FavouriteDataDAO';
 import Toast from 'react-native-root-toast';
+import px2dp from '../utils/px2dp';
 
 var starList = [];
 
@@ -69,10 +70,10 @@ export function starData(rowData) {
         starList.unshift(rowData);
         dao.save(starList).then((msg) => {
             dispatch(starDataSuccess(starList));
-            Toast.show(msg, {position: -80});
+            Toast.show('收藏成功', {position: px2dp(-80)});
         },(msg) => {
             starList.shift();  //save failed, pop the data from the list
-            Toast.show(msg, {position: -80});
+            Toast.show('收藏失败', {position: px2dp(-80)});
         });
     };
 }
@@ -86,10 +87,10 @@ export function unStarData(rowData) {
                 dao.save(starList).then((msg) => {
                     dispatch(unStarDataSuccess(starList));
                     dispatch(updateStarState(false));
-                    Toast.show(msg, {position: -80});
+                    //Toast.show(msg, {position: -80});
                 }, (msg) => {
                     starList.splice(i, 1, rowData); //if save failed, roll back the list
-                    Toast.show(msg, {position: -80});
+                    Toast.show('取消失败', {position: px2dp(-80)});
                 });
                 return;
             }

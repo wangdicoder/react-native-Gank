@@ -12,7 +12,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import px2dp from '../utils/px2dp';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as Actions from '../actions/requestCollectionData';
+import * as Actions from '../actions/handleCollectionData';
 import Toast from 'react-native-root-toast';
 import ShareUtil from '../utils/ShareUtil';
 

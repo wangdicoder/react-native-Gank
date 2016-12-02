@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import WebViewPage from '../containers/WebViewPage';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import {store} from '../store/index';
-import {unStarData} from '../actions/requestCollectionData';
+import {unStarData} from '../actions/handleCollectionData';
 
 export default class ListViewForCollection extends Component{
     static propTypes = {
