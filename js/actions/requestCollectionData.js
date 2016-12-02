@@ -42,10 +42,10 @@ export function fetchStarList() {
         let dao = new FavouriteDataDAO();
         dao.getFavouriteList().then((result)=>{
             starList = result;
-            dispatch(updateList(result));
+            dispatch(updateList(starList));
         },(nullList)=>{
-            starList = nullList;
-            dispatch(updateList(nullList));
+            starList = [];
+            dispatch(updateList(starList));
         });
     };
 }

@@ -107,7 +107,7 @@ class MoreFragment extends Component{
                 break;
             case 7:
                 let share = new ShareUtil();
-                share.share('一款码农必备开源神器，快来试试','https://github.com/wangdicoder/JueJinClient');
+                share.share('一款码农必备开源神器，快来试试','https://github.com/wangdicoder/GankIO');
                 break;
         }
 

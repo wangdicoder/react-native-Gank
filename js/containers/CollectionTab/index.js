@@ -9,7 +9,7 @@ import {bindActionCreators} from 'redux';
 import {View, Text, ScrollView} from 'react-native';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
-import ListViewForHome from '../../components/ListViewForHome';
+import ListViewForCollection from '../../components/ListViewForCollection';
 import * as Actions from '../../actions/requestCollectionData';
 
 class CollectionFragment extends Component{
@@ -22,7 +22,7 @@ class CollectionFragment extends Component{
             <View style={{flex: 1, backgroundColor: theme.pageBackgroundColor}}>
                 <NavigationBar title="收藏"/>
                 <ScrollView>
-                    <ListViewForHome
+                    <ListViewForCollection
                         dataSource={this.props.dataSource}
                         navigator={this.props.navigator}
                     />

@@ -11,6 +11,7 @@
     "react-native": "^0.38.0",
     "react-native-root-toast": "^1.0.3",
     "react-native-scrollable-tab-view": "^0.6.0",
+    "react-native-swipe-list-view": "^0.3.1",
     "react-native-tab-navigator": "^0.3.3",
     "react-native-vector-icons": "^3.0.0",
     "react-redux": "^4.4.6",
