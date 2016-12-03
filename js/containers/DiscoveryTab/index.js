@@ -162,7 +162,7 @@ class DiscoveryFragment extends Component{
                     </View>
                 </View>
                 <View style={styles.imgPart}>
-                    {rowData.images ?
+                    {(rowData.images && this.props.isOpenThumbnail) ?
                         <Image style={styles.image} source={{uri: getCorrectImageSizeUrl(rowData.images[0])}} />
                         :
                         <Image style={styles.image} source={require('../../assets/user_article_no_data.png')}/>
@@ -310,7 +310,8 @@ const mapStateToProps = (state) => {
         loading: state.randomData.loading,
         error: state.randomData.error,
         isRenderFooter: state.randomData.isRenderFooter,
-        mainThemeColor: state.settingState.mainThemeColor
+        mainThemeColor: state.settingState.mainThemeColor,
+        isOpenThumbnail: state.settingState.isOpenThumbnail
     };
 };
 

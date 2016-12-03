@@ -14,6 +14,8 @@ import px2dp from '../../utils/px2dp';
 import Avatar from '../../components/Avatar';
 import colors from '../../constants/colors';
 import {connect} from 'react-redux'
+import {bindActionCreators} from 'redux';
+import * as Actions from '../../actions/modifySettings';
 import ShareUtil from '../../utils/ShareUtil';
 
 import ThemeColorPage from './ThemeColorPage';
@@ -27,6 +29,7 @@ class MoreFragment extends Component{
     }
 
     render(){
+        const {actions, mainThemeColor, isOpenThumbnail} = this.props;
         return(
             <View style={styles.container}>
                 <NavigationBar title="更多"/>
@@ -50,13 +53,13 @@ class MoreFragment extends Component{
                         <RowItem title="首页内容展示顺序" icon="md-reorder" iconColor='lightskyblue' onPress={this._itemClickCallback.bind(this, 1)}/>
                         <RowItem title="自定义主题" icon="md-brush" iconColor={colors.orange} onPress={this._itemClickCallback.bind(this, 2)}/>
                         {/*<RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple}  onPress={this._itemClickCallback.bind(this, 3)}/>*/}
-                        <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor="#7b68ee" renderSegment={false} onTintColor={this.props.mainThemeColor} />
+                        <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor="#7b68ee" onTintColor={mainThemeColor} switcherValue={false}/>
+                        <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' onTintColor={mainThemeColor} switcherValue={isOpenThumbnail} onValueChange={(value) => actions.changeShowThumbnail(value)} renderSegment={false}/>
                     </View>
                     <View style={styles.block}>
                         <RowItem title="关于作者" icon="md-happy" iconColor="#9acd32" renderSegment={false} onPress={this._itemClickCallback.bind(this, 4)}/>
                     </View>
                     <View style={styles.block}>
-                        <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' onTintColor={this.props.mainThemeColor} switcherValue={false} />
                         <RowItem title="反馈" icon="md-text" iconColor={colors.lightGreen} onPress={this._itemClickCallback.bind(this, 6)} isShowRightArrow={false}/>
                         <RowItem title="分享" icon="md-share" iconColor={colors.orangeRed} renderSegment={false} onPress={this._itemClickCallback.bind(this, 7)} isShowRightArrow={false}/>
                     </View>
@@ -161,8 +164,15 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        mainThemeColor: state.settingState.mainThemeColor
+        mainThemeColor: state.settingState.mainThemeColor,
+        isOpenThumbnail: state.settingState.isOpenThumbnail
     };
 };
 
-export default connect(mapStateToProps)(MoreFragment);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MoreFragment);

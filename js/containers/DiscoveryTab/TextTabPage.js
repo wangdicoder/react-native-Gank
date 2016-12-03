@@ -51,6 +51,7 @@ class TextTabPage extends BackPageComponent{
                                 onEndReached={this._listViewOnEndReached.bind(this)}
                                 isFullData={this.props.isFullData}
                                 mainThemeColor={this.props.mainThemeColor}
+                                isOpenThumbnail={this.props.isOpenThumbnail}
                             />
                         )
                     }
@@ -109,7 +110,8 @@ const mapStateToProps = (state) => {
         pageNumber: state.targetData.pageNumber,
         isFullData: state.targetData.isFullData,
         error: state.targetData.error,
-        mainThemeColor: state.settingState.mainThemeColor
+        mainThemeColor: state.settingState.mainThemeColor,
+        isOpenThumbnail: state.settingState.isOpenThumbnail
     };
 };
 

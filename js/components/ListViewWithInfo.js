@@ -23,7 +23,8 @@ export default class ListViewWithInfo extends Component{
         renderTag: PropTypes.bool,
         isRenderFooter: PropTypes.bool,
         onEndReached: PropTypes.func,
-        isFullData: PropTypes.bool
+        isFullData: PropTypes.bool,
+        isOpenThumbnail: PropTypes.bool
     };
 
     render(){
@@ -89,7 +90,7 @@ export default class ListViewWithInfo extends Component{
         return(
             <View style={styles.itemContainer}>
                 <View style={styles.imgPart}>
-                    {rowData.images ?
+                    {(rowData.images && this.props.isOpenThumbnail) ?
                         <Image style={styles.image} source={{uri: getCorrectImageSizeUrl(rowData.images[0])}} />
                         :
                         <Image style={styles.image} source={require('../assets/user_article_no_data.png')}/>
