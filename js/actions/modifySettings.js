@@ -4,6 +4,7 @@
 'use strict';
 
 import * as TYPES from './actionTypes';
+import SettingsDataDAO from '../dao/SettingsDataDAO';
 
 export function changeColor(color) {
     return {
@@ -12,7 +13,12 @@ export function changeColor(color) {
     };
 }
 
-export function changeShowThumbnail(value) {
+export function changeShowThumbnail(value, flag=true) {
+    if(flag) {
+        let dao = new SettingsDataDAO();
+        dao.saveShowThumbnail(value);
+    }
+
     if(value) {
         return {
             type: TYPES.OPEN_SHOW_THUMBNAIL
@@ -21,5 +27,22 @@ export function changeShowThumbnail(value) {
         return {
             type: TYPES.CLOSE_SHOW_THUMBNAIL
         };
+    }
+}
+
+function getShowThumbnailValue() {
+    return (dispatch) => {
+        let dao = new SettingsDataDAO();
+        dao.getShowThumbnailValue().then((result)=>{
+            dispatch(changeShowThumbnail(result, false));
+        }, (error)=>{
+            dispatch(changeShowThumbnail(error));
+        });
+    };
+}
+
+export function initialSettingsStateFacade() {
+    return (dispatch)=>{
+        dispatch(getShowThumbnailValue());
     }
 }

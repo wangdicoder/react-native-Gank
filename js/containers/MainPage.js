@@ -15,7 +15,8 @@ import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
 import {connect} from 'react-redux';
 import {store} from '../store/index';
-import {fetchStarList} from '../actions/handleCollectionData'
+import {fetchStarList} from '../actions/handleCollectionData';
+import {initialSettingsStateFacade, getShowThumbnailValue} from '../actions/modifySettings';
 
 class MainPage extends Component{
 
@@ -90,6 +91,7 @@ class BottomTabBar extends Component{
 
     componentDidMount(){
         store.dispatch(fetchStarList());
+        store.dispatch(initialSettingsStateFacade());
     }
 }
 
