@@ -17,19 +17,31 @@ export default function randomData(state=initialState, action) {
         case TYPES.FETCH_RANDOM_DATA_REQUEST:
             return Object.assign({}, state, {
                 ...state,
-                loading: true
+                loading: true,
+                isRenderFooter: false,
             });
 
         case TYPES.FETCH_RANDOM_MORE_DATA_REQUEST:
             return Object.assign({}, state, {
                 ...state,
+                loading: false,
+                isRenderFooter: true
             });
 
         case TYPES.FETCH_RANDOM_DATA_SUCCESS:
             return Object.assign({}, state, {
                 ...state,
                 loading: false,
+                isRenderFooter: false,
                 dataSource: action.dataSource
+            });
+
+        case TYPES.FETCH_RANDOM_MORE_DATA_SUCCESS:
+            return Object.assign({}, state, {
+                ...state,
+                loading: false,
+                isRenderFooter: false,
+                dataSource: state.dataSource.concat(action.dataSource)
             });
 
         case TYPES.FETCH_RANDOM_DATA_FAILURE:

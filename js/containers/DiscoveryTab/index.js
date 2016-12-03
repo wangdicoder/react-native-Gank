@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, ListView, Image, Platform, TouchableNativeFeedback, TouchableOpacity, RefreshControl} from 'react-native';
+import {StyleSheet, View, Text, ListView, Image, Platform, TouchableNativeFeedback, TouchableOpacity, RefreshControl, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestRandomData';
@@ -26,12 +26,21 @@ class DiscoveryFragment extends Component{
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     }
 
-    componentDidMount(){
+    _fetchData(){
         this.props.actions.fetchRandomData();
     }
 
+    componentDidMount(){
+        this._fetchData();
+    }
+
     _onRefresh(){
-        this.props.actions.fetchRandomData();
+        this._fetchData();
+    }
+
+    _onEndReached(){
+        if(!this.props.isRenderFooter)
+            this.props.actions.fetchMoreRandomData();
     }
 
     render(){
@@ -47,8 +56,8 @@ class DiscoveryFragment extends Component{
                     renderFooter={this._renderFooter.bind(this)}
                     initialListSize={10}
                     pageSize={10}
-                    //onEndReached={this.props.onEndReached}
-                    //onEndReachedThreshold={5}
+                    onEndReached={this._onEndReached.bind(this)}
+                    onEndReachedThreshold={5}
                     refreshControl={
                         <RefreshControl
                             refreshing={this.props.loading}
@@ -62,26 +71,26 @@ class DiscoveryFragment extends Component{
 
     _renderHeader(){
         return(
-        <View style={styles.btnPanel}>
-            {this.tabNames.map((item, i)=>{
-                return(
-                    <View style={styles.btnRow} key={i}>
-                        {this.tabNames[i].map((subItem, index) => {
-                            return(
-                                <View style={styles.btnCell} key={subItem}>
-                                    <TouchableOpacity
-                                        onPress={this._itemPressCallback.bind(this, subItem)}
-                                        activeOpacity={theme.touchableOpacityActiveOpacity}>
-                                        {this._renderBtnContent(i,index)}
-                                    </TouchableOpacity>
-                                    <Text style={styles.btnCellLabel}>{subItem}</Text>
-                                </View>
-                            );
-                        })}
-                    </View>
-                );
-            })}
-        </View>
+            <View style={styles.btnPanel}>
+                {this.tabNames.map((item, i)=>{
+                    return(
+                        <View style={styles.btnRow} key={i}>
+                            {this.tabNames[i].map((subItem, index) => {
+                                return(
+                                    <View style={styles.btnCell} key={subItem}>
+                                        <TouchableOpacity
+                                            onPress={this._itemPressCallback.bind(this, subItem)}
+                                            activeOpacity={theme.touchableOpacityActiveOpacity}>
+                                            {this._renderBtnContent(i,index)}
+                                        </TouchableOpacity>
+                                        <Text style={styles.btnCellLabel}>{subItem}</Text>
+                                    </View>
+                                );
+                            })}
+                        </View>
+                    );
+                })}
+            </View>
         )
     }
 
@@ -124,13 +133,6 @@ class DiscoveryFragment extends Component{
     _renderRowContent(rowData){
         return(
             <View style={styles.itemContainer}>
-                <View style={styles.imgPart}>
-                    {rowData.images ?
-                        <Image style={styles.image} source={{uri: getCorrectImageSizeUrl(rowData.images[0])}} />
-                        :
-                        <Image style={styles.image} source={require('../../assets/user_article_no_data.png')}/>
-                    }
-                </View>
                 <View style={styles.txtPart}>
                     <View style={styles.titlePart}>
                         <Text style={styles.title} numberOfLines={2}>{rowData.desc}</Text>
@@ -144,13 +146,23 @@ class DiscoveryFragment extends Component{
                         <Text style={styles.detailsTxt}>{this._handleCreateTime(rowData.publishedAt)}</Text>
                     </View>
                 </View>
+                <View style={styles.imgPart}>
+                    {rowData.images ?
+                        <Image style={styles.image} source={{uri: getCorrectImageSizeUrl(rowData.images[0])}} />
+                        :
+                        <Image style={styles.image} source={require('../../assets/user_article_no_data.png')}/>
+                    }
+                </View>
             </View>
         );
     }
 
     _renderSeparator(sectionID, rowID, adjacentRowHighlighted){
         return(
-            <View key={rowID} style={{height: theme.segment.width, backgroundColor: theme.segment.color}}/>
+            <View key={rowID} style={{height: theme.segment.width, width: theme.screenWidth, flexDirection: 'row'}}>
+                <View style={{flex: 77, backgroundColor: theme.segment.color}}/>
+                <View style={{flex: 23, backgroundColor: '#fff'}}/>
+            </View>
         );
     }
 
@@ -195,6 +207,7 @@ const styles = StyleSheet.create({
         height: px2dp(215),
         width: theme.screenWidth,
         marginTop: px2dp(12),
+        marginBottom: px2dp(15),
         borderBottomColor: theme.segment.color,
         borderBottomWidth: theme.segment.width,
         borderTopColor: theme.segment.color,
@@ -219,23 +232,25 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         flexDirection: 'row',
         width: theme.screenWidth,
-        height: px2dp(75)
+        height: px2dp(73)
     },
     imgPart: {
         flex: 20,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingRight: px2dp(5)
     },
     image: {
-        width: px2dp(52),
-        height: px2dp(52),
+        width: px2dp(60),
+        height: px2dp(60),
         resizeMode: 'cover',
         backgroundColor: '#f1f1f1',
     },
     txtPart: {
         flex: 80,
         paddingTop: px2dp(10),
-        paddingRight: px2dp(10),
+        paddingLeft: px2dp(12),
+        paddingRight: px2dp(5),
         paddingBottom: px2dp(10)
     },
     titlePart: {

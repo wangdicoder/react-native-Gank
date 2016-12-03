@@ -26,6 +26,25 @@ function fetchRequest() {
     };
 }
 
+function fetchMoreDataSuccess(json) {
+    return {
+        type: TYPES.FETCH_RANDOM_MORE_DATA_SUCCESS,
+        dataSource: json.results
+    };
+}
+
+function fetchMoreDataRequest() {
+    return {
+        type: TYPES.FETCH_RANDOM_MORE_DATA_REQUEST
+    };
+}
+
+function fetchMoreDataFailure() {
+    return {
+        type: TYPES.FETCH_RANDOM_MORE_DATA_FAILURE
+    };
+}
+
 export function fetchRandomData() {
     var url = fetchUrl.random + 'Android/10';
     return (dispatch) => {
@@ -37,5 +56,19 @@ export function fetchRandomData() {
             }).catch((error) => {
                 dispatch(fetchFailure());
             });
+    };
+}
+
+export function fetchMoreRandomData() {
+    var url = fetchUrl.random + 'Android/10';
+    return (dispatch) => {
+        dispatch(fetchMoreDataRequest());
+        fetchWithTimeout(5000, fetch(url))
+            .then((response)=> response.json())
+            .then((json) => {
+                dispatch(fetchMoreDataSuccess(json));
+            }).catch((error) => {
+            dispatch(fetchMoreDataFailure());
+        });
     };
 }
