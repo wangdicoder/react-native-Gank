@@ -8,7 +8,8 @@ import homeData from './homeData';
 import targetData from './targetData';
 import themeColor from './themeColor';
 import favorData from './favorData';
+import randomData from './randomData';
 
 export default combineReducers({
-    homeData, targetData, themeColor, favorData
+    homeData, targetData, themeColor, favorData, randomData
 });

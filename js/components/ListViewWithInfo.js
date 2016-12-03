@@ -60,7 +60,6 @@ export default class ListViewWithInfo extends Component{
                     </View>
                 );
         }
-        //return null;
     }
 
     _renderRow(rowData, sectionID, rowID, highlightRow){

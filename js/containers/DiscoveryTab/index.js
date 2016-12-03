@@ -4,54 +4,158 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, ScrollView, Platform, TouchableNativeFeedback, TouchableOpacity} from 'react-native';
-import ImageTabPage from './ImageTabPage';
+import {StyleSheet, View, Text, ListView, Image, Platform, TouchableNativeFeedback, TouchableOpacity, RefreshControl} from 'react-native';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as Actions from '../../actions/requestRandomData';
+import Icon from 'react-native-vector-icons/Ionicons';
 import TextTabPage from './TextTabPage';
-import VideoTabPage from './VideoTabPage';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import px2dp from '../../utils/px2dp';
 import Avatar from '../../components/Avatar';
+import getCorrectImageSizeUrl from '../../utils/imageFactory';
+import WebViewPage from '../../containers/WebViewPage';
 
-export default class DiscoveryFragment extends Component{
+class DiscoveryFragment extends Component{
     constructor(props){
         super(props);
         this.tabNames = [['Android','iOS','前端'],['App','休息视频','拓展资源']];
         this.tabIcon = [['logo-android','logo-apple','logo-chrome'],['ios-apps','ios-film','ios-book']];
         this.tabColor = [['rgb(141,192,89)','#000','rgb(51,154,237)'],['rgb(249,89,58)','rgb(154,53,172)','rgb(65,87,175)']];
+        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    }
+
+    componentDidMount(){
+        this.props.actions.fetchRandomData();
+    }
+
+    _onRefresh(){
+        this.props.actions.fetchRandomData();
     }
 
     render(){
         return(
             <View style={styles.container}>
                 <NavigationBar title="发现" />
-                <ScrollView>
-                    <View style={styles.btnPanel}>
-                        {this.tabNames.map((item, i)=>{
+                <ListView
+                    enableEmptySections={true}
+                    dataSource={this.ds.cloneWithRows(this.props.dataSource)}
+                    renderRow={this._renderRow.bind(this)}
+                    renderHeader={this._renderHeader.bind(this)}
+                    renderSeparator={this._renderSeparator.bind(this)}
+                    renderFooter={this._renderFooter.bind(this)}
+                    initialListSize={10}
+                    pageSize={10}
+                    //onEndReached={this.props.onEndReached}
+                    //onEndReachedThreshold={5}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.props.loading}
+                            onRefresh={this._onRefresh.bind(this)}
+                            title="玩命加载中..."
+                        />}
+                />
+            </View>
+        );
+    }
+
+    _renderHeader(){
+        return(
+        <View style={styles.btnPanel}>
+            {this.tabNames.map((item, i)=>{
+                return(
+                    <View style={styles.btnRow} key={i}>
+                        {this.tabNames[i].map((subItem, index) => {
                             return(
-                                <View style={styles.btnRow} key={i}>
-                                    {this.tabNames[i].map((subItem, index) => {
-                                        return(
-                                            <View style={styles.btnCell} key={subItem}>
-                                                <TouchableOpacity
-                                                    onPress={this._itemPressCallback.bind(this, subItem)}
-                                                    activeOpacity={theme.touchableOpacityActiveOpacity}>
-                                                    {this._renderBtnContent(i,index)}
-                                                </TouchableOpacity>
-                                                <Text style={styles.label}>{subItem}</Text>
-                                            </View>
-                                        );
-                                    })}
+                                <View style={styles.btnCell} key={subItem}>
+                                    <TouchableOpacity
+                                        onPress={this._itemPressCallback.bind(this, subItem)}
+                                        activeOpacity={theme.touchableOpacityActiveOpacity}>
+                                        {this._renderBtnContent(i,index)}
+                                    </TouchableOpacity>
+                                    <Text style={styles.btnCellLabel}>{subItem}</Text>
                                 </View>
                             );
                         })}
                     </View>
-                    <View>
+                );
+            })}
+        </View>
+        )
+    }
 
+    _renderFooter(){
+        if(this.props.isRenderFooter) {
+            return (
+                <View style={styles.footer}>
+                    <ActivityIndicator
+                        color={this.props.mainThemeColor}
+                    />
+                    <Text style={{marginLeft: 10, color: this.props.mainThemeColor}}>拼命获取中...</Text>
+                </View>
+            );
+        }
+    }
+
+    _renderRow(rowData, sectionID, rowID, highlightRow){
+        if(Platform.OS === 'android') {
+            return(
+                <TouchableNativeFeedback
+                    overflow="hidden"
+                    key={rowID}
+                    onPress={this._itemOnPress.bind(this, rowData)}>
+                    {this._renderRowContent(rowData)}
+                </TouchableNativeFeedback>
+            );
+        }else if(Platform.OS === 'ios'){
+            return(
+                <TouchableHighlight
+                    overflow="hidden"
+                    key={rowID}
+                    onPress={this._itemOnPress.bind(this, rowData)}
+                    underlayColor={theme.touchableHighlightUnderlayColor}>
+                    {this._renderRowContent(rowData)}
+                </TouchableHighlight>
+            );
+        }
+    }
+
+    _renderRowContent(rowData){
+        return(
+            <View style={styles.itemContainer}>
+                <View style={styles.imgPart}>
+                    {rowData.images ?
+                        <Image style={styles.image} source={{uri: getCorrectImageSizeUrl(rowData.images[0])}} />
+                        :
+                        <Image style={styles.image} source={require('../../assets/user_article_no_data.png')}/>
+                    }
+                </View>
+                <View style={styles.txtPart}>
+                    <View style={styles.titlePart}>
+                        <Text style={styles.title} numberOfLines={2}>{rowData.desc}</Text>
                     </View>
-                </ScrollView>
+                    <View style={styles.infoPart}>
+                        <Icon name="ios-pricetag-outline" color="#aaa"/>
+                        <Text style={styles.detailsTxt}>{rowData.type}</Text>
+                        <Icon name="ios-create-outline" color="#aaa"/>
+                        <Text style={styles.detailsTxt}>{rowData.who ? rowData.who : 'null'}</Text>
+                        <Icon name="ios-time-outline" color="#aaa"/>
+                        <Text style={styles.detailsTxt}>{this._handleCreateTime(rowData.publishedAt)}</Text>
+                    </View>
+                </View>
             </View>
         );
+    }
+
+    _renderSeparator(sectionID, rowID, adjacentRowHighlighted){
+        return(
+            <View key={rowID} style={{height: theme.segment.width, backgroundColor: theme.segment.color}}/>
+        );
+    }
+
+    _handleCreateTime(time){
+        return time.substring(0, 10);
     }
 
     _renderBtnContent(i, index){
@@ -70,6 +174,13 @@ export default class DiscoveryFragment extends Component{
         this.props.navigator.push({
             component: component,
             args: {title: title, navigator: this.props.navigator}
+        });
+    }
+
+    _itemOnPress(rowData){
+        this.props.navigator.push({
+            component: WebViewPage,
+            args: {rowData: rowData}
         });
     }
 }
@@ -100,8 +211,73 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    label: {
+    btnCellLabel: {
         marginTop: px2dp(4),
         color: "#000"
+    },
+    itemContainer: {
+        backgroundColor: '#fff',
+        flexDirection: 'row',
+        width: theme.screenWidth,
+        height: px2dp(75)
+    },
+    imgPart: {
+        flex: 20,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    image: {
+        width: px2dp(52),
+        height: px2dp(52),
+        resizeMode: 'cover',
+        backgroundColor: '#f1f1f1',
+    },
+    txtPart: {
+        flex: 80,
+        paddingTop: px2dp(10),
+        paddingRight: px2dp(10),
+        paddingBottom: px2dp(10)
+    },
+    titlePart: {
+        flex: 70,
+    },
+    infoPart: {
+        flex: 30,
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    title: {
+        color: '#000'
+    },
+    detailsTxt: {
+        marginLeft: px2dp(3),
+        marginRight: px2dp(13),
+        fontSize: px2dp(10),
+        color: '#aaa'
+    },
+    footer: {
+        flexDirection: 'row',
+        width: theme.screenWidth,
+        height: px2dp(60),
+        alignItems: 'center',
+        justifyContent: 'center',
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        dataSource: state.randomData.dataSource,
+        loading: state.randomData.loading,
+        error: state.randomData.error,
+        isRenderFooter: state.randomData.isRenderFooter,
+        mainThemeColor: state.themeColor.mainThemeColor
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DiscoveryFragment);

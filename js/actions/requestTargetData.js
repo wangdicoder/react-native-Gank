@@ -21,10 +21,10 @@ function requestMoreData() {
     }
 }
 
-function receiveData(responseData){
+function receiveData(json){
     return {
         type: TYPES.FETCH_TARGET_DATA_SUCCESS,
-        dataSource: responseData.results
+        dataSource: json.results
     }
 }
 
