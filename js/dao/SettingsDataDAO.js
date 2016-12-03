@@ -4,7 +4,7 @@
 'use strict';
 
 const SHOW_THUMBNAIL = 'showThumbnail';
-
+const THEME_COLOR = 'themeColor';
 
 import {AsyncStorage} from 'react-native';
 
@@ -29,5 +29,20 @@ export default class SettingsDataDAO{
         });
     }
 
+    saveThemeColor(color){
+        AsyncStorage.setItem(THEME_COLOR, color);
+    }
+
+    getThemeColorValue(){
+        return new Promise((resolve, reject) => {
+            AsyncStorage.getItem(THEME_COLOR, (error, result) => {
+                if(!error && result){
+                    resolve(result);
+                }else{
+                    reject('#1e90ff');
+                }
+            });
+        });
+    }
 
 }
