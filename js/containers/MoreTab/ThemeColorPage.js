@@ -8,7 +8,7 @@ import NavigationBar from '../../components/NavigationBar';
 import theme from '../../constants/theme';
 import colors from '../../constants/colors';
 import px2dp from '../../utils/px2dp';
-import * as Actions from '../../actions/changeThemeColor';
+import {changeColor} from '../../actions/modifySettings';
 import {store} from '../../store/index';
 import {connect} from 'react-redux'
 
@@ -72,7 +72,7 @@ class ThemeColorPage extends BackPageComponent{
     }
 
     _okBtnPressCallback(){
-        store.dispatch(Actions.changeColor(this.state.testColor));
+        store.dispatch(changeColor(this.state.testColor));
         this._handleBack();
     }
 }
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        mainThemeColor: state.themeColor.mainThemeColor
+        mainThemeColor: state.settingState.mainThemeColor
     };
 };
 

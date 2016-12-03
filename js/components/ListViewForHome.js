@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     rowContent: {
-        fontSize: px2dp(15),
+        fontSize: px2dp(14),
         color: '#000'
     }
 });

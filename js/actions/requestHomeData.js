@@ -53,7 +53,7 @@ export function fetchData(date) {
                             Toast.show('今日未更新，为您获取往日干货', {position: px2dp(-80)});
                             dispatch(fetchData(getYesterdayFromDate(date)));
                         }else {
-                            Toast.show('今日干货还没更新哎～', {position: px2dp(-80)});
+                            Toast.show('今日干货还未更新', {position: px2dp(-80)});
                             dispatch(receiveData(localData, date));
                         }
                     }

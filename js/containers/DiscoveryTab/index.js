@@ -62,6 +62,8 @@ class DiscoveryFragment extends Component{
                         <RefreshControl
                             refreshing={this.props.loading}
                             onRefresh={this._onRefresh.bind(this)}
+                            tintColor={this.props.mainThemeColor}
+                            colors={[this.props.mainThemeColor]}
                             title="玩命加载中..."
                         />}
                 />
@@ -71,25 +73,38 @@ class DiscoveryFragment extends Component{
 
     _renderHeader(){
         return(
-            <View style={styles.btnPanel}>
-                {this.tabNames.map((item, i)=>{
-                    return(
-                        <View style={styles.btnRow} key={i}>
-                            {this.tabNames[i].map((subItem, index) => {
-                                return(
-                                    <View style={styles.btnCell} key={subItem}>
-                                        <TouchableOpacity
-                                            onPress={this._itemPressCallback.bind(this, subItem)}
-                                            activeOpacity={theme.touchableOpacityActiveOpacity}>
-                                            {this._renderBtnContent(i,index)}
-                                        </TouchableOpacity>
-                                        <Text style={styles.btnCellLabel}>{subItem}</Text>
-                                    </View>
-                                );
-                            })}
-                        </View>
-                    );
-                })}
+            <View>
+                <View style={styles.btnPanel}>
+                    {this.tabNames.map((item, i)=>{
+                        return(
+                            <View style={styles.btnRow} key={i}>
+                                {this.tabNames[i].map((subItem, index) => {
+                                    return(
+                                        <View style={styles.btnCell} key={subItem}>
+                                            <TouchableOpacity
+                                                onPress={this._itemPressCallback.bind(this, subItem)}
+                                                activeOpacity={theme.touchableOpacityActiveOpacity}>
+                                                {this._renderBtnContent(i,index)}
+                                            </TouchableOpacity>
+                                            <Text style={styles.btnCellLabel}>{subItem}</Text>
+                                        </View>
+                                    );
+                                })}
+                            </View>
+                        );
+                    })}
+                </View>
+                {this.props.loading ?
+                    <View style={styles.fakeListViewHeader}>
+                        <Icon name="md-aperture" size={px2dp(16)}/>
+                        <Text style={{marginLeft: px2dp(5)}}>刷新中...</Text>
+                    </View>
+                    :
+                    <View style={styles.fakeListViewHeader}>
+                        <Icon name="md-aperture" size={px2dp(16)}/>
+                        <Text style={{marginLeft: px2dp(5)}}>随机干货</Text>
+                    </View>
+                }
             </View>
         )
     }
@@ -276,6 +291,16 @@ const styles = StyleSheet.create({
         height: px2dp(60),
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    fakeListViewHeader: {
+        flexDirection: 'row',
+        backgroundColor:'#fff',
+        padding: px2dp(8),
+        borderBottomColor:theme.segment.color,
+        borderBottomWidth:theme.segment.width,
+        borderTopColor: theme.segment.color,
+        borderTopWidth: theme.segment.width,
+        alignItems: 'center'
     }
 });
 
@@ -285,7 +310,7 @@ const mapStateToProps = (state) => {
         loading: state.randomData.loading,
         error: state.randomData.error,
         isRenderFooter: state.randomData.isRenderFooter,
-        mainThemeColor: state.themeColor.mainThemeColor
+        mainThemeColor: state.settingState.mainThemeColor
     };
 };
 

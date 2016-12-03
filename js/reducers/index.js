@@ -6,10 +6,10 @@
 import {combineReducers} from 'redux';
 import homeData from './homeData';
 import targetData from './targetData';
-import themeColor from './themeColor';
+import settingState from './settingState';
 import favorData from './favorData';
 import randomData from './randomData';
 
 export default combineReducers({
-    homeData, targetData, themeColor, favorData, randomData
+    homeData, targetData, settingState, favorData, randomData
 });

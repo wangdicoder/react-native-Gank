@@ -10,7 +10,7 @@ const initialState = {
     mainThemeColor: colors.dodgerBlue
 }
 
-export default function themeColor(state=initialState, action) {
+export default function settingState(state=initialState, action) {
     switch(action.type){
         case TYPES.CHANGE_COLOR:
             return Object.assign({}, state, {

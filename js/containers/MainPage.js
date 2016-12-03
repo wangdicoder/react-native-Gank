@@ -108,7 +108,7 @@ const styles = {
 
 const mapStateToProps = (state) => {
     return {
-        mainThemeColor: state.themeColor.mainThemeColor
+        mainThemeColor: state.settingState.mainThemeColor
     };
 };
 

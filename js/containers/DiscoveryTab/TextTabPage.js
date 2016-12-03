@@ -33,7 +33,7 @@ class TextTabPage extends BackPageComponent{
                     {this.props.error ?
                         <View style={styles.indicator}>
                             <Text style={{color: this.props.mainThemeColor}}>Ooops, 获取数据失败~ </Text>
-                            <Button onPress={this._fethchData.bind(this)} title="重新获取"/>
+                            <Button onPress={this._fethchData.bind(this)} title="重新获取" color={this.props.mainThemeColor}/>
                         </View>
                         :
                         (this.props.loading ?
@@ -109,7 +109,7 @@ const mapStateToProps = (state) => {
         pageNumber: state.targetData.pageNumber,
         isFullData: state.targetData.isFullData,
         error: state.targetData.error,
-        mainThemeColor: state.themeColor.mainThemeColor
+        mainThemeColor: state.settingState.mainThemeColor
     };
 };
 
