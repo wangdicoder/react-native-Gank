@@ -6,12 +6,13 @@
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Text, Image, ListView, Platform, ActivityIndicator, TouchableNativeFeedback, TouchableHighlight, ToastAndroid} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {connect} from 'react-redux';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
 import WebViewPage from '../containers/WebViewPage';
 import getCorrectImageSizeUrl from '../utils/imageFactory';
 
-export default class ListViewWithInfo extends Component{
+class ListViewWithInfo extends Component{
     constructor(props){
         super(props);
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
@@ -87,32 +88,33 @@ export default class ListViewWithInfo extends Component{
     }
 
     _renderRowContent(rowData){
+        const {titleColor, subTitleColor, rowItemBackgroundColor, thumbnailColor} = this.props;
         return(
-            <View style={styles.itemContainer}>
+            <View style={[styles.itemContainer, {backgroundColor: rowItemBackgroundColor}]}>
                 <View style={styles.imgPart}>
                     {(rowData.images && this.props.isOpenThumbnail) ?
                         <Image style={styles.image} source={{uri: getCorrectImageSizeUrl(rowData.images[0])}} />
                         :
-                        <Image style={styles.image} source={require('../assets/user_article_no_data.png')}/>
+                        <Image style={[styles.image, {backgroundColor: thumbnailColor}]} source={require('../assets/user_article_no_data.png')}/>
                     }
                 </View>
                 <View style={styles.txtPart}>
                     <View style={styles.titlePart}>
-                        <Text style={styles.title} numberOfLines={2}>{rowData.desc}</Text>
+                        <Text style={[styles.title, {color: titleColor}]} numberOfLines={2}>{rowData.desc}</Text>
                     </View>
                     <View style={styles.infoPart}>
                         {this.props.renderTag ?
                             <View>
-                                <Icon name="ios-pricetag-outline" color="#aaa"/>
-                                <Text style={styles.detailsTxt}>{rowData.type}</Text>
+                                <Icon name="ios-pricetag-outline" color={subTitleColor}/>
+                                <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{rowData.type}</Text>
                             </View>
                             :
                             null
                         }
-                        <Icon name="ios-create-outline" color="#aaa"/>
-                        <Text style={styles.detailsTxt}>{rowData.who ? rowData.who : 'null'}</Text>
-                        <Icon name="ios-time-outline" color="#aaa"/>
-                        <Text style={styles.detailsTxt}>{this._handleCreateTime(rowData.publishedAt)}</Text>
+                        <Icon name="ios-create-outline" color={subTitleColor}/>
+                        <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{rowData.who ? rowData.who : 'null'}</Text>
+                        <Icon name="ios-time-outline" color={subTitleColor}/>
+                        <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{this._handleCreateTime(rowData.publishedAt)}</Text>
                     </View>
                 </View>
             </View>
@@ -130,7 +132,7 @@ export default class ListViewWithInfo extends Component{
 
     _renderSeparator(sectionID, rowID, adjacentRowHighlighted){
         return(
-            <View key={rowID} style={{height: theme.segment.width, backgroundColor: theme.segment.color}}/>
+            <View key={rowID} style={{height: theme.segment.width, backgroundColor: this.props.segmentColor}}/>
         );
     }
 
@@ -148,7 +150,6 @@ export default class ListViewWithInfo extends Component{
 
 const styles = StyleSheet.create({
     itemContainer: {
-        backgroundColor: '#fff',
         flexDirection: 'row',
         width: theme.screenWidth,
         height: px2dp(75)
@@ -161,8 +162,7 @@ const styles = StyleSheet.create({
     image: {
         width: px2dp(52),
         height: px2dp(52),
-        resizeMode: 'cover',
-        backgroundColor: '#f1f1f1',
+        resizeMode: 'cover'
     },
     txtPart: {
         flex: 80,
@@ -179,13 +179,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
-        color: '#000'
+
     },
-    detailsTxt: {
+    detailsLabel: {
         marginLeft: px2dp(3),
         marginRight: px2dp(13),
-        fontSize: px2dp(10),
-        color: '#aaa'
+        fontSize: px2dp(10)
     },
     footer: {
         flexDirection: 'row',
@@ -195,3 +194,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        mainThemeColor: state.settingState.colorScheme.mainThemeColor,
+        segmentColor: state.settingState.colorScheme.segmentColor,
+        titleColor: state.settingState.colorScheme.titleColor,
+        subTitleColor: state.settingState.colorScheme.subTitleColor,
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,
+        thumbnailColor: state.settingState.colorScheme.thumbnailColor
+    };
+};
+
+export default connect(mapStateToProps)(ListViewWithInfo);

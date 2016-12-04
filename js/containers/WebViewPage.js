@@ -35,12 +35,12 @@ class WebViewPage extends BackPageComponent{
     render(){
         const rowData = this.props.rowData;
         return(
-            <View style={styles.container}>
+            <View style={[styles.container, {backgroundColor: this.props.pageBackgroundColor}]}>
                 <View style={styles.contentContainer}>
                     {this.state.didMount ?
                         <WebView
                             ref={(ref)=>{this.webView = ref}}
-                            style={styles.webView}
+                            style={[styles.webView, {backgroundColor: this.props.pageBackgroundColor}]}
                             source={{uri: rowData.url}}
                             renderLoading={this._renderLoading.bind(this)}
                             renderError={this._renderError.bind(this)}
@@ -59,7 +59,7 @@ class WebViewPage extends BackPageComponent{
                         rightBtnPress={this._btnOnPressCallback.bind(this, 0)}
                     />
                 </View>
-                <View style={styles.bottomInfoBar}>
+                <View style={[styles.bottomInfoBar, {backgroundColor: this.props.webViewToolbarColor, borderTopColor: this.props.segmentColor}]}>
                     {this.bottomIconNames.map((item, i)=>{
                         return(
                             <View key={i} style={{flex: 1, alignItems: 'center'}}>
@@ -152,8 +152,7 @@ class WebViewPage extends BackPageComponent{
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: theme.pageBackgroundColor,
+        flex: 1
     },
     contentContainer: {
         marginTop: theme.toolbar.height,
@@ -168,30 +167,26 @@ const styles = StyleSheet.create({
         zIndex: 1
     },
     webView: {
-        flex: 1,
-        backgroundColor: theme.pageBackgroundColor
+        flex: 1
     },
     bottomInfoBar: {
         position: 'absolute',
-        backgroundColor: 'rgba(255,255,255,.9)',
         bottom: 0,
         height: px2dp(45),
         width: theme.screenWidth,
         borderTopWidth: theme.segment.width,
-        borderTopColor: theme.segment.color,
         flexDirection: 'row',
         alignItems: 'center',
         zIndex: 1
-    },
-    contentTitle: {
-        color: '#000',
-        fontSize: px2dp(12)
     }
 });
 
 const mapStateToProps = (state) => {
     return {
         mainThemeColor: state.settingState.colorScheme.mainThemeColor,
+        pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
+        webViewToolbarColor: state.settingState.colorScheme.webViewToolbarColor,
+        segmentColor: state.settingState.colorScheme.segmentColor,
         isStarred: state.favorData.isStarred
     };
 };

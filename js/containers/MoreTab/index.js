@@ -78,7 +78,7 @@ class MoreFragment extends Component{
     }
 
     _renderTitleContent(){
-        const {mainThemeColor, segmentColor, titleColor, rowItemBackgroundColor} = this.props;
+        const {mainThemeColor, segmentColor, titleColor, rowItemBackgroundColor, arrowColor} = this.props;
         return(
             <View style={[styles.block, styles.intro, {backgroundColor: rowItemBackgroundColor, borderBottomColor: segmentColor, borderTopColor: segmentColor}]}>
                 <View style={styles.introLeft}>
@@ -86,7 +86,7 @@ class MoreFragment extends Component{
                 </View>
                 <View style={styles.introRight}>
                     <Text style={[styles.title, {color: titleColor}]}>Gank.io</Text>
-                    <Icon name="ios-arrow-forward" color={segmentColor} size={px2dp(25)}/>
+                    <Icon name="ios-arrow-forward" color={arrowColor} size={px2dp(25)}/>
                 </View>
             </View>
         );
@@ -178,7 +178,8 @@ const mapStateToProps = (state) => {
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
         segmentColor: state.settingState.colorScheme.segmentColor,
         titleColor: state.settingState.colorScheme.titleColor,
-        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,
+        arrowColor: state.settingState.colorScheme.arrowColor
     };
 };
 

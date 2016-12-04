@@ -19,7 +19,9 @@ const initialState = {
         subTitleColor: '#aaa',
         rowItemBackgroundColor: '#fff',
         arrowColor: '#ccc',
-        tabIconColor: colors.dodgerBlue
+        tabIconColor: colors.dodgerBlue,
+        thumbnailColor: '#f1f1f1',
+        webViewToolbarColor: 'rgba(255,255,255,.9)'
     }
 }
 
@@ -66,7 +68,9 @@ export default function settingState(state=initialState, action) {
                     subTitleColor: 'rgb(130,130,130)',
                     rowItemBackgroundColor: 'rgb(63,63,63)',
                     arrowColor: 'rgb(200,200,200)',
-                    tabIconColor: 'rgb(220,220,220)'
+                    tabIconColor: 'rgb(230,230,230)',
+                    thumbnailColor: 'rgb(130,130,130)',
+                    webViewToolbarColor: 'rgba(40,40,40,.9)'
                 }
             });
 
@@ -82,7 +86,9 @@ export default function settingState(state=initialState, action) {
                     subTitleColor: '#aaa',
                     rowItemBackgroundColor: '#fff',
                     arrowColor: '#ccc',
-                    tabIconColor: state.themeColor
+                    tabIconColor: state.themeColor,
+                    thumbnailColor: '#f1f1f1',
+                    webViewToolbarColor: 'rgba(255,255,255,.9)'
                 }
             });
 

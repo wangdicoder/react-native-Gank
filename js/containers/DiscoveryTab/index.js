@@ -45,7 +45,7 @@ class DiscoveryFragment extends Component{
 
     render(){
         return(
-            <View style={styles.container}>
+            <View style={[styles.container, {backgroundColor: this.props.pageBackgroundColor}]}>
                 <NavigationBar title="发现" />
                 <ListView
                     enableEmptySections={true}
@@ -72,9 +72,10 @@ class DiscoveryFragment extends Component{
     }
 
     _renderHeader(){
+        const {rowItemBackgroundColor, segmentColor} = this.props;
         return(
             <View>
-                <View style={styles.btnPanel}>
+                <View style={[styles.btnPanel, {backgroundColor: rowItemBackgroundColor, borderBottomColor: segmentColor, borderTopColor: segmentColor}]}>
                     {this.tabNames.map((item, i)=>{
                         return(
                             <View style={styles.btnRow} key={i}>
@@ -86,7 +87,7 @@ class DiscoveryFragment extends Component{
                                                 activeOpacity={theme.touchableOpacityActiveOpacity}>
                                                 {this._renderBtnContent(i,index)}
                                             </TouchableOpacity>
-                                            <Text style={styles.btnCellLabel}>{subItem}</Text>
+                                            <Text style={[styles.btnCellLabel, {color: this.props.titleColor}]}>{subItem}</Text>
                                         </View>
                                     );
                                 })}
@@ -95,14 +96,14 @@ class DiscoveryFragment extends Component{
                     })}
                 </View>
                 {this.props.loading ?
-                    <View style={styles.fakeListViewHeader}>
-                        <Icon name="md-aperture" size={px2dp(16)}/>
-                        <Text style={{marginLeft: px2dp(5)}}>刷新中...</Text>
+                    <View style={[styles.fakeListViewHeader, {backgroundColor: rowItemBackgroundColor, borderBottomColor: segmentColor, borderTopColor: segmentColor}]}>
+                        <Icon name="md-aperture" color={this.props.arrowColor} size={px2dp(16)}/>
+                        <Text style={{color: this.props.arrowColor, marginLeft: px2dp(5)}}>刷新中...</Text>
                     </View>
                     :
-                    <View style={styles.fakeListViewHeader}>
-                        <Icon name="md-aperture" size={px2dp(16)}/>
-                        <Text style={{marginLeft: px2dp(5)}}>随机干货</Text>
+                    <View style={[styles.fakeListViewHeader, {backgroundColor: rowItemBackgroundColor, borderBottomColor: segmentColor, borderTopColor: segmentColor}]}>
+                        <Icon name="md-aperture" color={this.props.arrowColor} size={px2dp(16)}/>
+                        <Text style={{color: this.props.arrowColor, marginLeft: px2dp(5)}}>随机干货</Text>
                     </View>
                 }
             </View>
@@ -146,26 +147,27 @@ class DiscoveryFragment extends Component{
     }
 
     _renderRowContent(rowData){
+        const {titleColor, subTitleColor, rowItemBackgroundColor, thumbnailColor} = this.props;
         return(
-            <View style={styles.itemContainer}>
+            <View style={[styles.itemContainer, {backgroundColor: rowItemBackgroundColor}]}>
                 <View style={styles.txtPart}>
                     <View style={styles.titlePart}>
-                        <Text style={styles.title} numberOfLines={2}>{rowData.desc}</Text>
+                        <Text style={[styles.title, {color: titleColor}]} numberOfLines={2}>{rowData.desc}</Text>
                     </View>
                     <View style={styles.infoPart}>
-                        <Icon name="ios-pricetag-outline" color="#aaa"/>
-                        <Text style={styles.detailsTxt}>{rowData.type}</Text>
-                        <Icon name="ios-create-outline" color="#aaa"/>
-                        <Text style={styles.detailsTxt}>{rowData.who ? rowData.who : 'null'}</Text>
-                        <Icon name="ios-time-outline" color="#aaa"/>
-                        <Text style={styles.detailsTxt}>{this._handleCreateTime(rowData.publishedAt)}</Text>
+                        <Icon name="ios-pricetag-outline" color={subTitleColor}/>
+                        <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{rowData.type}</Text>
+                        <Icon name="ios-create-outline" color={subTitleColor}/>
+                        <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{rowData.who ? rowData.who : 'null'}</Text>
+                        <Icon name="ios-time-outline" color={subTitleColor}/>
+                        <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{this._handleCreateTime(rowData.publishedAt)}</Text>
                     </View>
                 </View>
                 <View style={styles.imgPart}>
                     {(rowData.images && this.props.isOpenThumbnail) ?
                         <Image style={styles.image} source={{uri: getCorrectImageSizeUrl(rowData.images[0])}} />
                         :
-                        <Image style={styles.image} source={require('../../assets/user_article_no_data.png')}/>
+                        <Image style={[styles.image, {backgroundColor: thumbnailColor}]} source={require('../../assets/user_article_no_data.png')}/>
                     }
                 </View>
             </View>
@@ -175,8 +177,8 @@ class DiscoveryFragment extends Component{
     _renderSeparator(sectionID, rowID, adjacentRowHighlighted){
         return(
             <View key={rowID} style={{height: theme.segment.width, width: theme.screenWidth, flexDirection: 'row'}}>
-                <View style={{flex: 77, backgroundColor: theme.segment.color}}/>
-                <View style={{flex: 23, backgroundColor: '#fff'}}/>
+                <View style={{flex: 77, backgroundColor: this.props.segmentColor}}/>
+                <View style={{flex: 23, backgroundColor: this.props.rowItemBackgroundColor}}/>
             </View>
         );
     }
@@ -215,17 +217,13 @@ class DiscoveryFragment extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: theme.pageBackgroundColor
     },
     btnPanel: {
-        backgroundColor: '#fff',
         height: px2dp(215),
         width: theme.screenWidth,
         marginTop: px2dp(12),
         marginBottom: px2dp(15),
-        borderBottomColor: theme.segment.color,
         borderBottomWidth: theme.segment.width,
-        borderTopColor: theme.segment.color,
         borderTopWidth: theme.segment.width,
         padding: px2dp(17),
     },
@@ -241,10 +239,8 @@ const styles = StyleSheet.create({
     },
     btnCellLabel: {
         marginTop: px2dp(4),
-        color: "#000"
     },
     itemContainer: {
-        backgroundColor: '#fff',
         flexDirection: 'row',
         width: theme.screenWidth,
         height: px2dp(73)
@@ -258,8 +254,7 @@ const styles = StyleSheet.create({
     image: {
         width: px2dp(60),
         height: px2dp(60),
-        resizeMode: 'cover',
-        backgroundColor: '#f1f1f1',
+        resizeMode: 'cover'
     },
     txtPart: {
         flex: 80,
@@ -277,13 +272,12 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
-        color: '#000'
+
     },
-    detailsTxt: {
+    detailsLabel: {
         marginLeft: px2dp(3),
         marginRight: px2dp(13),
-        fontSize: px2dp(10),
-        color: '#aaa'
+        fontSize: px2dp(10)
     },
     footer: {
         flexDirection: 'row',
@@ -294,11 +288,8 @@ const styles = StyleSheet.create({
     },
     fakeListViewHeader: {
         flexDirection: 'row',
-        backgroundColor:'#fff',
         padding: px2dp(8),
-        borderBottomColor:theme.segment.color,
         borderBottomWidth:theme.segment.width,
-        borderTopColor: theme.segment.color,
         borderTopWidth: theme.segment.width,
         alignItems: 'center'
     }
@@ -310,8 +301,15 @@ const mapStateToProps = (state) => {
         loading: state.randomData.loading,
         error: state.randomData.error,
         isRenderFooter: state.randomData.isRenderFooter,
+        isOpenThumbnail: state.settingState.isOpenThumbnail,
         mainThemeColor: state.settingState.colorScheme.mainThemeColor,
-        isOpenThumbnail: state.settingState.isOpenThumbnail
+        pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
+        segmentColor: state.settingState.colorScheme.segmentColor,
+        titleColor: state.settingState.colorScheme.titleColor,
+        subTitleColor: state.settingState.colorScheme.subTitleColor,
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,
+        thumbnailColor: state.settingState.colorScheme.thumbnailColor,
+        arrowColor: state.settingState.colorScheme.arrowColor
     };
 };
 

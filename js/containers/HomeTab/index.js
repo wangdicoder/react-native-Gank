@@ -26,9 +26,9 @@ class HomeFragment extends Component{
     }
 
     render(){
-        const dataSource = this.props.dataSource;
+        const {dataSource, mainThemeColor, pageBackgroundColor, rowItemBackgroundColor, segmentColor} = this.props;
         return(
-            <View style={styles.container}>
+            <View style={[styles.container, {backgroundColor: pageBackgroundColor}]}>
                 <Animated.View style={[styles.toolbar, {opacity: this.state.opacity}]}>
                     <NavigationBar title="最新干货"/>
                 </Animated.View>
@@ -39,8 +39,8 @@ class HomeFragment extends Component{
                         <RefreshControl
                             refreshing={this.props.loading}
                             onRefresh={this._onPress.bind(this, 0)}
-                            tintColor={this.props.mainThemeColor}
-                            colors={[this.props.mainThemeColor]}
+                            tintColor={mainThemeColor}
+                            colors={[mainThemeColor]}
                             title="玩命加载中..."
                         />}
                     >
@@ -63,7 +63,7 @@ class HomeFragment extends Component{
                                             headerTitle={item}/>
                                     );
                                 })}
-                                <View style={styles.footer}>
+                                <View style={[styles.footer, {backgroundColor: rowItemBackgroundColor, borderTopColor: segmentColor}]}>
                                     <TouchableOpacity
                                         onPress={this._onPress.bind(this, 1)}
                                         activeOpacity={theme.touchableOpacityActiveOpacity}>
@@ -127,7 +127,6 @@ class ImageView extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: theme.pageBackgroundColor
     },
     toolbar: {
         position: 'absolute',
@@ -162,9 +161,7 @@ const styles = StyleSheet.create({
         width: theme.screenWidth,
         height: px2dp(70),
         alignItems: 'center',
-        backgroundColor: '#fff',
         justifyContent: 'center',
-        borderTopColor: theme.segment.color,
         borderTopWidth: theme.segment.width
     },
     bottomBtn: {
@@ -188,6 +185,9 @@ const mapStateToProps = (state) => {
         dataSource: state.homeData.dataSource,
         dataTime: state.homeData.dataTime,
         mainThemeColor: state.settingState.colorScheme.mainThemeColor,
+        pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,
+        segmentColor: state.settingState.colorScheme.segmentColor,
         displayOrder: state.settingState.displayOrder
     };
 };

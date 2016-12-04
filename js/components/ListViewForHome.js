@@ -5,13 +5,14 @@
 
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Text, ListView, PixelRatio, Platform, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
+import {connect} from 'react-redux';
 import px2dp from '../utils/px2dp';
 import theme from '../constants/theme';
 import Avatar from './Avatar';
 import Icon from 'react-native-vector-icons/Ionicons';
 import WebViewPage from '../containers/WebViewPage';
 
-export default class ListViewForHome extends Component{
+class ListViewForHome extends Component{
     static propTypes = {
         dataSource: PropTypes.array,
         headerTitle: PropTypes.string
@@ -62,21 +63,22 @@ export default class ListViewForHome extends Component{
     }
 
     _renderRowContent(rowData){
+        const {titleColor, subTitleColor, rowItemBackgroundColor} = this.props;
         return(
-            <View style={styles.rowItem}>
+            <View style={[styles.rowItem, {backgroundColor: rowItemBackgroundColor}]}>
                 <View style={{flexDirection:'row', alignItems:'center'}}>
-                    <Icon name="ios-create-outline" color="#aaa"/>
-                    <Text style={{fontSize: px2dp(10), color: "#aaa"}}> {rowData.who ? rowData.who : 'null'}</Text>
+                    <Icon name="ios-create-outline" color={subTitleColor}/>
+                    <Text style={{fontSize: px2dp(10), color: subTitleColor}}> {rowData.who ? rowData.who : 'null'}</Text>
                 </View>
-                <Text style={styles.rowContent} numberOfLines={2}>{rowData.desc}</Text>
+                <Text style={[styles.rowContent, {color: titleColor}]} numberOfLines={2}>{rowData.desc}</Text>
             </View>
         );
     }
 
     _renderHeader(){
-        const headerTitle = this.props.headerTitle;
+        const {headerTitle, rowItemBackgroundColor, segmentColor} = this.props;
         return(
-            <View style={styles.header}>
+            <View style={[styles.header, {backgroundColor: rowItemBackgroundColor, borderTopColor: segmentColor}]}>
                 <Avatar icon={this.tabIcon[this._judgeIconAttribute(headerTitle)]} width={px2dp(20)} backgroundColor={this.tabColor[this._judgeIconAttribute(headerTitle)]}/>
                 <Text style={styles.headerLabel}>{this.props.headerTitle}</Text>
             </View>
@@ -124,8 +126,6 @@ const styles = StyleSheet.create({
         paddingBottom: px2dp(6),
         paddingLeft: px2dp(15),
         alignItems: 'center',
-        backgroundColor: '#fff',
-        borderTopColor: theme.segment.color,
         borderTopWidth: theme.segment.width
     },
     headerLabel: {
@@ -134,7 +134,6 @@ const styles = StyleSheet.create({
         marginLeft: px2dp(7)
     },
     rowItem: {
-        backgroundColor: '#fff',
         paddingTop: px2dp(10),
         paddingBottom: px2dp(10),
         paddingLeft: px2dp(15),
@@ -142,7 +141,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     rowContent: {
-        fontSize: px2dp(14),
-        color: '#000'
+        fontSize: px2dp(14)
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        segmentColor: state.settingState.colorScheme.segmentColor,
+        titleColor: state.settingState.colorScheme.titleColor,
+        subTitleColor: state.settingState.colorScheme.subTitleColor,
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor
+    };
+};
+
+export default connect(mapStateToProps)(ListViewForHome);

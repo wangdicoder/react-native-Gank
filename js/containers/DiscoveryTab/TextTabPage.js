@@ -21,7 +21,7 @@ class TextTabPage extends BackPageComponent{
 
     render(){
         return(
-            <View style={styles.container}>
+            <View style={[styles.container, {backgroundColor: this.props.pageBackgroundColor}]}>
                 <View style={styles.toolbar}>
                     <NavigationBar
                         title={this.props.title}
@@ -50,7 +50,6 @@ class TextTabPage extends BackPageComponent{
                                 isRenderFooter={this.props.isRenderFooter}
                                 onEndReached={this._listViewOnEndReached.bind(this)}
                                 isFullData={this.props.isFullData}
-                                mainThemeColor={this.props.mainThemeColor}
                                 isOpenThumbnail={this.props.isOpenThumbnail}
                             />
                         )
@@ -80,7 +79,6 @@ class TextTabPage extends BackPageComponent{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: theme.pageBackgroundColor,
         paddingTop: theme.toolbar.paddingTop
     },
     contentContainer: {
@@ -111,6 +109,7 @@ const mapStateToProps = (state) => {
         isFullData: state.targetData.isFullData,
         error: state.targetData.error,
         mainThemeColor: state.settingState.colorScheme.mainThemeColor,
+        pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
         isOpenThumbnail: state.settingState.isOpenThumbnail
     };
 };

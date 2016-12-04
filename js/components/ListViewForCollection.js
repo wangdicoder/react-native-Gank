@@ -5,6 +5,7 @@
 
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Text, ListView, PixelRatio, Platform, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
+import {connect} from 'react-redux';
 import px2dp from '../utils/px2dp';
 import theme from '../constants/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -13,7 +14,7 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import {store} from '../store/index';
 import {unStarData} from '../actions/handleCollectionData';
 
-export default class ListViewForCollection extends Component{
+class ListViewForCollection extends Component{
     static propTypes = {
         dataSource: PropTypes.array
     };
@@ -42,7 +43,7 @@ export default class ListViewForCollection extends Component{
 
     _renderHiddenRow(rowData, sectionID, rowID, rowMap){
         return(
-            <View style={styles.rowBack}>
+            <View style={[styles.rowBack, {backgroundColor: this.props.rowItemBackgroundColor}]}>
                 <TouchableHighlight
                     onPress={this._itemRemoveOnPress.bind(this, rowData)}
                     underlayColor={theme.touchableHighlightUnderlayColor}>
@@ -78,18 +79,19 @@ export default class ListViewForCollection extends Component{
     }
 
     _renderRowContent(rowData){
+        const {titleColor, subTitleColor, rowItemBackgroundColor} = this.props;
         return(
-            <View style={styles.rowItem}>
+            <View style={[styles.rowItem, {backgroundColor: rowItemBackgroundColor}]}>
                 <View style={styles.titlePart}>
-                    <Text style={styles.title} numberOfLines={2}>{rowData.desc}</Text>
+                    <Text style={[styles.title, {color: titleColor}]} numberOfLines={2}>{rowData.desc}</Text>
                 </View>
                 <View style={styles.infoPart}>
-                    <Icon name="ios-pricetag-outline" color="#aaa"/>
-                    <Text style={styles.detailsTxt}>{rowData.type}</Text>
-                    <Icon name="ios-create-outline" color="#aaa"/>
-                    <Text style={styles.detailsTxt}>{rowData.who ? rowData.who : 'null'}</Text>
-                    <Icon name="ios-time-outline" color="#aaa"/>
-                    <Text style={styles.detailsTxt}>{this._handleCreateTime(rowData.publishedAt)}</Text>
+                    <Icon name="ios-pricetag-outline" color={subTitleColor}/>
+                    <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{rowData.type}</Text>
+                    <Icon name="ios-create-outline" color={subTitleColor}/>
+                    <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{rowData.who ? rowData.who : 'null'}</Text>
+                    <Icon name="ios-time-outline" color={subTitleColor}/>
+                    <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{this._handleCreateTime(rowData.publishedAt)}</Text>
                 </View>
             </View>
         );
@@ -97,7 +99,7 @@ export default class ListViewForCollection extends Component{
 
     _renderSeparator(sectionID, rowID, adjacentRowHighlighted){
         return(
-            <View key={rowID} style={{backgroundColor: theme.segment.color, height: theme.segment.width}}/>
+            <View key={rowID} style={{backgroundColor: this.props.segmentColor, height: theme.segment.width}}/>
         );
     }
 
@@ -123,7 +125,6 @@ const styles = StyleSheet.create({
 
     },
     rowItem: {
-        backgroundColor: '#fff',
         height: px2dp(75),
         padding: px2dp(10),
     },
@@ -136,19 +137,17 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     title: {
-        color: '#000'
+
     },
-    detailsTxt: {
+    detailsLabel: {
         marginLeft: px2dp(3),
         marginRight: px2dp(13),
-        fontSize: px2dp(10),
-        color: '#aaa'
+        fontSize: px2dp(10)
     },
     rowBack: {
         flex: 1,
         flexDirection: 'row-reverse',
-        alignItems: 'center',
-        backgroundColor: '#fff',
+        alignItems: 'center'
     },
     removeBtn: {
         height: px2dp(75),
@@ -162,3 +161,14 @@ const styles = StyleSheet.create({
         fontSize: px2dp(16)
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        segmentColor: state.settingState.colorScheme.segmentColor,
+        titleColor: state.settingState.colorScheme.titleColor,
+        subTitleColor: state.settingState.colorScheme.subTitleColor,
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor
+    };
+};
+
+export default connect(mapStateToProps)(ListViewForCollection);

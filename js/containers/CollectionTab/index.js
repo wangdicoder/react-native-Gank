@@ -5,12 +5,10 @@
 
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
 import {View, Text, ScrollView} from 'react-native';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import ListViewForCollection from '../../components/ListViewForCollection';
-import * as Actions from '../../actions/handleCollectionData';
 
 class CollectionFragment extends Component{
     constructor(props){
@@ -19,7 +17,7 @@ class CollectionFragment extends Component{
 
     render(){
         return(
-            <View style={{flex: 1, backgroundColor: theme.pageBackgroundColor}}>
+            <View style={{flex: 1, backgroundColor: this.props.pageBackgroundColor}}>
                 <NavigationBar title="收藏"/>
                 {this.props.dataSource.length > 0 ?
                     <ScrollView>
@@ -36,22 +34,13 @@ class CollectionFragment extends Component{
             </View>
         );
     }
-
-    // componentDidMount(){
-    //     this.props.actions.fetchStarList();
-    // }
 }
 
 const mapStateToProps = (state) => {
     return {
-        dataSource: state.favorData.dataSource
+        dataSource: state.favorData.dataSource,
+        pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
     };
 };
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        actions: bindActionCreators(Actions, dispatch)
-    };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CollectionFragment);
+export default connect(mapStateToProps)(CollectionFragment);
