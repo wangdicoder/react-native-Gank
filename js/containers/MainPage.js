@@ -110,7 +110,7 @@ const styles = {
 
 const mapStateToProps = (state) => {
     return {
-        mainThemeColor: state.settingState.mainThemeColor
+        mainThemeColor: state.settingState.dayMode.mainThemeColor
     };
 };
 

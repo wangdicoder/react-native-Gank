@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 import {View, Text} from 'react-native';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
-import BackPageComponent from '../BackPageComponent';
+import BackPageComponent from '../../components/BackPageComponent';
 
 export default class VideoTabPage extends BackPageComponent{
 

@@ -6,7 +6,7 @@
 import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, Platform, Text, PanResponder, AsyncStorage} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import BackPageComponent from '../BackPageComponent';
+import BackPageComponent from '../../components/BackPageComponent';
 import NavigationBar from '../../components/NavigationBar';
 import px2dp from '../../utils/px2dp';
 import theme from '../../constants/theme';

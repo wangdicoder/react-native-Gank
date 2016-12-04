@@ -7,7 +7,7 @@ import * as TYPES from '../actions/actionTypes';
 
 const initialState = {
     dataSource: [],
-    loading: false,
+    loading: true,
     error: false,
     isRenderFooter: false,
 };

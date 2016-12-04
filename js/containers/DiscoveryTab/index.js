@@ -39,7 +39,7 @@ class DiscoveryFragment extends Component{
     }
 
     _onEndReached(){
-        if(!this.props.isRenderFooter)
+        if(!this.props.isRenderFooter && !this.props.loading)
             this.props.actions.fetchMoreRandomData();
     }
 
@@ -310,7 +310,7 @@ const mapStateToProps = (state) => {
         loading: state.randomData.loading,
         error: state.randomData.error,
         isRenderFooter: state.randomData.isRenderFooter,
-        mainThemeColor: state.settingState.mainThemeColor,
+        mainThemeColor: state.settingState.dayMode.mainThemeColor,
         isOpenThumbnail: state.settingState.isOpenThumbnail
     };
 };

@@ -7,9 +7,24 @@ import colors from '../constants/colors';
 import * as TYPES from '../actions/actionTypes';
 
 const initialState = {
-    mainThemeColor: colors.dodgerBlue,
-    isOpenThumbnail: false,
-    displayOrder: ['Android','iOS','前端','拓展资源','休息视频','App']
+    isOpenThumbnail: true,
+    displayOrder: ['Android','iOS','前端','拓展资源','休息视频','App'],
+    dayMode: {
+        mainThemeColor: colors.dodgerBlue,
+        pageBackgroundColor: '#f4f4f4',
+        segmentColor: '#ccc',
+        titleColor: '#000',
+        subTitleColor: '#aaa',
+        rowItemBackgroundColor: '#fff'
+    },
+    nightMode: {
+        mainThemeColor: 'rgb(47,47,47)', //200
+        pageBackgroundColor: 'rgb(58,58,58)',
+        segmentColor: 'rgb(54,54,54)',
+        titleColor: 'rgb(177,177,177)',
+        subTitleColor: 'rgb(130,130,130)',
+        rowItemBackgroundColor: 'rgb(63,63,63)',
+    }
 }
 
 export default function settingState(state=initialState, action) {
@@ -17,7 +32,11 @@ export default function settingState(state=initialState, action) {
         case TYPES.CHANGE_COLOR:
             return Object.assign({}, state, {
                 ...state,
-                mainThemeColor: action.color
+                mainThemeColor: action.color,
+                dayMode: {
+                    ...state.dayMode,
+                    mainThemeColor: action.color
+                }
             });
 
         case TYPES.OPEN_SHOW_THUMBNAIL:

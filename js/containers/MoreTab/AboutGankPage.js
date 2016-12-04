@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-import BackPageComponent from '../BackPageComponent';
+import BackPageComponent from '../../components/BackPageComponent';
 import NavigationBar from '../../components/NavigationBar';
 import theme from '../../constants/theme';
 

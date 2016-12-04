@@ -7,7 +7,7 @@ import React, {Component, PropTypes} from 'react';
 import {StyleSheet, View, WebView, InteractionManager, Text, TouchableOpacity, ActivityIndicator, Alert, Linking, Clipboard} from 'react-native';
 import theme from '../constants/theme';
 import NavigationBar from '../components/NavigationBar';
-import BackPageComponent from './BackPageComponent';
+import BackPageComponent from '../components/BackPageComponent';
 import Icon from 'react-native-vector-icons/Ionicons';
 import px2dp from '../utils/px2dp';
 import {connect} from 'react-redux';
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        mainThemeColor: state.settingState.mainThemeColor,
+        mainThemeColor: state.settingState.dayMode.mainThemeColor,
         isStarred: state.favorData.isStarred
     };
 };

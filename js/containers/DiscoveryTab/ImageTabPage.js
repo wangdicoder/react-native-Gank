@@ -8,7 +8,7 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, ScrollView, Image} from 'react-native';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
-import BackPageComponent from '../BackPageComponent';
+import BackPageComponent from '../../components/BackPageComponent';
 import getCorrectImageUrl from '../../utils/imageFactory';
 
 export default class ImageTabPage extends BackPageComponent{

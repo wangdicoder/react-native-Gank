@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {StyleSheet, Platform, View, Text, Image, Button, ScrollView, TouchableOpacity} from 'react-native';
-import BackPageComponent from '../BackPageComponent';
+import BackPageComponent from '../../components/BackPageComponent';
 import NavigationBar from '../../components/NavigationBar';
 import theme from '../../constants/theme';
 import colors from '../../constants/colors';
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        mainThemeColor: state.settingState.mainThemeColor
+        mainThemeColor: state.settingState.dayMode.mainThemeColor
     };
 };
 

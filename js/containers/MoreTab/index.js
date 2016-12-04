@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        mainThemeColor: state.settingState.mainThemeColor,
+        mainThemeColor: state.settingState.dayMode.mainThemeColor,
         isOpenThumbnail: state.settingState.isOpenThumbnail
     };
 };

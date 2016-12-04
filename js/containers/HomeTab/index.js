@@ -187,7 +187,7 @@ const mapStateToProps = (state) => {
         hasData: state.homeData.hasData,
         dataSource: state.homeData.dataSource,
         dataTime: state.homeData.dataTime,
-        mainThemeColor: state.settingState.mainThemeColor,
+        mainThemeColor: state.settingState.dayMode.mainThemeColor,
         displayOrder: state.settingState.displayOrder
     };
 };

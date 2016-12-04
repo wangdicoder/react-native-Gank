@@ -11,7 +11,7 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestTargetData';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
-import BackPageComponent from '../BackPageComponent';
+import BackPageComponent from '../../components/BackPageComponent';
 import ListViewWithInfo from '../../components/ListViewWithInfo';
 
 class TextTabPage extends BackPageComponent{
@@ -110,7 +110,7 @@ const mapStateToProps = (state) => {
         pageNumber: state.targetData.pageNumber,
         isFullData: state.targetData.isFullData,
         error: state.targetData.error,
-        mainThemeColor: state.settingState.mainThemeColor,
+        mainThemeColor: state.settingState.dayMode.mainThemeColor,
         isOpenThumbnail: state.settingState.isOpenThumbnail
     };
 };
