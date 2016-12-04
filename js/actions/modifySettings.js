@@ -12,7 +12,6 @@ export function changeColor(color, flag=true) {
         dao.saveThemeColor(color);
     }
 
-    console.log(color);
     return {
         type: TYPES.CHANGE_COLOR,
         color: color
@@ -36,6 +35,18 @@ export function changeShowThumbnail(value, flag=true) {
     }
 }
 
+export function changeDisplayOrder(order, flag=true) {
+    if(flag) {
+        let dao = new SettingsDataDAO();
+        dao.saveDisplayOrder(order);
+    }
+
+    return {
+        type: TYPES.CHANGE_DISPLAY_ORDER,
+        displayOrder: order
+    };
+}
+
 function fetchShowThumbnailValue() {
     return (dispatch) => {
         let dao = new SettingsDataDAO();
@@ -51,11 +62,20 @@ function fetchThemeColorValue() {
     return (dispatch) => {
         let dao = new SettingsDataDAO();
         dao.getThemeColorValue().then((result)=>{
-            console.log('right');
             dispatch(changeColor(result, false));
         }, (error)=>{
-            console.log('wrong');
             dispatch(changeColor(error));
+        });
+    };
+}
+
+function fetchDisplayOrderValue() {
+    return (dispatch) => {
+        let dao = new SettingsDataDAO();
+        dao.getDisplayOrderValue().then((result)=>{
+            dispatch(changeDisplayOrder(result, false));
+        }, (error)=>{
+            dispatch(changeDisplayOrder(error));
         });
     };
 }
@@ -64,5 +84,6 @@ export function initialSettingsStateFacade() {
     return (dispatch)=>{
         dispatch(fetchShowThumbnailValue());
         dispatch(fetchThemeColorValue());
+        dispatch(fetchDisplayOrderValue());
     }
 }

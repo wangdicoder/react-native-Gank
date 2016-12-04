@@ -8,7 +8,8 @@ import * as TYPES from '../actions/actionTypes';
 
 const initialState = {
     mainThemeColor: colors.dodgerBlue,
-    isOpenThumbnail: false
+    isOpenThumbnail: false,
+    displayOrder: ['Android','iOS','前端','拓展资源','休息视频','App']
 }
 
 export default function settingState(state=initialState, action) {
@@ -29,6 +30,12 @@ export default function settingState(state=initialState, action) {
             return Object.assign({}, state, {
                 ...state,
                 isOpenThumbnail: false
+            });
+
+        case TYPES.CHANGE_DISPLAY_ORDER:
+            return Object.assign({}, state, {
+                ...state,
+                displayOrder: action.displayOrder
             });
 
         default:

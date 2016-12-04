@@ -53,7 +53,7 @@ class HomeFragment extends Component{
                                     labelTime={this.props.dataTime}/>
                             </View>
                             <View style={styles.scrollContents}>
-                                {Info.getCategoryList(dataSource).map((item, i) => {
+                                {this.props.displayOrder.map((item, i) => {
                                     if(item !== '福利' && Info.getTargetList(dataSource, item) != null)
                                     return(
                                         <ListViewForHome
@@ -187,7 +187,8 @@ const mapStateToProps = (state) => {
         hasData: state.homeData.hasData,
         dataSource: state.homeData.dataSource,
         dataTime: state.homeData.dataTime,
-        mainThemeColor: state.settingState.mainThemeColor
+        mainThemeColor: state.settingState.mainThemeColor,
+        displayOrder: state.settingState.displayOrder
     };
 };
 

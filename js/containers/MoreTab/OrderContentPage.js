@@ -10,13 +10,21 @@ import BackPageComponent from '../BackPageComponent';
 import NavigationBar from '../../components/NavigationBar';
 import px2dp from '../../utils/px2dp';
 import theme from '../../constants/theme';
+import {changeDisplayOrder} from '../../actions/modifySettings';
+import {connect} from 'react-redux';
+import {store} from '../../store/index';
 
-export default class OrderContentPage extends BackPageComponent{
+class OrderContentPage extends BackPageComponent{
     constructor(props){
         super(props);
-        this.names = ['Android','iOS','前端','拓展资源','休息视频','App'];
         this.items = [];
         this.order = [];
+    }
+
+    _okBtnPressCallback(){
+        store.dispatch(changeDisplayOrder(this.order));
+        this.order = [];
+        this._handleBack();
     }
 
     render(){
@@ -24,10 +32,12 @@ export default class OrderContentPage extends BackPageComponent{
             <View style={styles.container}>
                 <NavigationBar
                     title="首页内容展示顺序"
-                    leftBtnIcon="arrow-back"
+                    leftBtnText="取消"
                     leftBtnPress={this._handleBack.bind(this)}
+                    rightBtnText="确定"
+                    rightBtnPress={this._okBtnPressCallback.bind(this)}
                 />
-                {this.names.map((item, i)=>{
+                {this.props.displayOrder.map((item, i)=>{
                     this.order.push(item);
                     return (
                         <View
@@ -129,11 +139,7 @@ export default class OrderContentPage extends BackPageComponent{
 
     _getTopValueYById(id){
         const height = px2dp(49);
-        return (id + 1) * height + ((Platform.OS === 'android') ? px2dp(20) : px2dp(7));
-    }
-
-    _storeOrder(){
-
+        return (id + 1) * height + ((Platform.OS === 'android') ? px2dp(18) : px2dp(7));
     }
 }
 
@@ -160,3 +166,11 @@ const styles = StyleSheet.create({
         marginLeft: px2dp(20)
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        displayOrder: state.settingState.displayOrder
+    }
+}
+
+export default connect(mapStateToProps)(OrderContentPage);
