@@ -310,7 +310,7 @@ const mapStateToProps = (state) => {
         loading: state.randomData.loading,
         error: state.randomData.error,
         isRenderFooter: state.randomData.isRenderFooter,
-        mainThemeColor: state.settingState.dayMode.mainThemeColor,
+        mainThemeColor: state.settingState.colorScheme.mainThemeColor,
         isOpenThumbnail: state.settingState.isOpenThumbnail
     };
 };

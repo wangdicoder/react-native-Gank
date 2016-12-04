@@ -35,6 +35,22 @@ export function changeShowThumbnail(value, flag=true) {
     }
 }
 
+export function changeNightMode(value, flag=true) {
+    if(flag){
+
+    }
+
+    if(value){
+        return {
+            type: TYPES.OPEN_NIGHT_MODE
+        };
+    }else{
+        return {
+            type: TYPES.CLOSE_NIGHT_MODE
+        };
+    }
+}
+
 export function changeDisplayOrder(order, flag=true) {
     if(flag) {
         let dao = new SettingsDataDAO();

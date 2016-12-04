@@ -8,8 +8,9 @@ import {StyleSheet, Platform, View, Text, TouchableNativeFeedback, TouchableHigh
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
+import {connect} from 'react-redux';
 
-export default class SimpleRowItem extends Component{
+class SimpleRowItem extends Component{
     static propTypes = {
         title: PropTypes.string.isRequired,
         icon: PropTypes.string,
@@ -44,25 +45,25 @@ export default class SimpleRowItem extends Component{
     }
 
     _renderContent(){
-        const {title, icon, renderSegment, iconColor, isShowRightArrow} = this.props;
+        const {title, icon, renderSegment, iconColor, isShowRightArrow, rowItemBackgroundColor, segmentColor, titleColor, arrowColor} = this.props;
         return(
-            <View style={styles.container}>
+            <View style={[styles.container, {backgroundColor: rowItemBackgroundColor}]}>
                 <View style={styles.leftCell}>
                     <View style={[styles.iconBorder, {backgroundColor: iconColor}]}>
-                        <Icon name={icon} color="#fff" size={px2dp(16)}/>
+                        <Icon name={icon} color={rowItemBackgroundColor} size={px2dp(16)}/>
                     </View>
                 </View>
                 <View style={styles.rightCell}>
                     <View style={styles.cell}>
-                        <Text style={styles.title}>{title}</Text>
+                        <Text style={[styles.title, {color: titleColor}]}>{title}</Text>
                         {isShowRightArrow ?
-                            <Icon name="ios-arrow-forward" color={theme.segment.color} size={px2dp(18)}/>
+                            <Icon name="ios-arrow-forward" color={arrowColor} size={px2dp(18)}/>
                             :
                             null
                         }
                     </View>
                     { renderSegment ?
-                        <View style={styles.segmentLine}/>
+                        <View style={[styles.segmentLine, {backgroundColor: segmentColor}]}/>
                         :
                         null
                     }
@@ -77,12 +78,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: theme.screenWidth,
         height: px2dp(40),
-        backgroundColor: '#fff',
         alignItems: 'center'
     },
     title: {
-        color: '#000',
-        marginLeft: 5
+        marginLeft: px2dp(5)
     },
     iconBorder: {
         borderRadius: 5,
@@ -112,7 +111,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     segmentLine: {
-        backgroundColor: theme.segment.color,
         height: theme.segment.width
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        segmentColor: state.settingState.colorScheme.segmentColor,
+        titleColor: state.settingState.colorScheme.titleColor,
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,
+        arrowColor: state.settingState.colorScheme.arrowColor
+    };
+};
+
+export default connect(mapStateToProps)(SimpleRowItem);

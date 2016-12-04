@@ -17,6 +17,7 @@ import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/modifySettings';
 import ShareUtil from '../../utils/ShareUtil';
+import Toast from 'react-native-root-toast';
 
 import ThemeColorPage from './ThemeColorPage';
 import OrderContentPage from './OrderContentPage';
@@ -29,9 +30,16 @@ class MoreFragment extends Component{
     }
 
     render(){
-        const {actions, mainThemeColor, isOpenThumbnail} = this.props;
+        const {
+            actions,
+            isOpenThumbnail,
+            isOpenNightMode,
+            pageBackgroundColor,
+            segmentColor
+        } = this.props;
+
         return(
-            <View style={styles.container}>
+            <View style={[styles.container, {backgroundColor: pageBackgroundColor}]}>
                 <NavigationBar title="更多"/>
                 <ScrollView>
                     {Platform.OS === 'android' ?
@@ -46,20 +54,20 @@ class MoreFragment extends Component{
                             {this._renderTitleContent()}
                         </TouchableHighlight>
                     }
-                    <View style={styles.block}>
+                    <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
                         <RowItem title="福利" icon="md-images" iconColor='lightpink' renderSegment={false} onPress={this._itemClickCallback.bind(this, 5)}/>
                     </View>
-                    <View style={styles.block}>
+                    <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
                         <RowItem title="首页内容展示顺序" icon="md-reorder" iconColor='lightskyblue' onPress={this._itemClickCallback.bind(this, 1)}/>
-                        <RowItem title="自定义主题" icon="md-brush" iconColor={colors.orange} onPress={this._itemClickCallback.bind(this, 2)}/>
+                        <RowItem title="主题颜色" icon="md-brush" iconColor={colors.orange} onPress={this._itemClickCallback.bind(this, 2)}/>
                         {/*<RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple}  onPress={this._itemClickCallback.bind(this, 3)}/>*/}
-                        <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor="#7b68ee" onTintColor={mainThemeColor} switcherValue={false}/>
-                        <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' onTintColor={mainThemeColor} switcherValue={isOpenThumbnail} onValueChange={(value) => actions.changeShowThumbnail(value)} renderSegment={false}/>
+                        <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor="#7b68ee" switcherValue={isOpenNightMode} onValueChange={(value) => actions.changeNightMode(value)}/>
+                        <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' switcherValue={isOpenThumbnail} onValueChange={(value) => actions.changeShowThumbnail(value)} renderSegment={false}/>
                     </View>
-                    <View style={styles.block}>
+                    <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
                         <RowItem title="关于作者" icon="md-happy" iconColor="#9acd32" renderSegment={false} onPress={this._itemClickCallback.bind(this, 4)}/>
                     </View>
-                    <View style={styles.block}>
+                    <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
                         <RowItem title="反馈" icon="md-text" iconColor={colors.lightGreen} onPress={this._itemClickCallback.bind(this, 6)} isShowRightArrow={false}/>
                         <RowItem title="分享" icon="md-share" iconColor={colors.orangeRed} renderSegment={false} onPress={this._itemClickCallback.bind(this, 7)} isShowRightArrow={false}/>
                     </View>
@@ -70,14 +78,15 @@ class MoreFragment extends Component{
     }
 
     _renderTitleContent(){
+        const {mainThemeColor, segmentColor, titleColor, rowItemBackgroundColor} = this.props;
         return(
-            <View style={[styles.block, styles.intro]}>
+            <View style={[styles.block, styles.intro, {backgroundColor: rowItemBackgroundColor, borderBottomColor: segmentColor, borderTopColor: segmentColor}]}>
                 <View style={styles.introLeft}>
-                    <Avatar text="Gank" width={px2dp(50)} backgroundColor={this.props.mainThemeColor}/>
+                    <Avatar text="Gank" width={px2dp(50)} backgroundColor={mainThemeColor}/>
                 </View>
                 <View style={styles.introRight}>
-                    <Text style={styles.title}>Gank.io</Text>
-                    <Icon name="ios-arrow-forward" color={theme.segment.color} size={px2dp(25)}/>
+                    <Text style={[styles.title, {color: titleColor}]}>Gank.io</Text>
+                    <Icon name="ios-arrow-forward" color={segmentColor} size={px2dp(25)}/>
                 </View>
             </View>
         );
@@ -92,7 +101,11 @@ class MoreFragment extends Component{
                 this._switchPage(OrderContentPage);
                 break;
             case 2:
-                this._switchPage(ThemeColorPage);
+                if(this.props.isOpenNightMode){
+                    Toast.show('夜间模式下不可更换主题颜色', {position: px2dp(-80)});
+                    return;
+                }else
+                    this._switchPage(ThemeColorPage);
                 break;
             case 3:
 
@@ -126,12 +139,10 @@ class MoreFragment extends Component{
 const styles = StyleSheet.create({
     container: {
        flex: 1,
-       backgroundColor: theme.pageBackgroundColor
     },
     intro: {
         width: theme.screenWidth,
         height: px2dp(80),
-        backgroundColor: '#fff',
         flexDirection: 'row',
         alignItems: 'center',
         paddingLeft: px2dp(20),
@@ -151,21 +162,23 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: px2dp(23),
-        color: '#000'
     },
     block: {
         marginTop: px2dp(12),
-        borderBottomColor: theme.segment.color,
         borderBottomWidth: theme.segment.width,
-        borderTopColor: theme.segment.color,
         borderTopWidth: theme.segment.width
     }
 });
 
 const mapStateToProps = (state) => {
     return {
-        mainThemeColor: state.settingState.dayMode.mainThemeColor,
-        isOpenThumbnail: state.settingState.isOpenThumbnail
+        isOpenThumbnail: state.settingState.isOpenThumbnail,
+        isOpenNightMode: state.settingState.isOpenNightMode,
+        mainThemeColor: state.settingState.colorScheme.mainThemeColor,
+        pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
+        segmentColor: state.settingState.colorScheme.segmentColor,
+        titleColor: state.settingState.colorScheme.titleColor,
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor
     };
 };
 

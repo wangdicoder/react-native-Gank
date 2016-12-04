@@ -8,16 +8,16 @@ import {StyleSheet, Platform, View, Text, Switch} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
+import {connect} from 'react-redux';
 
-export default class RowItemWithSwitcher extends Component{
+class RowItemWithSwitcher extends Component{
     static propTypes = {
         title: PropTypes.string.isRequired,
         icon: PropTypes.string,
         iconColor: PropTypes.string,
         renderSegment: PropTypes.bool,
         switcherValue: PropTypes.bool,
-        onValueChange: PropTypes.func,
-        onTintColor: PropTypes.string
+        onValueChange: PropTypes.func
     };
 
     static defaultProps = {
@@ -27,21 +27,21 @@ export default class RowItemWithSwitcher extends Component{
     }
 
     render(){
-        const {title, icon, renderSegment, iconColor, switcherValue, onValueChange, onTintColor} = this.props;
+        const {title, icon, renderSegment, iconColor, switcherValue, onValueChange, mainThemeColor, rowItemBackgroundColor, segmentColor, titleColor} = this.props;
         return(
-            <View style={styles.container}>
+            <View style={[styles.container, {backgroundColor: rowItemBackgroundColor}]}>
                 <View style={styles.leftCell}>
                     <View style={[styles.iconBorder, {backgroundColor: iconColor}]}>
-                        <Icon name={icon} color="#fff" size={px2dp(16)}/>
+                        <Icon name={icon} color={rowItemBackgroundColor} size={px2dp(16)}/>
                     </View>
                 </View>
                 <View style={styles.rightCell}>
                     <View style={styles.cell}>
-                        <Text style={styles.title}>{title}</Text>
-                        <Switch value={switcherValue} onValueChange={onValueChange} onTintColor={onTintColor}/>
+                        <Text style={[styles.title, {color: titleColor}]}>{title}</Text>
+                        <Switch value={switcherValue} onValueChange={onValueChange} onTintColor={mainThemeColor}/>
                     </View>
                     { renderSegment ?
-                        <View style={styles.segmentLine}/>
+                        <View style={[styles.segmentLine, {backgroundColor: segmentColor}]}/>
                         :
                         null
                     }
@@ -56,12 +56,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: theme.screenWidth,
         height: px2dp(40),
-        backgroundColor: '#fff',
         alignItems: 'center'
     },
     title: {
-        color: '#000',
-        marginLeft: 5
+        marginLeft: px2dp(5)
     },
     iconBorder: {
         borderRadius: 5,
@@ -91,7 +89,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     segmentLine: {
-        backgroundColor: theme.segment.color,
         height: theme.segment.width
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        mainThemeColor: state.settingState.colorScheme.mainThemeColor,
+        segmentColor: state.settingState.colorScheme.segmentColor,
+        titleColor: state.settingState.colorScheme.titleColor,
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor
+    };
+};
+
+export default connect(mapStateToProps)(RowItemWithSwitcher);

@@ -110,7 +110,7 @@ const mapStateToProps = (state) => {
         pageNumber: state.targetData.pageNumber,
         isFullData: state.targetData.isFullData,
         error: state.targetData.error,
-        mainThemeColor: state.settingState.dayMode.mainThemeColor,
+        mainThemeColor: state.settingState.colorScheme.mainThemeColor,
         isOpenThumbnail: state.settingState.isOpenThumbnail
     };
 };

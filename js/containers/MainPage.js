@@ -22,7 +22,12 @@ class MainPage extends Component{
 
     render(){
         return(
-            <BottomTabBar navigator={this.props.navigator} mainThemeColor={this.props.mainThemeColor}/>
+            <BottomTabBar
+                navigator={this.props.navigator}
+                mainThemeColor={this.props.mainThemeColor}
+                rowItemBackgroundColor={this.props.rowItemBackgroundColor}
+                tabIconColor={this.props.tabIconColor}
+            />
         );
     }
 }
@@ -36,14 +41,14 @@ class BottomTabBar extends Component{
     }
 
     _renderItem(Component, tab, tabName, normalIcon, selectedIcon){
-        const {navigator, mainThemeColor} = this.props;
+        const {navigator, mainThemeColor, tabIconColor} = this.props;
         return(
             <TabNavigator.Item
                 selected={this.state.selectedTab === tab}
                 title={tabName}
-                selectedTitleStyle={{color: mainThemeColor}}
+                selectedTitleStyle={{color: tabIconColor}}
                 renderIcon={() => <Image style={styles.tabBarItemIcon} source={normalIcon} />}
-                renderSelectedIcon={() => <Image style={[styles.tabBarItemIcon, {tintColor: mainThemeColor}]} source={selectedIcon} />}
+                renderSelectedIcon={() => <Image style={[styles.tabBarItemIcon, {tintColor: tabIconColor}]} source={selectedIcon} />}
                 onPress={() => this.setState({ selectedTab: tab })}>
                 {<Component navigator={navigator}/>}
             </TabNavigator.Item>
@@ -54,7 +59,7 @@ class BottomTabBar extends Component{
         return(
             <TabNavigator
                 hidesTabTouch={true}
-                tabBarStyle={styles.tabBarStyle}
+                tabBarStyle={[styles.tabBarStyle, {backgroundColor: this.props.rowItemBackgroundColor}]}
                 sceneStyle={{
                     paddingTop: theme.toolbar.paddingTop, //immersive experience
                     paddingBottom: styles.tabBarStyle.height}}>
@@ -67,25 +72,25 @@ class BottomTabBar extends Component{
     }
 
     componentWillMount(){
-        const mainThemeColor = this.props.mainThemeColor;
+        const tabIconColor = this.props.tabIconColor;
         if(Platform.OS === 'ios') {
             Icon.getImageSource('ios-home-outline', 100, theme.tabButton.normalColor).then((source) => this.setState({homeNormal: source}));
-            Icon.getImageSource('ios-home-outline', 100, mainThemeColor).then((source) => this.setState({homeSelected: source}));
+            Icon.getImageSource('ios-home-outline', 100, tabIconColor).then((source) => this.setState({homeSelected: source}));
             Icon.getImageSource('ios-compass-outline', 100, theme.tabButton.normalColor).then((source) => this.setState({compassNormal: source}));
-            Icon.getImageSource('ios-compass-outline', 100, mainThemeColor).then((source) => this.setState({compassSelected: source}));
+            Icon.getImageSource('ios-compass-outline', 100, tabIconColor).then((source) => this.setState({compassSelected: source}));
             Icon.getImageSource('ios-list-box-outline', 100, theme.tabButton.normalColor).then((source) => this.setState({moreNormal: source}));
-            Icon.getImageSource('ios-list-box-outline', 100, mainThemeColor).then((source) => this.setState({moreSelected: source}));
+            Icon.getImageSource('ios-list-box-outline', 100, tabIconColor).then((source) => this.setState({moreSelected: source}));
             Icon.getImageSource('ios-cube-outline', 100, theme.tabButton.normalColor).then((source) => this.setState({collectionNormal: source}));
-            Icon.getImageSource('ios-cube-outline', 100, mainThemeColor).then((source) => this.setState({collectionSelected: source}));
+            Icon.getImageSource('ios-cube-outline', 100, tabIconColor).then((source) => this.setState({collectionSelected: source}));
         }else if(Platform.OS === 'android'){
             Icon.getImageSource('md-home', 100, theme.tabButton.normalColor).then((source) => this.setState({homeNormal: source}));
-            Icon.getImageSource('md-home', 100, mainThemeColor).then((source) => this.setState({homeSelected: source}));
+            Icon.getImageSource('md-home', 100, tabIconColor).then((source) => this.setState({homeSelected: source}));
             Icon.getImageSource('md-compass', 100, theme.tabButton.normalColor).then((source) => this.setState({compassNormal: source}));
-            Icon.getImageSource('md-compass', 100, mainThemeColor).then((source) => this.setState({compassSelected: source}));
+            Icon.getImageSource('md-compass', 100, tabIconColor).then((source) => this.setState({compassSelected: source}));
             Icon.getImageSource('md-list-box', 100, theme.tabButton.normalColor).then((source) => this.setState({moreNormal: source}));
-            Icon.getImageSource('md-list-box', 100, mainThemeColor).then((source) => this.setState({moreSelected: source}));
+            Icon.getImageSource('md-list-box', 100, tabIconColor).then((source) => this.setState({moreSelected: source}));
             Icon.getImageSource('md-cube', 100, theme.tabButton.normalColor).then((source) => this.setState({collectionNormal: source}));
-            Icon.getImageSource('md-cube', 100, mainThemeColor).then((source) => this.setState({collectionSelected: source}));
+            Icon.getImageSource('md-cube', 100, tabIconColor).then((source) => this.setState({collectionSelected: source}));
         }
     }
 
@@ -95,6 +100,14 @@ class BottomTabBar extends Component{
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        mainThemeColor: state.settingState.colorScheme.mainThemeColor,
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,
+        tabIconColor: state.settingState.colorScheme.tabIconColor
+    };
+};
+
 const styles = {
     tabBarItemIcon: {
         width: px2dp(20),
@@ -102,16 +115,9 @@ const styles = {
     },
     tabBarStyle: {
         height: px2dp(45),
-        backgroundColor: '#fff',
         alignItems: 'center',
         paddingTop: Platform.OS === 'android' ? px2dp(6) : px2dp(3)
     }
 }
-
-const mapStateToProps = (state) => {
-    return {
-        mainThemeColor: state.settingState.dayMode.mainThemeColor
-    };
-};
 
 export default connect(mapStateToProps)(MainPage);

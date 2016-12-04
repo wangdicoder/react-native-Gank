@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        mainThemeColor: state.settingState.dayMode.mainThemeColor,
+        mainThemeColor: state.settingState.colorScheme.mainThemeColor,
         isStarred: state.favorData.isStarred
     };
 };
