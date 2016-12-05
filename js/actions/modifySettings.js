@@ -37,7 +37,8 @@ export function changeShowThumbnail(value, flag=true) {
 
 export function changeNightMode(value, flag=true) {
     if(flag){
-
+        let dao = new SettingsDataDAO();
+        dao.saveOpenNightMode(value);
     }
 
     if(value){
@@ -74,6 +75,17 @@ function fetchShowThumbnailValue() {
     };
 }
 
+function fetchOpenNightModelValue() {
+    return (dispatch) => {
+        let dao = new SettingsDataDAO();
+        dao.getOpenNightModeValue().then((result)=>{
+            dispatch(changeNightMode(result, false));
+        }, (error)=>{
+            dispatch(changeNightMode(error));
+        });
+    };
+}
+
 function fetchThemeColorValue() {
     return (dispatch) => {
         let dao = new SettingsDataDAO();
@@ -101,5 +113,6 @@ export function initialSettingsStateFacade() {
         dispatch(fetchShowThumbnailValue());
         dispatch(fetchThemeColorValue());
         dispatch(fetchDisplayOrderValue());
+        dispatch(fetchOpenNightModelValue());
     }
 }

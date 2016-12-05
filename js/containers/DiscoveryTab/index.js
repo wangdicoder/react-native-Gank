@@ -72,7 +72,7 @@ class DiscoveryFragment extends Component{
     }
 
     _renderHeader(){
-        const {rowItemBackgroundColor, segmentColor} = this.props;
+        const {rowItemBackgroundColor, segmentColor, subTitleColor} = this.props;
         return(
             <View>
                 <View style={[styles.btnPanel, {backgroundColor: rowItemBackgroundColor, borderBottomColor: segmentColor, borderTopColor: segmentColor}]}>
@@ -97,13 +97,13 @@ class DiscoveryFragment extends Component{
                 </View>
                 {this.props.loading ?
                     <View style={[styles.fakeListViewHeader, {backgroundColor: rowItemBackgroundColor, borderBottomColor: segmentColor, borderTopColor: segmentColor}]}>
-                        <Icon name="md-aperture" color={this.props.arrowColor} size={px2dp(16)}/>
-                        <Text style={{color: this.props.arrowColor, marginLeft: px2dp(5)}}>刷新中...</Text>
+                        <Icon name="md-aperture" color={subTitleColor} size={px2dp(16)}/>
+                        <Text style={{color: subTitleColor, marginLeft: px2dp(5)}}>刷新中...</Text>
                     </View>
                     :
                     <View style={[styles.fakeListViewHeader, {backgroundColor: rowItemBackgroundColor, borderBottomColor: segmentColor, borderTopColor: segmentColor}]}>
-                        <Icon name="md-aperture" color={this.props.arrowColor} size={px2dp(16)}/>
-                        <Text style={{color: this.props.arrowColor, marginLeft: px2dp(5)}}>随机干货</Text>
+                        <Icon name="md-aperture" color={subTitleColor} size={px2dp(16)}/>
+                        <Text style={{color: subTitleColor, marginLeft: px2dp(5)}}>随机干货</Text>
                     </View>
                 }
             </View>

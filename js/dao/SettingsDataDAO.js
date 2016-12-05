@@ -3,9 +3,10 @@
  */
 'use strict';
 
-const SHOW_THUMBNAIL = 'showThumbnail';
-const THEME_COLOR = 'themeColor';
-const DISPLAY_ORDER = 'displayOrder';
+const SHOW_THUMBNAIL = '@ShowThumbnail';
+const THEME_COLOR = '@ThemeColor';
+const DISPLAY_ORDER = '@DisplayOrder';
+const NIGHT_MODE = '@NightMode';
 
 import {AsyncStorage} from 'react-native';
 
@@ -25,6 +26,25 @@ export default class SettingsDataDAO{
                         resolve(false);
                 }else{
                     reject(true);
+                }
+            });
+        });
+    }
+
+    saveOpenNightMode(value){
+        AsyncStorage.setItem(NIGHT_MODE, value+'');
+    }
+
+    getOpenNightModeValue(){
+        return new Promise((resolve, reject) => {
+            AsyncStorage.getItem(NIGHT_MODE, (error, result) => {
+                if(!error){
+                    if(result === 'true')
+                        resolve(true);
+                    else
+                        resolve(false);
+                }else{
+                    reject(false);
                 }
             });
         });

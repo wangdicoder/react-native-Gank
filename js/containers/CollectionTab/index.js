@@ -28,7 +28,7 @@ class CollectionFragment extends Component{
                     </ScrollView>
                     :
                     <View style={{flex: 1, justifyContent:'center', alignItems: 'center'}}>
-                        <Text>还没有任何收藏数据，找篇文章收藏吧～</Text>
+                        <Text style={{color: this.props.subTitleColor}}>还没有任何收藏数据，找篇文章收藏吧～</Text>
                     </View>
                 }
             </View>
@@ -40,6 +40,7 @@ const mapStateToProps = (state) => {
     return {
         dataSource: state.favorData.dataSource,
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
+        subTitleColor: state.settingState.colorScheme.subTitleColor,
     };
 };
 
