@@ -14,7 +14,7 @@ import NavigationBar from '../../components/NavigationBar';
 import BackPageComponent from '../../components/BackPageComponent';
 import ListViewWithInfo from '../../components/ListViewWithInfo';
 
-class TextTabPage extends BackPageComponent{
+class TextListPage extends BackPageComponent{
     constructor(props){
         super(props);
     }
@@ -120,5 +120,5 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TextTabPage);
+export default connect(mapStateToProps, mapDispatchToProps)(TextListPage);
 

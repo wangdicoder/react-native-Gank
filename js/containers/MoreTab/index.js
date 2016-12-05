@@ -23,6 +23,7 @@ import ThemeColorPage from './ThemeColorPage';
 import OrderContentPage from './OrderContentPage';
 import AboutGankPage from './AboutGankPage';
 import AboutAuthorPage from './AboutAuthor/index';
+import GirlsPage from './GirlsPage';
 
 class MoreFragment extends Component{
     constructor(props){
@@ -55,11 +56,11 @@ class MoreFragment extends Component{
                         </TouchableHighlight>
                     }
                     <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
-                        <RowItem title="福利" icon="md-images" iconColor='lightpink' renderSegment={false} onPress={this._itemClickCallback.bind(this, 5)}/>
+                        <RowItem title="福利" icon="md-images" iconColor='lightpink' renderSegment={false} onPress={this._itemClickCallback.bind(this, 1)}/>
                     </View>
                     <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
-                        <RowItem title="首页内容展示顺序" icon="md-reorder" iconColor='lightskyblue' onPress={this._itemClickCallback.bind(this, 1)}/>
-                        <RowItem title="主题颜色" icon="md-brush" iconColor={colors.orange} onPress={this._itemClickCallback.bind(this, 2)}/>
+                        <RowItem title="首页内容展示顺序" icon="md-reorder" iconColor='lightskyblue' onPress={this._itemClickCallback.bind(this, 2)}/>
+                        <RowItem title="主题颜色" icon="md-brush" iconColor={colors.orange} onPress={this._itemClickCallback.bind(this, 3)}/>
                         {/*<RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple}  onPress={this._itemClickCallback.bind(this, 3)}/>*/}
                         <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor="#7b68ee" switcherValue={isOpenNightMode} onValueChange={(value) => actions.changeNightMode(value)}/>
                         <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' switcherValue={isOpenThumbnail} onValueChange={(value) => actions.changeShowThumbnail(value)} renderSegment={false}/>
@@ -68,8 +69,8 @@ class MoreFragment extends Component{
                         <RowItem title="关于作者" icon="md-happy" iconColor="#9acd32" renderSegment={false} onPress={this._itemClickCallback.bind(this, 4)}/>
                     </View>
                     <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
-                        <RowItem title="反馈" icon="md-text" iconColor={colors.lightGreen} onPress={this._itemClickCallback.bind(this, 6)} isShowRightArrow={false}/>
-                        <RowItem title="分享" icon="md-share" iconColor={colors.orangeRed} renderSegment={false} onPress={this._itemClickCallback.bind(this, 7)} isShowRightArrow={false}/>
+                        <RowItem title="反馈" icon="md-text" iconColor={colors.lightGreen} onPress={this._itemClickCallback.bind(this, 5)} isShowRightArrow={false}/>
+                        <RowItem title="分享" icon="md-share" iconColor={colors.orangeRed} renderSegment={false} onPress={this._itemClickCallback.bind(this, 6)} isShowRightArrow={false}/>
                     </View>
                     <View style={{height: px2dp(15)}}/>
                 </ScrollView>
@@ -98,32 +99,31 @@ class MoreFragment extends Component{
                 this._switchPage(AboutGankPage);
                 break;
             case 1:
-                this._switchPage(OrderContentPage);
+                this._switchPage(GirlsPage);
                 break;
             case 2:
+                this._switchPage(OrderContentPage);
+                break;
+            case 3:
                 if(this.props.isOpenNightMode){
                     Toast.show('夜间模式下不可更换主题颜色', {position: px2dp(-80)});
                     return;
                 }else
                     this._switchPage(ThemeColorPage);
                 break;
-            case 3:
-
-                break;
             case 4:
                 this._switchPage(AboutAuthorPage);
                 break;
             case 5:
-
-                break;
-            case 6:
                 Linking.canOpenURL('mailto:wangdicoder@gmail.com').then(supported => {
                     if (supported) Linking.openURL('mailto:wangdicoder@gmail.com');
                 });
                 break;
-            case 7:
+            case 6:
                 let share = new ShareUtil();
                 share.share('一款码农必备获取开源信息的神器，快来试试','https://github.com/wangdicoder/GankIO');
+                break;
+            case 7:
                 break;
         }
 

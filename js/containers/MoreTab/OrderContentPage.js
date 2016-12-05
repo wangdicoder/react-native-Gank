@@ -28,8 +28,9 @@ class OrderContentPage extends BackPageComponent{
     }
 
     render(){
+        const {pageBackgroundColor, rowItemBackgroundColor, segmentColor, titleColor} = this.props;
         return(
-            <View style={styles.container}>
+            <View style={[styles.container, {backgroundColor: pageBackgroundColor}]}>
                 <NavigationBar
                     title="首页内容展示顺序"
                     leftBtnText="取消"
@@ -44,9 +45,9 @@ class OrderContentPage extends BackPageComponent{
                             {...this._panResponder.panHandlers}
                             ref={(ref) => this.items[i] = ref}
                             key={i}
-                            style={[styles.item, {top: this._getTopValueYById(i)}]}>
+                            style={[styles.item, {top: this._getTopValueYById(i), backgroundColor: rowItemBackgroundColor, borderBottomColor: segmentColor}]}>
                             <Icon name="ios-menu" size={px2dp(25)} color="#ccc"/>
-                            <Text style={styles.itemTitle}>{item}</Text>
+                            <Text style={[styles.itemTitle, {color: titleColor}]}>{item}</Text>
                         </View>
                     );
                 })}
@@ -146,7 +147,6 @@ class OrderContentPage extends BackPageComponent{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: theme.pageBackgroundColor,
         paddingTop: theme.toolbar.paddingTop,
     },
     item: {
@@ -154,22 +154,23 @@ const styles = StyleSheet.create({
         height: px2dp(49),
         width: theme.screenWidth,
         alignItems: 'center',
-        backgroundColor: '#fff',
         paddingLeft: px2dp(20),
-        borderBottomColor: theme.segment.color,
         borderBottomWidth: theme.segment.width,
         position: 'absolute',
     },
     itemTitle: {
         fontSize: px2dp(15),
-        color: '#000',
         marginLeft: px2dp(20)
     }
 });
 
 const mapStateToProps = (state) => {
     return {
-        displayOrder: state.settingState.displayOrder
+        displayOrder: state.settingState.displayOrder,
+        pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
+        segmentColor: state.settingState.colorScheme.segmentColor,
+        titleColor: state.settingState.colorScheme.titleColor,
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor
     }
 }
 

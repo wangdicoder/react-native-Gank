@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestRandomData';
 import Icon from 'react-native-vector-icons/Ionicons';
-import TextTabPage from './TextTabPage';
+import TextListPage from './TextListPage';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import px2dp from '../../utils/px2dp';
@@ -196,7 +196,7 @@ class DiscoveryFragment extends Component{
     }
 
     _itemPressCallback(title){
-       this._pushScene(TextTabPage, title);
+       this._pushScene(TextListPage, title);
     }
 
     _pushScene(component, title){
