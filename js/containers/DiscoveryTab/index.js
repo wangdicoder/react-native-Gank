@@ -115,9 +115,9 @@ class DiscoveryFragment extends Component{
             return (
                 <View style={styles.footer}>
                     <ActivityIndicator
-                        color={this.props.mainThemeColor}
+                        color={this.props.tabIconColor}
                     />
-                    <Text style={{marginLeft: 10, color: this.props.mainThemeColor}}>拼命获取中...</Text>
+                    <Text style={{marginLeft: 10, color: this.props.tabIconColor}}>拼命获取中...</Text>
                 </View>
             );
         }
@@ -309,7 +309,8 @@ const mapStateToProps = (state) => {
         subTitleColor: state.settingState.colorScheme.subTitleColor,
         rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,
         thumbnailColor: state.settingState.colorScheme.thumbnailColor,
-        arrowColor: state.settingState.colorScheme.arrowColor
+        arrowColor: state.settingState.colorScheme.arrowColor,
+        tabIconColor: state.settingState.colorScheme.tabIconColor
     };
 };
 

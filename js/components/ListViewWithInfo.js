@@ -49,16 +49,16 @@ class ListViewWithInfo extends Component{
             if (this.props.isFullData)
                 return (
                     <View style={styles.footer}>
-                        <Text style={{color: this.props.mainThemeColor}}>已加载全部</Text>
+                        <Text style={{color: this.props.tabIconColor}}>已加载全部</Text>
                     </View>
                 );
             else
                 return (
                     <View style={styles.footer}>
                         <ActivityIndicator
-                            color={this.props.mainThemeColor}
+                            color={this.props.tabIconColor}
                         />
-                        <Text style={{marginLeft: 10, color: this.props.mainThemeColor}}>拼命获取中...</Text>
+                        <Text style={{marginLeft: 10, color: this.props.tabIconColor}}>拼命获取中...</Text>
                     </View>
                 );
         }
@@ -202,7 +202,8 @@ const mapStateToProps = (state) => {
         titleColor: state.settingState.colorScheme.titleColor,
         subTitleColor: state.settingState.colorScheme.subTitleColor,
         rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,
-        thumbnailColor: state.settingState.colorScheme.thumbnailColor
+        thumbnailColor: state.settingState.colorScheme.thumbnailColor,
+        tabIconColor: state.settingState.colorScheme.tabIconColor
     };
 };
 

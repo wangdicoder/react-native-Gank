@@ -32,16 +32,16 @@ class TextListPage extends BackPageComponent{
                 <View style={styles.contentContainer}>
                     {this.props.error ?
                         <View style={styles.indicator}>
-                            <Text style={{color: this.props.mainThemeColor}}>Ooops, 获取数据失败~ </Text>
-                            <Button onPress={this._fethchData.bind(this)} title="重新获取" color={this.props.mainThemeColor}/>
+                            <Text style={{color: this.props.tabIconColor}}>Ooops, 获取数据失败~ </Text>
+                            <Button onPress={this._fethchData.bind(this)} title="重新获取" color={this.props.tabIconColor}/>
                         </View>
                         :
                         (this.props.loading ?
                             <View style={styles.indicator}>
                                 <ActivityIndicator
-                                    color={this.props.mainThemeColor}
+                                    color={this.props.tabIconColor}
                                 />
-                                <Text style={{marginLeft: 10, color: this.props.mainThemeColor}}>获取中...</Text>
+                                <Text style={{marginLeft: 10, color: this.props.tabIconColor}}>获取中...</Text>
                             </View>
                             :
                             <ListViewWithInfo
@@ -110,6 +110,7 @@ const mapStateToProps = (state) => {
         error: state.targetData.error,
         mainThemeColor: state.settingState.colorScheme.mainThemeColor,
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
+        tabIconColor: state.settingState.colorScheme.tabIconColor,
         isOpenThumbnail: state.settingState.isOpenThumbnail
     };
 };

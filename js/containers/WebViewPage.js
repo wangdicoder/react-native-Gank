@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, WebView, InteractionManager, Text, TouchableOpacity, ActivityIndicator, Alert, Linking, Clipboard} from 'react-native';
+import {StyleSheet, View, WebView, InteractionManager, Text, TouchableOpacity, ActivityIndicator, Alert, Linking, Clipboard, Modal} from 'react-native';
 import theme from '../constants/theme';
 import NavigationBar from '../components/NavigationBar';
 import BackPageComponent from '../components/BackPageComponent';
@@ -20,16 +20,14 @@ class WebViewPage extends BackPageComponent{
     constructor(props){
         super(props);
         this.state = {
-            didMount: false
+            didMount: false,
+            showMoreContent: false
         };
         this.bottomIconNames = ['ios-arrow-back-outline',
                                 'ios-arrow-forward-outline',
-                                'ios-refresh-outline',
-                                'ios-copy-outline',
-                                'ios-browsers-outline',
-                                'ios-share-outline'
+                                'ios-refresh-outline'
                                 ];
-        this.bottomIconSize = [px2dp(25),px2dp(25),px2dp(32),px2dp(25), px2dp(25),px2dp(25)];
+        this.bottomIconSize = [px2dp(25),px2dp(25),px2dp(32)];
     }
 
     render(){
@@ -50,13 +48,28 @@ class WebViewPage extends BackPageComponent{
                         null
                     }
                 </View>
+                <Modal
+                    transparent={true}
+                    visible={this.state.showMoreContent}
+                    onRequestClose={this._btnOnPressCallback.bind(this, 9)}>
+                    <View style={[styles.moreContentContainerBackground, {backgroundColor: 'rgba(0,0,0,0.1)'}]}>
+                        <View style={[styles.moreContentContainer, {backgroundColor: this.props.rowItemBackgroundColor}]}>
+                            {this._renderModalItem(0, 'ios-bowtie-outline', '查看完整标题')}
+                            {this._renderModalItem(4, 'ios-copy-outline', '复制链接')}
+                            {this._renderModalItem(5, 'ios-browsers-outline', '在浏览器中打开')}
+                            {this._renderModalItem(6, 'ios-share-outline', '分享此内容')}
+                            {this._renderModalItem(9, 'ios-close-circle-outline', '关闭')}
+                        </View>
+                    </View>
+                </Modal>
+
                 <View style={styles.toolbar}>
                     <NavigationBar
                         title="详细内容"
                         leftBtnIcon="arrow-back"
                         leftBtnPress={this._handleBack.bind(this)}
-                        rightBtnText="标题"
-                        rightBtnPress={this._btnOnPressCallback.bind(this, 0)}
+                        rightBtnIcon="more"
+                        rightBtnPress={this._btnOnPressCallback.bind(this, 9)}
                     />
                 </View>
                 <View style={[styles.bottomInfoBar, {backgroundColor: this.props.webViewToolbarColor, borderTopColor: this.props.segmentColor}]}>
@@ -91,11 +104,21 @@ class WebViewPage extends BackPageComponent{
         );
     }
 
+    _renderModalItem(btnId, icon, title){
+        return(
+            <TouchableOpacity
+                onPress={this._btnOnPressCallback.bind(this, btnId)}
+                activeOpacity={theme.touchableOpacityActiveOpacity}>
+                <ModalItem icon={icon} title={title} titleColor={this.props.titleColor}/>
+            </TouchableOpacity>
+        );
+    }
+
     _renderLoading(){
         return(
             <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}>
-                <ActivityIndicator color={this.props.mainThemeColor} size="large"/>
-                <Text style={{marginTop: px2dp(10), color: this.props.mainThemeColor}}>玩命加载中...</Text>
+                <ActivityIndicator color={this.props.tabIconColor} size="large"/>
+                <Text style={{marginTop: px2dp(10), color: this.props.tabIconColor}}>玩命加载中...</Text>
             </View>
         );
     }
@@ -144,10 +167,32 @@ class WebViewPage extends BackPageComponent{
             this.props.actions.unStarData(this.props.rowData);
         }else if(id === 8){
             this.props.actions.starData(this.props.rowData);
+        }else if(id === 9){
+            this.setState({showMoreContent: !this.state.showMoreContent});
         }
 
     }
+}
 
+class ModalItem extends Component{
+    static propTypes = {
+        icon: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        titleColor: PropTypes.string
+    };
+
+    render(){
+        return(
+            <View style={styles.modalItem}>
+                <View style={{flex: 20}}>
+                    <Icon name={this.props.icon} size={px2dp(20)} color={this.props.titleColor}/>
+                </View>
+                <View style={{flex: 80}}>
+                    <Text style={{color: this.props.titleColor}}>{this.props.title}</Text>
+                </View>
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -178,6 +223,30 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         zIndex: 1
+    },
+    moreContentContainerBackground: {
+        position: 'absolute',
+        top: 0,
+        width: theme.screenWidth,
+        height: theme.screenHeight
+    },
+    moreContentContainer: {
+        position: 'absolute',
+        right: px2dp(5),
+        top: theme.toolbar.height,
+        width: px2dp(150),
+        height: px2dp(160),
+        borderRadius: 5,
+        paddingLeft: px2dp(10),
+        paddingRight: px2dp(10),
+        paddingTop: px2dp(5),
+        paddingBottom: px2dp(5)
+    },
+    modalItem: {
+        width: px2dp(150),
+        height: px2dp(30),
+        flexDirection: 'row',
+        alignItems: 'center'
     }
 });
 
@@ -187,6 +256,9 @@ const mapStateToProps = (state) => {
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
         webViewToolbarColor: state.settingState.colorScheme.webViewToolbarColor,
         segmentColor: state.settingState.colorScheme.segmentColor,
+        titleColor: state.settingState.colorScheme.titleColor,
+        tabIconColor: state.settingState.colorScheme.tabIconColor,
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,
         isStarred: state.favorData.isStarred
     };
 };
