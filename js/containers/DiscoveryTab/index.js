@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, View, Text, ListView, Image, Platform, TouchableNativeFeedback, TouchableOpacity, RefreshControl, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, Text, ListView, Image, Platform, TouchableNativeFeedback, TouchableHighlight, TouchableOpacity, RefreshControl, ActivityIndicator} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestRandomData';
@@ -40,7 +40,7 @@ class DiscoveryFragment extends Component{
 
     _onEndReached(){
         if(!this.props.isRenderFooter && !this.props.loading)
-            this.props.actions.fetchMoreRandomData();
+            this.props.actions.fetchRandomData(true);
     }
 
     render(){

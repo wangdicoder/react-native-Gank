@@ -60,7 +60,7 @@ class MoreFragment extends Component{
                     </View>
                     <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
                         <RowItem title="首页内容展示顺序" icon="md-reorder" iconColor='lightskyblue' onPress={this._itemClickCallback.bind(this, 2)}/>
-                        <RowItem title="主题颜色" icon="md-brush" iconColor={colors.orange} onPress={this._itemClickCallback.bind(this, 3)}/>
+                        <RowItem title="主题颜色" icon="ios-color-palette" iconColor={colors.orange} onPress={this._itemClickCallback.bind(this, 3)}/>
                         {/*<RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple}  onPress={this._itemClickCallback.bind(this, 3)}/>*/}
                         <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor="#7b68ee" switcherValue={isOpenNightMode} onValueChange={(value) => actions.changeNightMode(value)}/>
                         <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' switcherValue={isOpenThumbnail} onValueChange={(value) => actions.changeShowThumbnail(value)} renderSegment={false}/>

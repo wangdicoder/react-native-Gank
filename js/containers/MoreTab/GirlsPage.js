@@ -17,11 +17,12 @@ class GirlsPage extends BackPageComponent{
         const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             dataSource: ds,
-            dataBlob1: [],
-            dataBlob2: [],
-            imageHeight: 200,
+            dataBlob: [],
+            imageHeight: 20,
+            imageWidth: 20,
+            load: false
         };
-        this.flag = true;
+        this.url = 'http://ww4.sinaimg.cn/large/610dc034gw1fa0ppsw0a7j20u00u0thp.jpg';
     }
 
     render(){
@@ -36,66 +37,59 @@ class GirlsPage extends BackPageComponent{
                         leftBtnPress={this._handleBack.bind(this)}/>
                 </View>
 
-                <View style={{flexDirection: 'row'}}>
+                {this.state.load ?
                     <ListView
-                        ref={(ref)=> this.listView1 = ref}
-                        renderRow={this._renderRow.bind(this)}
                         enableEmptySections={true}
-                        dataSource={this.state.dataSource.cloneWithRows(this.state.dataBlob1)}
-                        onScroll={this._onScroll.bind(this)}
-                        //scrollEventThrottle={200}
-                        onScrollBeginDrag={() => this.flag = true}
-                        showsVerticalScrollIndicator={false}
-                        onEndReached={()=>ToastAndroid.show('end', ToastAndroid.SHORT)}
-                        onEndReachedThreshold={5}
-                    />
-                    <ListView
-                        ref={(ref)=> this.listView2 = ref}
+                        dataSource={this.state.dataSource.cloneWithRows(this.state.dataBlob)}
                         renderRow={this._renderRow.bind(this)}
-                        enableEmptySections={true}
-                        dataSource={this.state.dataSource.cloneWithRows(this.state.dataBlob2)}
-                        onScroll={this._onScroll.bind(this)}
-                        scrollEventThrottle={200}
-                        onScrollBeginDrag={() => this.flag = false}
-                        onEndReached={()=>ToastAndroid.show('end', ToastAndroid.SHORT)}
-                        onEndReachedThreshold={5}
                     />
-                </View>
+                    :
+                    null
+                }
             </View>
         );
     }
 
-    _onScroll(event){
-        var offsetY = event.nativeEvent.contentOffset.y;
-        if(this.flag)
-            this.listView2.scrollTo({y: offsetY, animated: false});
-        else
-            this.listView1.scrollTo({y: offsetY, animated: false});
-    }
-
     _renderRow(rowData) {
         return (
-            <View>
-                <Image style={{width: theme.screenWidth/2, height: this._randomHeight()}}
-                       source={{uri: this._handleImageToSmallSize(rowData.url)}}/>
+            <View style={styles.rowItem}>
+                <Image style={{width: rowData.leftWidth, height: theme.screenWidth/2, marginRight: 3}}
+                       source={{uri: rowData.leftUrl}}/>
+                <Image style={{width: rowData.rightWidth, height: theme.screenWidth/2, marginLeft: 3}}
+                       source={{uri: rowData.rightUrl}}/>
             </View>
         );
     }
 
     componentDidMount(){
         InteractionManager.runAfterInteractions(()=>{
-            fetch('http://gank.io/api/data/%E7%A6%8F%E5%88%A9/20/1').then(response => response.json())
+            fetch('http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/1').then(response => response.json())
                 .then(json => {
+                    var results = json.results;
+                    var dataBlob = [];
+
+                    for(let i=0; i<results.length; i=i+2) {
+                        const leftWidth = this._randomWidth();
+                        let rowData = {
+                            leftUrl: this._handleImageToSmallSize(results[i].url),
+                            rightUrl: this._handleImageToSmallSize(results[i+1].url),
+                            leftWidth: leftWidth-3-6,
+                            rightWidth: theme.screenWidth - leftWidth - 3 -6
+                        }
+                        dataBlob.push(rowData);
+                    }
+
                     this.setState({
-                        dataBlob1: json.results.slice(0,10),
-                        dataBlob2: json.results.slice(10)
+                        dataBlob: dataBlob,
+                        load: true
                     });
                 });
+
         });
     }
 
-    _randomHeight(){
-        return Math.floor((Math.random() * 100) + 150);
+    _randomWidth(){
+        return Math.floor((Math.random() * theme.screenWidth/5) + theme.screenWidth/5*2);
     }
 
     _handleImageToSmallSize(url){
@@ -109,17 +103,17 @@ const styles = StyleSheet.create({
         paddingTop: theme.toolbar.paddingTop
     },
     toolbar: {
-        position: 'absolute',
+        // position: 'absolute',
+        // width: theme.screenWidth,
+        // zIndex: 1
+    },
+    rowItem: {
+        flexDirection: 'row',
         width: theme.screenWidth,
-        zIndex: 1
-    },
-    img1: {
-        width: theme.screenWidth/2,
-        height: 200
-    },
-    img2: {
-        width: theme.screenWidth/2,
-        height: 170
+        height: theme.screenWidth/2+6,
+        paddingLeft: 6,
+        paddingRight: 6,
+        paddingBottom: 6
     }
 });
 

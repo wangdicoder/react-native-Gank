@@ -10,7 +10,7 @@ import fetchWithTimeout from '../utils/fetchWithTimeout';
 function fetchSuccess(json) {
     return {
         type: TYPES.FETCH_RANDOM_DATA_SUCCESS,
-        dataSource: json.results
+        dataSource: json
     };
 }
 
@@ -29,7 +29,7 @@ function fetchRequest() {
 function fetchMoreDataSuccess(json) {
     return {
         type: TYPES.FETCH_RANDOM_MORE_DATA_SUCCESS,
-        dataSource: json.results
+        dataSource: json
     };
 }
 
@@ -45,30 +45,39 @@ function fetchMoreDataFailure() {
     };
 }
 
-export function fetchRandomData() {
-    var url = fetchUrl.random + 'Android/10';
-    return (dispatch) => {
-        dispatch(fetchRequest());
-        fetchWithTimeout(5000, fetch(url))
-            .then((response)=> response.json())
-            .then((json) => {
-                dispatch(fetchSuccess(json));
-            }).catch((error) => {
-                dispatch(fetchFailure());
-            });
-    };
-}
+export function fetchRandomData(isMoreData=false) {
+    var results = [];
+    const randomCategory = ['Android/1','iOS/1','前端/1','休息视频/1','拓展资源/1','App/1','瞎推荐/1'];
+    var index = 0;
 
-export function fetchMoreRandomData() {
-    var url = fetchUrl.random + 'Android/10';
-    return (dispatch) => {
-        dispatch(fetchMoreDataRequest());
-        fetchWithTimeout(5000, fetch(url))
+    function fetchCategoryData(dispatch) {
+        fetchWithTimeout(5000, fetch(fetchUrl.random + randomCategory[Math.floor(Math.random()*7)]))
             .then((response)=> response.json())
             .then((json) => {
-                dispatch(fetchMoreDataSuccess(json));
+                index++;
+                results = results.concat(json.results);
+
+                if(index >= 10) {
+                    if (isMoreData)
+                        dispatch(fetchMoreDataSuccess(results));
+                    else
+                        dispatch(fetchSuccess(results));
+                }else
+                    fetchCategoryData(dispatch);
             }).catch((error) => {
-            dispatch(fetchMoreDataFailure());
+            if(isMoreData)
+                dispatch(fetchMoreDataFailure());
+            else
+                dispatch(fetchFailure());
         });
-    };
+    }
+
+    return (dispatch) => {
+        if(isMoreData)
+            dispatch(fetchMoreDataRequest());
+        else
+            dispatch(fetchRequest());
+
+        fetchCategoryData(dispatch);
+    }
 }

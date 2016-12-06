@@ -54,9 +54,9 @@ class WebViewPage extends BackPageComponent{
                     onRequestClose={this._btnOnPressCallback.bind(this, 9)}>
                     <View style={[styles.moreContentContainerBackground, {backgroundColor: 'rgba(0,0,0,0.1)'}]}>
                         <View style={[styles.moreContentContainer, {backgroundColor: this.props.rowItemBackgroundColor}]}>
-                            {this._renderModalItem(0, 'ios-bowtie-outline', '查看完整标题')}
-                            {this._renderModalItem(4, 'ios-copy-outline', '复制链接')}
-                            {this._renderModalItem(5, 'ios-browsers-outline', '在浏览器中打开')}
+                            {this._renderModalItem(0, 'ios-paper-outline', '查看完整标题')}
+                            {this._renderModalItem(4, 'ios-clipboard-outline', '复制链接')}
+                            {this._renderModalItem(5, 'ios-open-outline', '在浏览器中打开')}
                             {this._renderModalItem(6, 'ios-share-outline', '分享此内容')}
                             {this._renderModalItem(9, 'ios-close-circle-outline', '关闭')}
                         </View>
