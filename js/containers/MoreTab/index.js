@@ -34,6 +34,7 @@ class MoreFragment extends Component{
             actions,
             isOpenThumbnail,
             isOpenNightMode,
+            isAutoFetch,
             pageBackgroundColor,
             segmentColor
         } = this.props;
@@ -60,7 +61,7 @@ class MoreFragment extends Component{
                         {/*<RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple}  onPress={this._itemClickCallback.bind(this, 3)}/>*/}
                         <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor="#7b68ee" switcherValue={isOpenNightMode} onValueChange={(value) => actions.changeNightMode(value)}/>
                         <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' switcherValue={isOpenThumbnail} onValueChange={(value) => actions.changeShowThumbnail(value)} />
-                        <RowItemWithSwitcher title="自动刷新首页数据" icon="md-refresh" iconColor='#ffd700' switcherValue={true} onValueChange={(value) => {}} renderSegment={false}/>
+                        <RowItemWithSwitcher title="自动刷新首页数据" icon="md-refresh" iconColor='#ffd700' switcherValue={isAutoFetch} onValueChange={(value) => {actions.changeAutoFetch(value)}} renderSegment={false}/>
                     </View>
                     <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
                         <RowItem title="关于作者" icon="md-happy" iconColor="#9acd32" renderSegment={false} onPress={this._itemClickCallback.bind(this, 4)}/>
@@ -171,6 +172,7 @@ const mapStateToProps = (state) => {
     return {
         isOpenThumbnail: state.settingState.isOpenThumbnail,
         isOpenNightMode: state.settingState.isOpenNightMode,
+        isAutoFetch: state.settingState.isAutoFetch,
         mainThemeColor: state.settingState.colorScheme.mainThemeColor,
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
         segmentColor: state.settingState.colorScheme.segmentColor,

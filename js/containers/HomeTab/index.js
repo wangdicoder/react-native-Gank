@@ -15,6 +15,7 @@ import {getCurrentDate} from '../../utils/getDate';
 import * as Info from '../../utils/handleHomeDataSource';
 import ListViewForHome from '../../components/ListViewForHome';
 import colors from '../../constants/colors';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 class HomeFragment extends Component{
     constructor(props){
@@ -41,12 +42,12 @@ class HomeFragment extends Component{
                             onRefresh={this._onPress.bind(this, 0)}
                             tintColor={mainThemeColor}
                             colors={[mainThemeColor]}
-                            title="玩命加载中..."
+                            title="拼命加载中..."
                         />}
                     >
                     {(this.props.error && !this.props.hasData) ?
                         <View style={styles.indicator}>
-                            <Text style={{color: this.props.tabIconColor}}>Ooops, 获取数据失败~ </Text>
+                            <Text style={{color: this.props.tabIconColor}}>Ooops, 获取数据失败</Text>
                         </View>
                         :
                         ((this.props.hasData && Info.getCategoryList(dataSource).length > 0) ?
@@ -90,13 +91,28 @@ class HomeFragment extends Component{
         );
     }
 
+    _fetchData(){
+        this.props.actions.fetchDataIfNeed(getCurrentDate());
+    }
+
     componentDidMount(){
-        this.props.actions.fetchData(getCurrentDate());
+        RCTDeviceEventEmitter.addListener('fetch', this._handleEventEmitter.bind(this));
+    }
+
+    componentWillUnmount(){
+        RCTDeviceEventEmitter.removeListener('fetch', this._handleEventEmitter.bind(this));
+    }
+
+    _handleEventEmitter(value){
+        if(value)
+            this._fetchData();
+        else
+            this.props.actions.onlyFetchLocalData(getCurrentDate());
     }
 
     _onPress(id) {
         if (id === 0)
-            this.props.actions.fetchData(getCurrentDate());
+            this._fetchData();
         else if (id === 1)
             ;
     }
@@ -195,11 +211,11 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        loading: state.homeData.loading,
-        hasData: state.homeData.hasData,
-        dataSource: state.homeData.dataSource,
-        dataTime: state.homeData.dataTime,
-        error: state.homeData.error,
+        loading: state.homeDataState.loading,
+        hasData: state.homeDataState.hasData,
+        dataSource: state.homeDataState.dataSource,
+        dataTime: state.homeDataState.dataTime,
+        error: state.homeDataState.error,
         mainThemeColor: state.settingState.colorScheme.mainThemeColor,
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
         rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,

@@ -5,6 +5,7 @@
 
 import * as TYPES from './actionTypes';
 import SettingsDataDAO from '../dao/SettingsDataDAO';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 export function changeColor(color, flag=true) {
     if(flag) {
@@ -31,6 +32,26 @@ export function changeShowThumbnail(value, flag=true) {
     }else {
         return {
             type: TYPES.CLOSE_SHOW_THUMBNAIL
+        };
+    }
+}
+
+export function changeAutoFetch(value, flag=true, emitter=false) {
+    if(flag){
+        let dao = new SettingsDataDAO();
+        dao.saveAutoFetchHomeData(value);
+    }
+
+    if(emitter) // for only sending notification once
+        RCTDeviceEventEmitter.emit('fetch', value);
+
+    if(value){
+        return {
+            type: TYPES.OPEN_AUTO_FETCH
+        };
+    }else{
+        return {
+            type: TYPES.CLOSE_AUTO_FETCH
         };
     }
 }
@@ -86,6 +107,17 @@ function fetchOpenNightModelValue() {
     };
 }
 
+function fetchAutoFetchValue() {
+    return (dispatch) => {
+        let dao = new SettingsDataDAO();
+        dao.getAutoFetchHomeDataValue().then((result)=>{
+            dispatch(changeAutoFetch(result, false, true));
+        }, (error)=>{
+            dispatch(changeAutoFetch(error, false, true));
+        });
+    };
+}
+
 function fetchThemeColorValue() {
     return (dispatch) => {
         let dao = new SettingsDataDAO();
@@ -114,5 +146,6 @@ export function initialSettingsStateFacade() {
         dispatch(fetchThemeColorValue());
         dispatch(fetchDisplayOrderValue());
         dispatch(fetchOpenNightModelValue());
+        dispatch(fetchAutoFetchValue());
     }
 }

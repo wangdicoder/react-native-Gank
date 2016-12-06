@@ -297,10 +297,10 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        dataSource: state.randomData.dataSource,
-        loading: state.randomData.loading,
-        error: state.randomData.error,
-        isRenderFooter: state.randomData.isRenderFooter,
+        dataSource: state.randomDataState.dataSource,
+        loading: state.randomDataState.loading,
+        error: state.randomDataState.error,
+        isRenderFooter: state.randomDataState.isRenderFooter,
         isOpenThumbnail: state.settingState.isOpenThumbnail,
         mainThemeColor: state.settingState.colorScheme.mainThemeColor,
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,

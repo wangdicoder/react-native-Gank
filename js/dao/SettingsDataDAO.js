@@ -7,6 +7,7 @@ const SHOW_THUMBNAIL = '@ShowThumbnail';
 const THEME_COLOR = '@ThemeColor';
 const DISPLAY_ORDER = '@DisplayOrder';
 const NIGHT_MODE = '@NightMode';
+const AUTO_FETCH = '@AutoFetch';
 
 import {AsyncStorage} from 'react-native';
 
@@ -19,6 +20,25 @@ export default class SettingsDataDAO{
     getShowThumbnailValue() {
         return new Promise((resolve, reject) => {
             AsyncStorage.getItem(SHOW_THUMBNAIL, (error, result) => {
+                if(!error && result){
+                    if(result === 'true')
+                        resolve(true);
+                    else
+                        resolve(false);
+                }else{
+                    reject(true);
+                }
+            });
+        });
+    }
+
+    saveAutoFetchHomeData(value){
+        AsyncStorage.setItem(AUTO_FETCH, value ? 'true' : 'false');
+    }
+
+    getAutoFetchHomeDataValue() {
+        return new Promise((resolve, reject) => {
+            AsyncStorage.getItem(AUTO_FETCH, (error, result) => {
                 if(!error && result){
                     if(result === 'true')
                         resolve(true);

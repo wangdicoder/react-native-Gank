@@ -60,6 +60,7 @@ class TextListPage extends BackPageComponent{
     }
 
     componentDidMount(){
+        super.componentDidMount();  // must invoke it for the back button event
         //InteractionManager.runAfterInteractions(()=>{
         this._fethchData();
         //});
@@ -102,12 +103,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        loading: state.targetData.loading,
-        dataSource: state.targetData.dataSource,
-        isRenderFooter: state.targetData.isRenderFooter,
-        pageNumber: state.targetData.pageNumber,
-        isFullData: state.targetData.isFullData,
-        error: state.targetData.error,
+        loading: state.targetDataState.loading,
+        dataSource: state.targetDataState.dataSource,
+        isRenderFooter: state.targetDataState.isRenderFooter,
+        pageNumber: state.targetDataState.pageNumber,
+        isFullData: state.targetDataState.isFullData,
+        error: state.targetDataState.error,
         mainThemeColor: state.settingState.colorScheme.mainThemeColor,
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
         tabIconColor: state.settingState.colorScheme.tabIconColor,

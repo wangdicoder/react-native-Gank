@@ -10,7 +10,7 @@ const initialState = {
     isStarred: false
 };
 
-export default function favorData(state=initialState, action) {
+export default function favorDataState(state=initialState, action) {
     switch(action.type){
         case TYPES.UPDATE_STAR_LIST:
             return Object.assign({}, state, {

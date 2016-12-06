@@ -4,12 +4,12 @@
 'use strict';
 
 import {combineReducers} from 'redux';
-import homeData from './homeData';
-import targetData from './targetData';
+import homeDataState from './homeDataState';
+import targetDataState from './targetDataState';
 import settingState from './settingState';
-import favorData from './favorData';
-import randomData from './randomData';
+import favorDataState from './favorDataState';
+import randomDataState from './randomDataState';
 
 export default combineReducers({
-    homeData, targetData, settingState, favorData, randomData
+    homeDataState, targetDataState, settingState, favorDataState, randomDataState
 });

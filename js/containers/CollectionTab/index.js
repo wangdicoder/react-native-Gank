@@ -38,7 +38,7 @@ class CollectionFragment extends Component{
 
 const mapStateToProps = (state) => {
     return {
-        dataSource: state.favorData.dataSource,
+        dataSource: state.favorDataState.dataSource,
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
         subTitleColor: state.settingState.colorScheme.subTitleColor,
     };

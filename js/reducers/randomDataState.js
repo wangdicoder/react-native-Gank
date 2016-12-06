@@ -12,7 +12,7 @@ const initialState = {
     isRenderFooter: false,
 };
 
-export default function randomData(state=initialState, action) {
+export default function randomDataState(state=initialState, action) {
     switch(action.type){
         case TYPES.FETCH_RANDOM_DATA_REQUEST:
             return Object.assign({}, state, {

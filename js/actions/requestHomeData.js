@@ -37,7 +37,20 @@ function isValidData(responseData) {
     return false;
 }
 
-export function fetchData(date) {
+export function onlyFetchLocalData(date) {
+    return (dispatch)=> {
+        var dao = new HomeDataDAO();
+        dao.fetchLocalData(date).then((localData) => {
+            //Toast.show('local', {position: px2dp(-80)});
+            dispatch(receiveData(localData, date));
+        }, (localData) => {
+            //Toast.show('local', {position: px2dp(-80)});
+            dispatch(onlyFetchLocalData(getYesterdayFromDate(date)));
+        });
+    }
+}
+
+export function fetchDataIfNeed(date) {
     const url = fetchUrl.daily + date;
     return (dispatch) => {
         dispatch(requestData());
@@ -58,7 +71,7 @@ export function fetchData(date) {
                         if(localData === null) {
                             //if today's data is also null, it will fetch yesterday's data
                             Toast.show('今日未更新，为您获取往日干货', {position: px2dp(-80)});
-                            dispatch(fetchData(getYesterdayFromDate(date)));
+                            dispatch(fetchDataIfNeed(getYesterdayFromDate(date)));
                         }else {
                             Toast.show('今日干货还未更新', {position: px2dp(-80)});
                             dispatch(receiveData(localData, date));

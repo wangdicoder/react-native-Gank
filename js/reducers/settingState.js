@@ -10,6 +10,7 @@ const initialState = {
     themeColor: colors.dodgerBlue,
     isOpenThumbnail: true,
     isOpenNightMode: false,
+    isAutoFetch: true,
     displayOrder: ['Android','iOS','前端','拓展资源','休息视频','App','瞎推荐'],
     colorScheme: {  //dayMode color scheme for the default color
         mainThemeColor: colors.dodgerBlue,
@@ -37,6 +38,18 @@ export default function settingState(state=initialState, action) {
             return Object.assign({}, state, {
                 ...state,
                 isOpenThumbnail: false
+            });
+
+        case TYPES.OPEN_AUTO_FETCH:
+            return Object.assign({}, state, {
+                ...state,
+                isAutoFetch: true
+            });
+
+        case TYPES.CLOSE_AUTO_FETCH:
+            return Object.assign({}, state, {
+                ...state,
+                isAutoFetch: false
             });
 
         case TYPES.CHANGE_DISPLAY_ORDER:

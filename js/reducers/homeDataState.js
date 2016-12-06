@@ -10,10 +10,10 @@ const initialState = {
     hasData: false,
     error: false,
     dataSource: {},
-    dataTime: '',
+    dataTime: ''
 };
 
-export default function homeData(state=initialState, action){
+export default function homeDataState(state=initialState, action){
     switch (action.type){
         case types.FETCH_HOME_DATE_REQUEST:
             return Object.assign({}, state, {

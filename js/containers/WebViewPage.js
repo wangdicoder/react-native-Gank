@@ -23,7 +23,7 @@ class WebViewPage extends BackPageComponent{
             didMount: false,
             showMoreContent: false,
             bottomInfoBarBottomValue: new Animated.Value(0),
-            toolbarTopValue: new Animated.Value(0)
+            //toolbarTopValue: new Animated.Value(0)
         };
         this.bottomIconNames = ['ios-arrow-back-outline',
                                 'ios-arrow-forward-outline',
@@ -47,10 +47,10 @@ class WebViewPage extends BackPageComponent{
                         toValue: 0,
                         duration: 300
                     }).start(() => this.animationFlag = true);
-                    Animated.timing(this.state.toolbarTopValue, {
-                        toValue: 0,
-                        duration: 300
-                    }).start();
+                    // Animated.timing(this.state.toolbarTopValue, {
+                    //     toValue: 0,
+                    //     duration: 300
+                    // }).start();
                 }
                 if(y < -this.moveYThreshold && this.animationFlag) {  //drag up
                     if (this.state.bottomInfoBarBottomValue === px2dp(-45)) return;
@@ -59,10 +59,10 @@ class WebViewPage extends BackPageComponent{
                         toValue: px2dp(-45),
                         duration: 300
                     }).start(() => this.animationFlag = true);
-                    Animated.timing(this.state.toolbarTopValue, {
-                        toValue: -theme.toolbar.height,
-                        duration: 300
-                    }).start();
+                    // Animated.timing(this.state.toolbarTopValue, {
+                    //     toValue: -theme.toolbar.height,
+                    //     duration: 300
+                    // }).start();
                 }
             }
         });
@@ -101,7 +101,7 @@ class WebViewPage extends BackPageComponent{
                     </View>
                 </Modal>
 
-                <Animated.View style={[styles.toolbar, {top: this.state.toolbarTopValue}]}>
+                <Animated.View style={[styles.toolbar, {top: 0}]}>
                     <NavigationBar
                         title="详细内容"
                         leftBtnIcon="arrow-back"
@@ -170,6 +170,7 @@ class WebViewPage extends BackPageComponent{
     }
 
     componentDidMount(){
+        super.componentDidMount();
         InteractionManager.runAfterInteractions(() => {
             this.setState({
                 didMount: true
@@ -238,8 +239,9 @@ const styles = StyleSheet.create({
         flex: 1
     },
     contentContainer: {
-        //marginTop: theme.toolbar.height,
+        marginTop: theme.toolbar.height,
         flex: 1,
+        paddingTop: theme.toolbar.paddingTop
     },
     toolbar: {
         position: 'absolute',
@@ -294,7 +296,7 @@ const mapStateToProps = (state) => {
         titleColor: state.settingState.colorScheme.titleColor,
         tabIconColor: state.settingState.colorScheme.tabIconColor,
         rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,
-        isStarred: state.favorData.isStarred
+        isStarred: state.favorDataState.isStarred
     };
 };
 
