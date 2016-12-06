@@ -44,38 +44,46 @@ class HomeFragment extends Component{
                             title="玩命加载中..."
                         />}
                     >
-                    {/*prevent the length of data is equal to 0*/}
-                    {this.props.hasData && Info.getCategoryList(dataSource).length > 0 ?
-                        <View>
-                            <View style={{height: this.imageHeight, width: theme.screenWidth}}>
-                                <ImageView
-                                    imgUrl={Info.getFuLiUrl(dataSource)}
-                                    labelTime={this.props.dataTime}/>
-                            </View>
-                            <View style={styles.scrollContents}>
-                                {this.props.displayOrder.map((item, i) => {
-                                    if(item !== '福利' && Info.getTargetList(dataSource, item) != null)
-                                    return(
-                                        <ListViewForHome
-                                            key={i}
-                                            navigator={this.props.navigator}
-                                            dataSource={Info.getTargetList(dataSource, item)}
-                                            headerTitle={item}/>
-                                    );
-                                })}
-                                <View style={[styles.footer, {backgroundColor: rowItemBackgroundColor, borderTopColor: segmentColor}]}>
-                                    <TouchableOpacity
-                                        onPress={this._onPress.bind(this, 1)}
-                                        activeOpacity={theme.touchableOpacityActiveOpacity}>
-                                        <View style={styles.bottomBtn}>
-                                            <Text style={styles.btnLabel}>没看够？试试往期干货吧</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
+                    {(this.props.error && !this.props.hasData) ?
+                        <View style={styles.indicator}>
+                            <Text style={{color: this.props.tabIconColor}}>Ooops, 获取数据失败~ </Text>
                         </View>
                         :
-                        null
+                        ((this.props.hasData && Info.getCategoryList(dataSource).length > 0) ?
+                                <View>
+                                    <View style={{height: this.imageHeight, width: theme.screenWidth}}>
+                                        <ImageView
+                                            imgUrl={Info.getFuLiUrl(dataSource)}
+                                            labelTime={this.props.dataTime}/>
+                                    </View>
+                                    <View style={styles.scrollContents}>
+                                        {this.props.displayOrder.map((item, i) => {
+                                            if (item !== '福利' && Info.getTargetList(dataSource, item) != null)
+                                                return (
+                                                    <ListViewForHome
+                                                        key={i}
+                                                        navigator={this.props.navigator}
+                                                        dataSource={Info.getTargetList(dataSource, item)}
+                                                        headerTitle={item}/>
+                                                );
+                                        })}
+                                        <View style={[styles.footer, {
+                                            backgroundColor: rowItemBackgroundColor,
+                                            borderTopColor: segmentColor
+                                        }]}>
+                                            <TouchableOpacity
+                                                onPress={this._onPress.bind(this, 1)}
+                                                activeOpacity={theme.touchableOpacityActiveOpacity}>
+                                                <View style={styles.bottomBtn}>
+                                                    <Text style={styles.btnLabel}>没看够？试试往期干货吧</Text>
+                                                </View>
+                                            </TouchableOpacity>
+                                        </View>
+                                    </View>
+                                </View>
+                                :
+                                null
+                        )
                     }
                 </ScrollView>
             </View>
@@ -175,6 +183,13 @@ const styles = StyleSheet.create({
     btnLabel: {
         color: '#fff',
         fontSize: px2dp(16)
+    },
+    indicator: {
+        flexDirection: 'row',
+        width: theme.screenWidth,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: px2dp(20)
     }
 });
 
@@ -184,6 +199,7 @@ const mapStateToProps = (state) => {
         hasData: state.homeData.hasData,
         dataSource: state.homeData.dataSource,
         dataTime: state.homeData.dataTime,
+        error: state.homeData.error,
         mainThemeColor: state.settingState.colorScheme.mainThemeColor,
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
         rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,

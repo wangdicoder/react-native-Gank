@@ -5,6 +5,7 @@
 
 import * as types from './actionTypes';
 import fetchUrl from '../constants/fetchUrl';
+import fetchWithTimeout from '../utils/fetchWithTimeout';
 import {getYesterdayFromDate} from '../utils/getDate';
 import HomeDataDAO from '../dao/HomeDataDAO';
 import Toast from 'react-native-root-toast';
@@ -24,6 +25,12 @@ function receiveData(json, date){
     }
 }
 
+function fetchFailure() {
+    return {
+        type: types.FETCH_HOME_DATA_FAILURE
+    };
+}
+
 function isValidData(responseData) {
     if(responseData.category.length > 0)
         return true;
@@ -33,13 +40,13 @@ function isValidData(responseData) {
 export function fetchData(date) {
     const url = fetchUrl.daily + date;
     return (dispatch) => {
-        //dispatch(requestData());
+        dispatch(requestData());
         var dao = new HomeDataDAO();
         dao.fetchLocalData(date).then((localData) => {
             Toast.show('已是最新数据了', {position: px2dp(-80)});
             dispatch(receiveData(localData, date));
         }, (localData)=>{
-            fetch(url)
+            fetchWithTimeout(5000, fetch(url))
                 .then(response => response.json())
                 .then(json => {
                     if(isValidData(json)){
@@ -57,7 +64,10 @@ export function fetchData(date) {
                             dispatch(receiveData(localData, date));
                         }
                     }
-                });
+                }).catch((error)=>{
+                    Toast.show('获取数据失败', {position: px2dp(-80)});
+                    dispatch(fetchFailure());
+            });
         });
 
     }

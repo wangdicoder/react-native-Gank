@@ -3,7 +3,7 @@
  */
 'use strict';
 
-const HOME_DATA = 'homeData';
+const HOME_DATA = '@HomeData';
 
 import {AsyncStorage} from 'react-native';
 
@@ -53,9 +53,5 @@ export default class HomeDataDAO{
                 }
             });
         });
-    }
-
-    removeLocalData(){
-        AsyncStorage.removeItem(HOME_DATA, (error)=>{});
     }
 }

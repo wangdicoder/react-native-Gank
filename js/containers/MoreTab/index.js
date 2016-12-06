@@ -23,7 +23,6 @@ import ThemeColorPage from './ThemeColorPage';
 import OrderContentPage from './OrderContentPage';
 import AboutGankPage from './AboutGankPage';
 import AboutAuthorPage from './AboutAuthor/index';
-import GirlsPage from './GirlsPage';
 
 class MoreFragment extends Component{
     constructor(props){
@@ -56,14 +55,12 @@ class MoreFragment extends Component{
                         </TouchableHighlight>
                     }
                     <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
-                        <RowItem title="福利" icon="md-images" iconColor='lightpink' renderSegment={false} onPress={this._itemClickCallback.bind(this, 1)}/>
-                    </View>
-                    <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
                         <RowItem title="首页内容展示顺序" icon="md-reorder" iconColor='lightskyblue' onPress={this._itemClickCallback.bind(this, 2)}/>
                         <RowItem title="主题颜色" icon="ios-color-palette" iconColor={colors.orange} onPress={this._itemClickCallback.bind(this, 3)}/>
                         {/*<RowItem title="选择语言 / Language" icon="md-globe" iconColor={colors.purple}  onPress={this._itemClickCallback.bind(this, 3)}/>*/}
                         <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor="#7b68ee" switcherValue={isOpenNightMode} onValueChange={(value) => actions.changeNightMode(value)}/>
-                        <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' switcherValue={isOpenThumbnail} onValueChange={(value) => actions.changeShowThumbnail(value)} renderSegment={false}/>
+                        <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' switcherValue={isOpenThumbnail} onValueChange={(value) => actions.changeShowThumbnail(value)} />
+                        <RowItemWithSwitcher title="自动刷新首页数据" icon="md-refresh" iconColor='#ffd700' switcherValue={isOpenThumbnail} onValueChange={(value) => actions.changeShowThumbnail(value)} renderSegment={false}/>
                     </View>
                     <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
                         <RowItem title="关于作者" icon="md-happy" iconColor="#9acd32" renderSegment={false} onPress={this._itemClickCallback.bind(this, 4)}/>

@@ -8,7 +8,7 @@ import React from 'react';
 import {Navigator} from 'react-native';
 import {store} from './store/index';
 import MainPage from './containers/MainPage';
-import Test from './containers/MoreTab/GirlsPage'
+import Test from './containers/DiscoveryTab/GirlsPage'
 
 export default class App extends React.Component{
     render(){

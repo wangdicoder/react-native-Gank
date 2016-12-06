@@ -10,6 +10,7 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestRandomData';
 import Icon from 'react-native-vector-icons/Ionicons';
 import TextListPage from './TextListPage';
+import GirlsPage from './GirlsPage';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import px2dp from '../../utils/px2dp';
@@ -20,22 +21,18 @@ import WebViewPage from '../../containers/WebViewPage';
 class DiscoveryFragment extends Component{
     constructor(props){
         super(props);
-        this.tabNames = [['Android','iOS','前端'],['App','休息视频','拓展资源']];
-        this.tabIcon = [['logo-android','logo-apple','logo-chrome'],['ios-apps','ios-film','ios-book']];
-        this.tabColor = [['rgb(141,192,89)','#000','rgb(51,154,237)'],['rgb(249,89,58)','rgb(154,53,172)','rgb(65,87,175)']];
+        this.tabNames = [['Android','iOS','前端','App'],['休息视频','拓展资源','瞎推荐','福利']];
+        this.tabIcon = [['logo-android','logo-apple','logo-chrome','ios-apps'],['ios-film','ios-book','ios-radio','ios-images']];
+        this.tabColor = [['rgb(141,192,89)','#000','rgb(51,154,237)','rgb(249,89,58)'],['#9370db','#00ced1','#ffa500','lightpink']];
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     }
 
-    _fetchData(){
-        this.props.actions.fetchRandomData();
-    }
-
     componentDidMount(){
-        this._fetchData();
+        this.props.actions.fetchLocalRandomData();
     }
 
     _onRefresh(){
-        this._fetchData();
+        this.props.actions.fetchRandomData();
     }
 
     _onEndReached(){
@@ -108,6 +105,14 @@ class DiscoveryFragment extends Component{
                 }
             </View>
         )
+    }
+
+    _renderBtnContent(i, index){
+        return(
+            <View style={{width:px2dp(50), height:px2dp(50), alignItems:'center', justifyContent:'center'}}>
+                <Avatar icon={this.tabIcon[i][index]} width={px2dp(50)} backgroundColor={this.tabColor[i][index]}/>
+            </View>
+        );
     }
 
     _renderFooter(){
@@ -187,16 +192,11 @@ class DiscoveryFragment extends Component{
         return time.substring(0, 10);
     }
 
-    _renderBtnContent(i, index){
-        return(
-            <View style={{width:px2dp(60), height:px2dp(60), alignItems:'center', justifyContent:'center'}}>
-                <Avatar icon={this.tabIcon[i][index]} width={px2dp(60)} backgroundColor={this.tabColor[i][index]}/>
-            </View>
-        );
-    }
-
     _itemPressCallback(title){
-       this._pushScene(TextListPage, title);
+        if(title === '福利')
+            this._pushScene(GirlsPage, title);
+        else
+            this._pushScene(TextListPage, title);
     }
 
     _pushScene(component, title){

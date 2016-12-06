@@ -6,7 +6,7 @@
 import * as types from '../actions/actionTypes';
 
 const initialState = {
-    loading: true,
+    loading: false,
     hasData: false,
     error: false,
     dataSource: {},
@@ -18,6 +18,8 @@ export default function homeData(state=initialState, action){
         case types.FETCH_HOME_DATE_REQUEST:
             return Object.assign({}, state, {
                 ...state,
+                loading: true,
+                error: false
             });
 
         case types.FETCH_HOME_DATA_SUCCESS:
@@ -27,6 +29,13 @@ export default function homeData(state=initialState, action){
                 hasData: true,
                 dataSource: action.dataSource,
                 dataTime: action.dataTime
+            });
+
+        case types.FETCH_HOME_DATA_FAILURE:
+            return Object.assign({}, state, {
+                ...state,
+                loading: false,
+                error: true
             });
 
         default:

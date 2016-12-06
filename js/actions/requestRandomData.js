@@ -6,6 +6,7 @@
 import * as TYPES from './actionTypes';
 import fetchUrl from '../constants/fetchUrl';
 import fetchWithTimeout from '../utils/fetchWithTimeout';
+import RandomDataDAO from '../dao/RandomDataDAO';
 
 function fetchSuccess(json) {
     return {
@@ -45,6 +46,21 @@ function fetchMoreDataFailure() {
     };
 }
 
+/**
+ * for save cellular network data and improve performance,
+ * this random data is only manually refreshed
+ */
+export function fetchLocalRandomData() {
+    return (dispatch) => {
+        let dao = new RandomDataDAO();
+        dao.fetchLocalData().then((result)=>{
+            dispatch(fetchSuccess(result));
+        }, (error)=>{
+            dispatch(fetchRandomData());
+        });
+    };
+}
+
 export function fetchRandomData(isMoreData=false) {
     var results = [];
     const randomCategory = ['Android/1','iOS/1','前端/1','休息视频/1','拓展资源/1','App/1','瞎推荐/1'];
@@ -58,17 +74,20 @@ export function fetchRandomData(isMoreData=false) {
                 results = results.concat(json.results);
 
                 if(index >= 10) {
-                    if (isMoreData)
+                    if (isMoreData) {
                         dispatch(fetchMoreDataSuccess(results));
-                    else
+                    }else {
+                        let dao = new RandomDataDAO();
+                        dao.saveData(results);
                         dispatch(fetchSuccess(results));
+                    }
                 }else
                     fetchCategoryData(dispatch);
             }).catch((error) => {
-            if(isMoreData)
-                dispatch(fetchMoreDataFailure());
-            else
-                dispatch(fetchFailure());
+                if(isMoreData)
+                    dispatch(fetchMoreDataFailure());
+                else
+                    dispatch(fetchFailure());
         });
     }
 

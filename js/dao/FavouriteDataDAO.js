@@ -3,7 +3,7 @@
  */
 'use strict';
 
-const FAVOR_DATA = 'favorData';
+const FAVOR_DATA = '@FavorData';
 
 import {AsyncStorage} from 'react-native';
 

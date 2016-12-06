@@ -7,7 +7,7 @@ import * as TYPES from '../actions/actionTypes';
 
 const initialState = {
     dataSource: [],
-    loading: true,
+    loading: false,
     error: false,
     isRenderFooter: false,
 };
@@ -19,6 +19,7 @@ export default function randomData(state=initialState, action) {
                 ...state,
                 loading: true,
                 isRenderFooter: false,
+                error: false
             });
 
         case TYPES.FETCH_RANDOM_MORE_DATA_REQUEST:
