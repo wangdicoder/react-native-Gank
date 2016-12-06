@@ -22,23 +22,27 @@ A cross platform App which shows the data from [gank.io](http://gank.io)
 
 # Feature and Screenshot
 
-- iOS user interface on **MoreTab**
+#### iOS user interface on **MoreTab**
 
 ![moreTab](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/moretab.png)
 
-- custom App theme
+
+#### custom App theme
 
 ![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/theme.gif)
 
-- night mode
+
+#### night mode
 
 ![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/nightmode.gif)
 
-- reorder
+
+#### reorder
 
 ![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/order.gif)
 
-- pull up to refresh
+
+#### pull up to refresh
 
 ![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/listviewRefresh.gif)
 
