@@ -4,19 +4,9 @@ A cross platform App which shows the data from [gank.io](http://gank.io)
 
 # Version Info
 
-- App version: 0.3.0 (**Implementing, please Do NOT clone it**)
+- App version: 0.6.0 (**Implementing, please Do NOT clone it**)
 
 - react-native version: 0.38
-
-# Feature
-
-- iOS UI effects on **MoreTab**
-
-- custom App theme
-
-- pull up to refresh
-
-- some animation experiences
 
 # How to run it
 
@@ -30,17 +20,27 @@ A cross platform App which shows the data from [gank.io](http://gank.io)
 
 5. react-native run-android / run-ios
 
-# To do list
+# Feature and Screenshot
 
-* multiple language choice
-
-* night mode
-
-# Screenshot
-
-![homeTab](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/hometab.gif)
+- iOS user interface on **MoreTab**
 
 ![moreTab](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/moretab.png)
+
+- custom App theme
+
+![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/theme.gif)
+
+- night mode
+
+![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/nightmode.gif)
+
+- reorder
+
+![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/order.gif)
+
+- pull up to refresh
+
+![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/listviewRefresh.gif)
 
 # License
 
