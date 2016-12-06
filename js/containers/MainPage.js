@@ -16,7 +16,7 @@ import px2dp from '../utils/px2dp';
 import {connect} from 'react-redux';
 import {store} from '../store/index';
 import {fetchStarList} from '../actions/handleCollectionData';
-import {initialSettingsStateFacade, getShowThumbnailValue} from '../actions/modifySettings';
+import {initialSettingsStateFacade} from '../actions/modifySettings';
 
 class MainPage extends Component{
 
@@ -36,7 +36,7 @@ class BottomTabBar extends Component{
     constructor(props){
         super(props);
         this.state = {
-            selectedTab: 'home'
+            selectedTab: 'more'
         };
     }
 

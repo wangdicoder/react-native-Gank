@@ -40,16 +40,29 @@ class WebViewPage extends BackPageComponent{
             onMoveShouldSetPanResponder: (evt, gestureState) => true,
             onPanResponderMove: (evt, gestureState) => {
                 let y = gestureState.dy;
-                if(y > this.moveYThreshold) //drag down
-                    if(this.state.bottomInfoBarBottomValue === px2dp(0)) return;
+                if(y > this.moveYThreshold && this.animationFlag) { //drag down
+                    if (this.state.bottomInfoBarBottomValue === px2dp(0)) return;
                     this.animationFlag = false;
-                    Animated.timing(this.state.bottomInfoBarBottomValue, {toValue: 0}).start(()=>this.animationFlag = true);
-                    Animated.timing(this.state.toolbarTopValue, {toValue: 0}).start();
+                    Animated.timing(this.state.bottomInfoBarBottomValue, {
+                        toValue: 0,
+                        duration: 300
+                    }).start(() => this.animationFlag = true);
+                    Animated.timing(this.state.toolbarTopValue, {
+                        toValue: 0,
+                        duration: 300
+                    }).start();
+                }
                 if(y < -this.moveYThreshold && this.animationFlag) {  //drag up
-                    if(this.state.bottomInfoBarBottomValue === px2dp(-45)) return;
+                    if (this.state.bottomInfoBarBottomValue === px2dp(-45)) return;
                     this.animationFlag = false;
-                    Animated.timing(this.state.bottomInfoBarBottomValue, {toValue: px2dp(-45)}).start(()=>this.animationFlag = true);
-                    Animated.timing(this.state.toolbarTopValue, {toValue: -theme.toolbar.height}).start();
+                    Animated.timing(this.state.bottomInfoBarBottomValue, {
+                        toValue: px2dp(-45),
+                        duration: 300
+                    }).start(() => this.animationFlag = true);
+                    Animated.timing(this.state.toolbarTopValue, {
+                        toValue: -theme.toolbar.height,
+                        duration: 300
+                    }).start();
                 }
             }
         });
@@ -225,9 +238,8 @@ const styles = StyleSheet.create({
         flex: 1
     },
     contentContainer: {
-        marginTop: theme.toolbar.height,
+        //marginTop: theme.toolbar.height,
         flex: 1,
-        paddingTop: theme.toolbar.paddingTop
     },
     toolbar: {
         position: 'absolute',

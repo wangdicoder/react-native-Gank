@@ -13,13 +13,13 @@ import {AsyncStorage} from 'react-native';
 export default class SettingsDataDAO{
 
     saveShowThumbnail(value){
-        AsyncStorage.setItem(SHOW_THUMBNAIL, value+'');
+        AsyncStorage.setItem(SHOW_THUMBNAIL, value ? 'true' : 'false');
     }
 
     getShowThumbnailValue() {
         return new Promise((resolve, reject) => {
             AsyncStorage.getItem(SHOW_THUMBNAIL, (error, result) => {
-                if(!error){
+                if(!error && result){
                     if(result === 'true')
                         resolve(true);
                     else
@@ -32,13 +32,13 @@ export default class SettingsDataDAO{
     }
 
     saveOpenNightMode(value){
-        AsyncStorage.setItem(NIGHT_MODE, value+'');
+        AsyncStorage.setItem(NIGHT_MODE, value ? 'true' : 'false');
     }
 
     getOpenNightModeValue(){
         return new Promise((resolve, reject) => {
             AsyncStorage.getItem(NIGHT_MODE, (error, result) => {
-                if(!error){
+                if(!error && result){
                     if(result === 'true')
                         resolve(true);
                     else
