@@ -4,7 +4,7 @@
 'use strict';
 
 import React, {Component, PropTypes} from 'react';
-import {StyleSheet, View, WebView, InteractionManager, Text, TouchableOpacity, ActivityIndicator, Alert, Linking, Clipboard, Modal} from 'react-native';
+import {StyleSheet, View, WebView, InteractionManager, Text, TouchableOpacity, ActivityIndicator, Alert, Linking, Clipboard, Modal, PanResponder, Animated, ToastAndroid} from 'react-native';
 import theme from '../constants/theme';
 import NavigationBar from '../components/NavigationBar';
 import BackPageComponent from '../components/BackPageComponent';
@@ -21,20 +21,45 @@ class WebViewPage extends BackPageComponent{
         super(props);
         this.state = {
             didMount: false,
-            showMoreContent: false
+            showMoreContent: false,
+            bottomInfoBarBottomValue: new Animated.Value(0),
+            toolbarTopValue: new Animated.Value(0)
         };
         this.bottomIconNames = ['ios-arrow-back-outline',
                                 'ios-arrow-forward-outline',
                                 'ios-refresh-outline'
                                 ];
         this.bottomIconSize = [px2dp(25),px2dp(25),px2dp(32)];
+
+        this.moveYThreshold = 5;
+        this.animationFlag = true;
+    }
+
+    componentWillMount(){
+        this._panResponder = PanResponder.create({
+            onMoveShouldSetPanResponder: (evt, gestureState) => true,
+            onPanResponderMove: (evt, gestureState) => {
+                let y = gestureState.dy;
+                if(y > this.moveYThreshold) //drag down
+                    if(this.state.bottomInfoBarBottomValue === px2dp(0)) return;
+                    this.animationFlag = false;
+                    Animated.timing(this.state.bottomInfoBarBottomValue, {toValue: 0}).start(()=>this.animationFlag = true);
+                    Animated.timing(this.state.toolbarTopValue, {toValue: 0}).start();
+                if(y < -this.moveYThreshold && this.animationFlag) {  //drag up
+                    if(this.state.bottomInfoBarBottomValue === px2dp(-45)) return;
+                    this.animationFlag = false;
+                    Animated.timing(this.state.bottomInfoBarBottomValue, {toValue: px2dp(-45)}).start(()=>this.animationFlag = true);
+                    Animated.timing(this.state.toolbarTopValue, {toValue: -theme.toolbar.height}).start();
+                }
+            }
+        });
     }
 
     render(){
         const rowData = this.props.rowData;
         return(
             <View style={[styles.container, {backgroundColor: this.props.pageBackgroundColor}]}>
-                <View style={styles.contentContainer}>
+                <View style={styles.contentContainer} {...this._panResponder.panHandlers}>
                     {this.state.didMount ?
                         <WebView
                             ref={(ref)=>{this.webView = ref}}
@@ -63,7 +88,7 @@ class WebViewPage extends BackPageComponent{
                     </View>
                 </Modal>
 
-                <View style={styles.toolbar}>
+                <Animated.View style={[styles.toolbar, {top: this.state.toolbarTopValue}]}>
                     <NavigationBar
                         title="详细内容"
                         leftBtnIcon="arrow-back"
@@ -71,8 +96,8 @@ class WebViewPage extends BackPageComponent{
                         rightBtnIcon="more"
                         rightBtnPress={this._btnOnPressCallback.bind(this, 9)}
                     />
-                </View>
-                <View style={[styles.bottomInfoBar, {backgroundColor: this.props.webViewToolbarColor, borderTopColor: this.props.segmentColor}]}>
+                </Animated.View>
+                <Animated.View style={[styles.bottomInfoBar, {bottom: this.state.bottomInfoBarBottomValue, backgroundColor: this.props.webViewToolbarColor, borderTopColor: this.props.segmentColor}]}>
                     {this.bottomIconNames.map((item, i)=>{
                         return(
                             <View key={i} style={{flex: 1, alignItems: 'center'}}>
@@ -99,7 +124,7 @@ class WebViewPage extends BackPageComponent{
                             </TouchableOpacity>
                         }
                     </View>
-                </View>
+                </Animated.View>
             </View>
         );
     }
@@ -208,7 +233,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         width: theme.screenWidth,
         marginTop: theme.toolbar.paddingTop,
-        top: 0,
         zIndex: 1
     },
     webView: {
@@ -216,7 +240,6 @@ const styles = StyleSheet.create({
     },
     bottomInfoBar: {
         position: 'absolute',
-        bottom: 0,
         height: px2dp(45),
         width: theme.screenWidth,
         borderTopWidth: theme.segment.width,

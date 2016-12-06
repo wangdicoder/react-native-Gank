@@ -36,7 +36,7 @@ class BottomTabBar extends Component{
     constructor(props){
         super(props);
         this.state = {
-            selectedTab: 'more'
+            selectedTab: 'home'
         };
     }
 

@@ -67,18 +67,18 @@ class HomeFragment extends Component{
                                                         headerTitle={item}/>
                                                 );
                                         })}
-                                        <View style={[styles.footer, {
-                                            backgroundColor: rowItemBackgroundColor,
-                                            borderTopColor: segmentColor
-                                        }]}>
-                                            <TouchableOpacity
-                                                onPress={this._onPress.bind(this, 1)}
-                                                activeOpacity={theme.touchableOpacityActiveOpacity}>
-                                                <View style={styles.bottomBtn}>
-                                                    <Text style={styles.btnLabel}>没看够？试试往期干货吧</Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                        </View>
+                                        {/*<View style={[styles.footer, {*/}
+                                            {/*backgroundColor: rowItemBackgroundColor,*/}
+                                            {/*borderTopColor: segmentColor*/}
+                                        {/*}]}>*/}
+                                            {/*<TouchableOpacity*/}
+                                                {/*onPress={this._onPress.bind(this, 1)}*/}
+                                                {/*activeOpacity={theme.touchableOpacityActiveOpacity}>*/}
+                                                {/*<View style={styles.bottomBtn}>*/}
+                                                    {/*<Text style={styles.btnLabel}>没看够？试试往期干货吧</Text>*/}
+                                                {/*</View>*/}
+                                            {/*</TouchableOpacity>*/}
+                                        {/*</View>*/}
                                     </View>
                                 </View>
                                 :
