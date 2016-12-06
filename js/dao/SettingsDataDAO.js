@@ -78,9 +78,9 @@ export default class SettingsDataDAO{
                     if(data)
                         resolve(data.order);
                     else
-                        reject(['Android','iOS','前端','拓展资源','休息视频','App']);
+                        reject(['Android','iOS','前端','拓展资源','休息视频','App','瞎推荐']);
                 }else
-                    reject(['Android','iOS','前端','拓展资源','休息视频','App']);
+                    reject(['Android','iOS','前端','拓展资源','休息视频','App','瞎推荐']);
             });
         });
     }

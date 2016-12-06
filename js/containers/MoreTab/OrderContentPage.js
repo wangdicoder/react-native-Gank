@@ -134,6 +134,8 @@ class OrderContentPage extends BackPageComponent{
             id = 4;
         else if(pageY >= height*6 + offset && pageY < height*7 + offset)
             id = 5;
+        else if(pageY >= height*7 + offset && pageY < height*8 + offset)
+            id = 6;
 
         return id;
     }

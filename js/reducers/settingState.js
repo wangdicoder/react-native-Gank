@@ -10,7 +10,7 @@ const initialState = {
     themeColor: colors.dodgerBlue,
     isOpenThumbnail: true,
     isOpenNightMode: false,
-    displayOrder: ['Android','iOS','前端','拓展资源','休息视频','App'],
+    displayOrder: ['Android','iOS','前端','拓展资源','休息视频','App','瞎推荐'],
     colorScheme: {  //dayMode color scheme for the default color
         mainThemeColor: colors.dodgerBlue,
         pageBackgroundColor: '#f4f4f4',
