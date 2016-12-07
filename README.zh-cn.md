@@ -2,7 +2,9 @@
 
 [干货集中营](http://gank.io)非官方App
 
-react-native版本: **0.38**
+- react-native版本: **0.38**
+
+- redux架构
 
 *阅读此内容的其他语言版本: [English](https://github.com/wangdicoder/react-native-Gank/blob/master/README.md)*
 
