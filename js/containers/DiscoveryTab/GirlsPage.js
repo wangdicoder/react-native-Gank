@@ -5,24 +5,19 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, InteractionManager, View, Text, ScrollView, Image, ListView, ToastAndroid} from 'react-native';
+import {StyleSheet, InteractionManager, View, Text, ScrollView, Image, ListView, ActivityIndicator} from 'react-native';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import BackPageComponent from '../../components/BackPageComponent';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import * as Actions from '../../actions/requestTargetData';
+import ListViewForGirls from '../../components/ListViewForGirls';
+import px2dp from '../../utils/px2dp';
 
 class GirlsPage extends BackPageComponent{
     constructor(props){
         super(props);
-        const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-        this.state = {
-            dataSource: ds,
-            dataBlob: [],
-            imageHeight: 20,
-            imageWidth: 20,
-            load: false
-        };
-        this.url = 'http://ww4.sinaimg.cn/large/610dc034gw1fa0ppsw0a7j20u00u0thp.jpg';
     }
 
     render(){
@@ -37,55 +32,66 @@ class GirlsPage extends BackPageComponent{
                         leftBtnPress={this._handleBack.bind(this)}/>
                 </View>
 
-                {this.state.load ?
-                    <ListView
-                        enableEmptySections={true}
-                        dataSource={this.state.dataSource.cloneWithRows(this.state.dataBlob)}
-                        renderRow={this._renderRow.bind(this)}
-                    />
-                    :
-                    null
-                }
-            </View>
-        );
-    }
-
-    _renderRow(rowData) {
-        return (
-            <View style={styles.rowItem}>
-                <Image style={{width: rowData.leftWidth, height: theme.screenWidth/2, marginRight: 3}}
-                       source={{uri: rowData.leftUrl}}/>
-                <Image style={{width: rowData.rightWidth, height: theme.screenWidth/2, marginLeft: 3}}
-                       source={{uri: rowData.rightUrl}}/>
+                <View style={styles.contentContainer}>
+                    {this.props.error ?
+                        <View style={styles.indicator}>
+                            <Text style={{color: this.props.tabIconColor}}>Ooops, 获取数据失败~ </Text>
+                            <Button onPress={this._fethchData.bind(this)} title="重新获取" color={this.props.tabIconColor}/>
+                        </View>
+                        :
+                        (this.props.loading ?
+                            <View style={styles.indicator}>
+                                <ActivityIndicator
+                                    color={this.props.tabIconColor}
+                                />
+                                <Text style={{marginLeft: 10, color: this.props.tabIconColor}}>获取中...</Text>
+                            </View>
+                            :
+                            <ListViewForGirls
+                                enableEmptySections={true}
+                                dataSource={this._handleDataSource(this.props.dataSource)}
+                                navigator={this.props.navigator}
+                                isRenderFooter={this.props.isRenderFooter}
+                                onEndReached={this._listViewOnEndReached.bind(this)}
+                                isFullData={this.props.isFullData}
+                            />
+                        )
+                    }
+                </View>
             </View>
         );
     }
 
     componentDidMount(){
-        InteractionManager.runAfterInteractions(()=>{
-            fetch('http://gank.io/api/data/%E7%A6%8F%E5%88%A9/10/1').then(response => response.json())
-                .then(json => {
-                    var results = json.results;
-                    var dataBlob = [];
+        super.componentDidMount();
+        this._fethchData();
+    }
 
-                    for(let i=0; i<results.length; i=i+2) {
-                        const leftWidth = this._randomWidth();
-                        let rowData = {
-                            leftUrl: this._handleImageToSmallSize(results[i].url),
-                            rightUrl: this._handleImageToSmallSize(results[i+1].url),
-                            leftWidth: leftWidth-3-6,
-                            rightWidth: theme.screenWidth - leftWidth - 3 -6
-                        }
-                        dataBlob.push(rowData);
-                    }
+    _handleDataSource(dataSource){
+        var dataBlob = [];
 
-                    this.setState({
-                        dataBlob: dataBlob,
-                        load: true
-                    });
-                });
+        for(let i=0; i<dataSource.length; i=i+2) {
+            const leftWidth = this._randomWidth();
+            let rowData = {
+                leftUrl: this._handleImageToSmallSize(dataSource[i].url),
+                rightUrl: this._handleImageToSmallSize(dataSource[i+1].url),
+                leftWidth: leftWidth-3-6,
+                rightWidth: theme.screenWidth - leftWidth - 3 -6
+            }
+            dataBlob.push(rowData);
+        }
 
-        });
+        return dataBlob;
+    }
+
+    _fethchData(){
+        this.props.actions.fetchData('福利/10/1');
+    }
+
+    _listViewOnEndReached(){
+        if(!this.props.isRenderFooter) {
+            this.props.actions.fetchMoreData('福利/10/'+this.props.pageNumber);
+        }
     }
 
     _randomWidth(){
@@ -102,29 +108,46 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingTop: theme.toolbar.paddingTop
     },
-    toolbar: {
-        // position: 'absolute',
-        // width: theme.screenWidth,
-        // zIndex: 1
+    contentContainer: {
+        marginTop: theme.toolbar.height,
+        flex: 1,
+        zIndex: 0
     },
-    rowItem: {
+    toolbar: {
+        position: 'absolute',
+        width: theme.screenWidth,
+        zIndex: 1
+    },
+    indicator: {
         flexDirection: 'row',
         width: theme.screenWidth,
-        height: theme.screenWidth/2+6,
-        paddingLeft: 6,
-        paddingRight: 6,
-        paddingBottom: 6
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 20
     }
 });
 
 const mapStateToProps = (state) => {
     return {
+        loading: state.targetDataState.loading,
+        dataSource: state.targetDataState.dataSource,
+        isRenderFooter: state.targetDataState.isRenderFooter,
+        pageNumber: state.targetDataState.pageNumber,
+        isFullData: state.targetDataState.isFullData,
+        error: state.targetDataState.error,
         displayOrder: state.settingState.displayOrder,
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
         segmentColor: state.settingState.colorScheme.segmentColor,
         titleColor: state.settingState.colorScheme.titleColor,
-        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor
+        rowItemBackgroundColor: state.settingState.colorScheme.rowItemBackgroundColor,
+        tabIconColor: state.settingState.colorScheme.tabIconColor
     }
 }
 
-export default connect(mapStateToProps)(GirlsPage);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        actions: bindActionCreators(Actions, dispatch)
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(GirlsPage);

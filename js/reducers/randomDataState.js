@@ -55,6 +55,7 @@ export default function randomDataState(state=initialState, action) {
         case TYPES.FETCH_RANDOM_MORE_DATA_FAILURE:
             return Object.assign({}, state, {
                 ...state,
+                isRenderFooter: false
             });
 
         default:

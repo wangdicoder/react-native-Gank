@@ -20,8 +20,6 @@ class ListViewWithInfo extends Component{
 
     static propTypes = {
         dataSource: PropTypes.array,
-        headerTitle: PropTypes.string,
-        renderTag: PropTypes.bool,
         isRenderFooter: PropTypes.bool,
         onEndReached: PropTypes.func,
         isFullData: PropTypes.bool,
@@ -33,7 +31,6 @@ class ListViewWithInfo extends Component{
             <ListView
                 dataSource={this.ds.cloneWithRows(this.props.dataSource)}
                 renderRow={this._renderRow.bind(this)}
-                renderHeader={this._renderHeader.bind(this)}
                 renderSeparator={this._renderSeparator.bind(this)}
                 renderFooter={this._renderFooter.bind(this)}
                 initialListSize={10}
@@ -103,14 +100,8 @@ class ListViewWithInfo extends Component{
                         <Text style={[styles.title, {color: titleColor}]} numberOfLines={2}>{rowData.desc}</Text>
                     </View>
                     <View style={styles.infoPart}>
-                        {this.props.renderTag ?
-                            <View>
-                                <Icon name="ios-pricetag-outline" color={subTitleColor}/>
-                                <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{rowData.type}</Text>
-                            </View>
-                            :
-                            null
-                        }
+                        <Icon name="ios-pricetag-outline" color={subTitleColor}/>
+                        <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{rowData.type}</Text>
                         <Icon name="ios-create-outline" color={subTitleColor}/>
                         <Text style={[styles.detailsLabel, {color: subTitleColor}]}>{rowData.who ? rowData.who : 'null'}</Text>
                         <Icon name="ios-time-outline" color={subTitleColor}/>
@@ -119,15 +110,6 @@ class ListViewWithInfo extends Component{
                 </View>
             </View>
         );
-    }
-
-    _renderHeader(){
-        if(this.props.headerTitle)
-            return(
-                <View>
-                    <Text>{this.props.headerTitle}</Text>
-                </View>
-            );
     }
 
     _renderSeparator(sectionID, rowID, adjacentRowHighlighted){

@@ -7,11 +7,13 @@ import * as TYPES from './actionTypes';
 import fetchUrl from '../constants/fetchUrl';
 import fetchWithTimeout from '../utils/fetchWithTimeout';
 import RandomDataDAO from '../dao/RandomDataDAO';
+import Toast from 'react-native-root-toast';
+import px2dp from '../utils/px2dp';
 
 function fetchSuccess(json) {
     return {
         type: TYPES.FETCH_RANDOM_DATA_SUCCESS,
-        dataSource: json
+        dataSource: json.sort()
     };
 }
 
@@ -30,7 +32,7 @@ function fetchRequest() {
 function fetchMoreDataSuccess(json) {
     return {
         type: TYPES.FETCH_RANDOM_MORE_DATA_SUCCESS,
-        dataSource: json
+        dataSource: json.sort()
     };
 }
 
@@ -63,14 +65,14 @@ export function fetchLocalRandomData() {
 
 export function fetchRandomData(isMoreData=false) {
     var results = [];
-    const randomCategory = ['Android/1','iOS/1','前端/1','休息视频/1','拓展资源/1','App/1','瞎推荐/1'];
+    const randomCategory = ['Android/2','iOS/2','前端/2','休息视频/2','拓展资源/2','App/2','瞎推荐/2'];
     var index = 0;
 
     function fetchCategoryData(dispatch) {
         fetchWithTimeout(5000, fetch(fetchUrl.random + randomCategory[Math.floor(Math.random()*7)]))
             .then((response)=> response.json())
             .then((json) => {
-                index++;
+                index += 2;
                 results = results.concat(json.results);
 
                 if(index >= 10) {
@@ -84,6 +86,7 @@ export function fetchRandomData(isMoreData=false) {
                 }else
                     fetchCategoryData(dispatch);
             }).catch((error) => {
+                Toast.show('获取数据失败', {position: px2dp(-80)});
                 if(isMoreData)
                     dispatch(fetchMoreDataFailure());
                 else
