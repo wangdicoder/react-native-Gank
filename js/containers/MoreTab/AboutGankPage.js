@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
 import px2dp from '../../utils/px2dp';
 import Toast from 'react-native-root-toast';
+import AboutAuthorPage from './AboutAuthorPage';
 
 class AboutGankPage extends BackPageComponent{
 
@@ -29,8 +30,8 @@ class AboutGankPage extends BackPageComponent{
                 </View>
                 <View style={[styles.block, {borderTopColor: segmentColor, backgroundColor: rowItemBackgroundColor}]}>
                     <Item title="简介" arrowColor={arrowColor} titleColor={titleColor} segmentColor={segmentColor} onPress={this._itemOnPressCallback.bind(this, 0)}/>
-                    <Item title="用户协议" arrowColor={arrowColor} titleColor={titleColor} segmentColor={segmentColor}  onPress={this._itemOnPressCallback.bind(this, 1)}/>
-                    <Item title="隐私条款" arrowColor={arrowColor} titleColor={titleColor} segmentColor={segmentColor}  onPress={this._itemOnPressCallback.bind(this, 2)}/>
+                    <Item title="致谢" arrowColor={arrowColor} titleColor={titleColor} segmentColor={segmentColor}  onPress={this._itemOnPressCallback.bind(this, 1)}/>
+                    <Item title="关于作者" arrowColor={arrowColor} titleColor={titleColor} segmentColor={segmentColor}  onPress={this._itemOnPressCallback.bind(this, 2)}/>
                 </View>
                 <View style={{position: 'absolute', bottom: px2dp(15), width:theme.screenWidth, alignItems: 'center'}}>
                     <Text style={{color: tabIconColor, fontSize: px2dp(12)}}>Copyright@2016 wangdicoder</Text>
@@ -42,13 +43,15 @@ class AboutGankPage extends BackPageComponent{
     _itemOnPressCallback(id){
         switch(id){
             case 0:
-                Alert.alert('简介','每日分享妹子图 和 技术干货，还有供大家中午休息的休闲视频');
+                Alert.alert('简介','每日分享妹子图和技术干货，还有供大家中午休息的休闲视频');
                 break;
             case 1:
-                Toast.show('没有协议', {position: px2dp(-80)});
+                Alert.alert('致谢','感谢Gank.io提供API支持');
                 break;
             case 2:
-                Toast.show('没有条款', {position: px2dp(-80)});
+                this.props.navigator.push({
+                    component: AboutAuthorPage
+                });
                 break;
         }
     }
@@ -97,7 +100,7 @@ const styles = StyleSheet.create({
         fontSize: px2dp(18),
     },
     cell: {
-        flex: 1,
+        width: theme.screenWidth,
         paddingLeft: px2dp(20),
         paddingRight: px2dp(20),
         flexDirection: 'row',
@@ -114,7 +117,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        displayOrder: state.settingState.displayOrder,
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
         segmentColor: state.settingState.colorScheme.segmentColor,
         titleColor: state.settingState.colorScheme.titleColor,

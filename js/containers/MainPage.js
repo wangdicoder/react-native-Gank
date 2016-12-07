@@ -41,7 +41,7 @@ class BottomTabBar extends Component{
     }
 
     _renderItem(Component, tab, tabName, normalIcon, selectedIcon){
-        const {navigator, mainThemeColor, tabIconColor} = this.props;
+        const {navigator, tabIconColor} = this.props;
         return(
             <TabNavigator.Item
                 selected={this.state.selectedTab === tab}

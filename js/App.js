@@ -8,6 +8,7 @@ import React from 'react';
 import {Navigator} from 'react-native';
 import {store} from './store/index';
 import MainPage from './containers/MainPage';
+import SplashScreen from './native_modules/SplashScreen';
 import Test from './containers/DiscoveryTab/GirlsPage'
 
 export default class App extends React.Component{
@@ -22,5 +23,9 @@ export default class App extends React.Component{
                 />
             </Provider>
         );
+    }
+
+    componentDidMount(){
+        SplashScreen.hide();
     }
 }

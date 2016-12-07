@@ -47,13 +47,6 @@ class ListViewForGirls extends Component{
                     onRequestClose={this._triggerModal.bind(this)}
                     transparent={true}>
                     <View style={styles.modalBackground}>
-                        <View style={styles.closeBtn}>
-                            <TouchableOpacity
-                                onPress={this._triggerModal.bind(this)}
-                                activeOpacity={theme.touchableOpacityActiveOpacity}>
-                                <Icon name="ios-close-circle-outline" color="#fff" size={px2dp(30)}/>
-                            </TouchableOpacity>
-                        </View>
                         {this.state.loadedHD ?
                             <View>
                                 <Image style={{width: this.state.imageWidth, height: this.state.imageHeight}}
@@ -62,6 +55,13 @@ class ListViewForGirls extends Component{
                             :
                             <ActivityIndicator size="large" color={this.props.tabIconColor}/>
                         }
+                        <View style={styles.closeBtn}>
+                            <TouchableOpacity
+                                onPress={this._triggerModal.bind(this)}
+                                activeOpacity={theme.touchableOpacityActiveOpacity}>
+                                <Icon name="ios-close-circle-outline" color="#fff" size={px2dp(30)}/>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </Modal>
             </View>
@@ -169,7 +169,8 @@ const styles = StyleSheet.create({
         alignItems: 'flex-end',
         justifyContent: 'flex-start',
         paddingTop: px2dp(20),
-        paddingRight: px2dp(20)
+        paddingRight: px2dp(20),
+        zIndex: 1
     }
 });
 

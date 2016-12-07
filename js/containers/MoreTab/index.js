@@ -22,7 +22,7 @@ import Toast from 'react-native-root-toast';
 import ThemeColorPage from './ThemeColorPage';
 import OrderContentPage from './OrderContentPage';
 import AboutGankPage from './AboutGankPage';
-import AboutAuthorPage from './AboutAuthor/index';
+import AboutAuthorPage from './AboutAuthorPage';
 
 class MoreFragment extends Component{
     constructor(props){
@@ -62,9 +62,6 @@ class MoreFragment extends Component{
                         <RowItemWithSwitcher title="夜间模式" icon="md-moon" iconColor="#7b68ee" switcherValue={isOpenNightMode} onValueChange={(value) => actions.changeNightMode(value)}/>
                         <RowItemWithSwitcher title="显示列表缩略图" icon="md-browsers" iconColor='plum' switcherValue={isOpenThumbnail} onValueChange={(value) => actions.changeShowThumbnail(value)} />
                         <RowItemWithSwitcher title="自动刷新首页数据" icon="md-refresh" iconColor='#ffd700' switcherValue={isAutoFetch} onValueChange={(value) => {actions.changeAutoFetch(value)}} renderSegment={false}/>
-                    </View>
-                    <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
-                        <RowItem title="关于作者" icon="md-happy" iconColor="#9acd32" renderSegment={false} onPress={this._itemClickCallback.bind(this, 4)}/>
                     </View>
                     <View style={[styles.block, {borderTopColor: segmentColor, borderBottomColor: segmentColor}]}>
                         <RowItem title="反馈" icon="md-text" iconColor={colors.lightGreen} onPress={this._itemClickCallback.bind(this, 5)} isShowRightArrow={false}/>
