@@ -14,6 +14,8 @@
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* GankIOTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* GankIOTests.m */; };
 		017D8A331DEAC59F00F2DB2E /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 01456E5E1DEABF5A008162CC /* libRCTAnimation.a */; };
+		01F5B9D31DF8344400B5C13A /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 01F5B9D21DF8344400B5C13A /* icon.png */; };
+		01F5B9EA1DF8366B00B5C13A /* SplashScreen.m in Sources */ = {isa = PBXBuildFile; fileRef = 01F5B9E91DF8366B00B5C13A /* SplashScreen.m */; };
 		0FA08FA7C55E4A0C91DA1905 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD709DA11F8B49F89DC3EC29 /* SimpleLineIcons.ttf */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
@@ -198,6 +200,9 @@
 		00E356F21AD99517003FC87E /* GankIOTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GankIOTests.m; sourceTree = "<group>"; };
 		00FBF7899E1440B1A2F6A7E0 /* libRNVectorIcons.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNVectorIcons.a; sourceTree = "<group>"; };
 		01456E571DEABF59008162CC /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
+		01F5B9D21DF8344400B5C13A /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../js/assets/icon.png; sourceTree = "<group>"; };
+		01F5B9E81DF8366B00B5C13A /* SplashScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SplashScreen.h; path = GankIO/SplashScreen.h; sourceTree = "<group>"; };
+		01F5B9E91DF8366B00B5C13A /* SplashScreen.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SplashScreen.m; path = GankIO/SplashScreen.m; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
 		139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTWebSocket.xcodeproj; path = "../node_modules/react-native/Libraries/WebSocket/RCTWebSocket.xcodeproj"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* GankIO.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GankIO.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -357,6 +362,8 @@
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				01F5B9E81DF8366B00B5C13A /* SplashScreen.h */,
+				01F5B9E91DF8366B00B5C13A /* SplashScreen.m */,
 			);
 			name = GankIO;
 			sourceTree = "<group>";
@@ -373,6 +380,7 @@
 		1BC565A95F31458086FD4067 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				01F5B9D21DF8344400B5C13A /* icon.png */,
 				D3F32007D4C24B20BA7BFB9A /* Entypo.ttf */,
 				4FD9B84648564BB88ECFBDDE /* EvilIcons.ttf */,
 				5E4108478C1C48E2AF7EA337 /* FontAwesome.ttf */,
@@ -731,6 +739,7 @@
 				E616D1BB126D441C8EB2180A /* Foundation.ttf in Resources */,
 				2ADBD2DA897A429CBC4DB6F6 /* Ionicons.ttf in Resources */,
 				EE4911D73F974F18A3000866 /* MaterialIcons.ttf in Resources */,
+				01F5B9D31DF8344400B5C13A /* icon.png in Resources */,
 				732BB5C2D26D4A88B677AA2E /* Octicons.ttf in Resources */,
 				0FA08FA7C55E4A0C91DA1905 /* SimpleLineIcons.ttf in Resources */,
 				923952D4AA374BBF9065A457 /* Zocial.ttf in Resources */,
@@ -769,6 +778,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01F5B9EA1DF8366B00B5C13A /* SplashScreen.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
