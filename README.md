@@ -1,18 +1,20 @@
-# About Gank.io
+# react-native-gank.io
 
 A cross platform App which shows the data from [gank.io](http://gank.io)
 
-# Version Info
+react-native version: **0.38**
 
-- App version: 0.6.0 (**Implementing, please Do NOT clone it**)
+*Read this in other languages: [简体中文](https://github.com/wangdicoder/react-native-Gank/blob/master/README.zh-cn.md)*
 
-- react-native version: 0.38
+## Download
 
-# How to run it
+Apk file is [here](https://github.com/wangdicoder/react-native-Gank/blob/master/android/app/app-release.apk)
 
-1. git clone https://github.com/wangdicoder/Gank.io
+## How to run it
 
-2. cd Gank.io
+1. git clone https://github.com/wangdicoder/react-native-Gank
+
+2. cd react-native-Gank
 
 3. npm install
 
@@ -20,32 +22,71 @@ A cross platform App which shows the data from [gank.io](http://gank.io)
 
 5. react-native run-android / run-ios
 
-# Feature and Screenshot
+## Features and Screenshots
 
-#### iOS user interface on MoreTab
+### good layout design
 
-![moreTab](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/moretab.png)
+![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/hometab.png)
 
 
-#### custom App theme
+### get categorized and random contents
+
+![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/discoverytab.png)
+
+
+### iOS user interface
+
+![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/moretab.png)
+
+
+### custom App theme
 
 ![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/theme.gif)
 
 
-#### night mode
+### night mode
 
 ![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/nightmode.gif)
 
 
-#### reorder
+### image box
+
+![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/girls.gif)
+
+
+### powerful web view
+
+![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/webview.gif)
+
+
+### reorder
 
 ![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/order.gif)
 
 
-#### pull up to refresh
+### pull up to refresh
 
 ![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/listviewRefresh.gif)
 
-# License
+
+## Other Features
+
+- collect favourite articles
+
+- more friendly settings
+
+- better strategy to fetch contents for saving cellular data
+
+## To do list
+
+- [ ] fetch historical contents
+
+- [ ] modify strategy of fetching images (depends on Net types)
+
+## Acknowledge
+
+Thanks for Gank.io providing this API
+
+## License
 
 MIT License
