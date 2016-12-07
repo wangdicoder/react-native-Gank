@@ -95,6 +95,10 @@ class HomeFragment extends Component{
         this.props.actions.fetchDataIfNeed(getCurrentDate());
     }
 
+    /**
+     * the speed of render is faster than that of getting setting value.
+     * this is for when gets the setting value, home page decides whether to refresh the content.
+     */
     componentDidMount(){
         RCTDeviceEventEmitter.addListener('fetch', this._handleEventEmitter.bind(this));
     }

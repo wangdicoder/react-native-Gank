@@ -60,7 +60,7 @@ class ListViewForGirls extends Component{
                                        source={{uri: this.state.imageUrl}}/>
                             </View>
                             :
-                            <ActivityIndicator size="large"/>
+                            <ActivityIndicator size="large" color={this.props.tabIconColor}/>
                         }
                     </View>
                 </Modal>

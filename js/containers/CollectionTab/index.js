@@ -9,6 +9,7 @@ import {View, Text, ScrollView} from 'react-native';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import ListViewForCollection from '../../components/ListViewForCollection';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 class CollectionFragment extends Component{
     constructor(props){
@@ -33,6 +34,18 @@ class CollectionFragment extends Component{
                 }
             </View>
         );
+    }
+
+    componentDidMount(){
+        RCTDeviceEventEmitter.addListener('refresh', this._refreshWholeDOM.bind(this));
+    }
+
+    componentWillUnmount(){
+        RCTDeviceEventEmitter.removeListener('refresh', this._refreshWholeDOM.bind(this));
+    }
+
+    _refreshWholeDOM(){
+        this.forceUpdate();
     }
 }
 

@@ -13,6 +13,7 @@ import WebViewPage from '../containers/WebViewPage';
 import { SwipeListView } from 'react-native-swipe-list-view';
 import {store} from '../store/index';
 import {unStarData} from '../actions/handleCollectionData';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 class ListViewForCollection extends Component{
     static propTypes = {
@@ -112,7 +113,7 @@ class ListViewForCollection extends Component{
 
     _itemRemoveOnPress(rowData){
         store.dispatch(unStarData(rowData));
-        this.forceUpdate(); //must refresh dom
+        RCTDeviceEventEmitter.emit('refresh'); //must refresh dom
     }
 
     _handleCreateTime(time){

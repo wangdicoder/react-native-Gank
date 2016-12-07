@@ -15,6 +15,7 @@ import {bindActionCreators} from 'redux';
 import * as Actions from '../actions/handleCollectionData';
 import Toast from 'react-native-root-toast';
 import ShareUtil from '../utils/ShareUtil';
+import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
 
 class WebViewPage extends BackPageComponent{
     constructor(props){
@@ -204,6 +205,7 @@ class WebViewPage extends BackPageComponent{
             share.share(this.props.rowData.desc, this.props.rowData.url);
         }else if(id === 7){
             this.props.actions.unStarData(this.props.rowData);
+            RCTDeviceEventEmitter.emit('refresh');
         }else if(id === 8){
             this.props.actions.starData(this.props.rowData);
         }else if(id === 9){

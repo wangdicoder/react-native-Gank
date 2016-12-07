@@ -84,12 +84,12 @@ class GirlsPage extends BackPageComponent{
     }
 
     _fethchData(){
-        this.props.actions.fetchData('福利/10/1');
+        this.props.actions.fetchData('福利/20/1');
     }
 
     _listViewOnEndReached(){
         if(!this.props.isRenderFooter) {
-            this.props.actions.fetchMoreData('福利/10/'+this.props.pageNumber);
+            this.props.actions.fetchMoreData('福利/20/'+this.props.pageNumber);
         }
     }
 

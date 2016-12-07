@@ -42,7 +42,7 @@ export function changeAutoFetch(value, flag=true, emitter=false) {
         dao.saveAutoFetchHomeData(value);
     }
 
-    if(emitter) // for only sending notification once
+    if(emitter) // only send notification once
         RCTDeviceEventEmitter.emit('fetch', value);
 
     if(value){
