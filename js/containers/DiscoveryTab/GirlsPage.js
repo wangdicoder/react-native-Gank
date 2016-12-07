@@ -71,12 +71,11 @@ class GirlsPage extends BackPageComponent{
         var dataBlob = [];
 
         for(let i=0; i<dataSource.length; i=i+2) {
-            const leftWidth = this._randomWidth();
             let rowData = {
+                leftOriginalUrl: dataSource[i].url,
+                rightOriginalUrl: dataSource[i+1].url,
                 leftUrl: this._handleImageToSmallSize(dataSource[i].url),
-                rightUrl: this._handleImageToSmallSize(dataSource[i+1].url),
-                leftWidth: leftWidth-3-6,
-                rightWidth: theme.screenWidth - leftWidth - 3 -6
+                rightUrl: this._handleImageToSmallSize(dataSource[i+1].url)
             }
             dataBlob.push(rowData);
         }
@@ -92,10 +91,6 @@ class GirlsPage extends BackPageComponent{
         if(!this.props.isRenderFooter) {
             this.props.actions.fetchMoreData('福利/10/'+this.props.pageNumber);
         }
-    }
-
-    _randomWidth(){
-        return Math.floor((Math.random() * theme.screenWidth/5) + theme.screenWidth/5*2);
     }
 
     _handleImageToSmallSize(url){
