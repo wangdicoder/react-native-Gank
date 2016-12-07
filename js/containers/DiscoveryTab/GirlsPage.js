@@ -5,7 +5,7 @@
 'use strict';
 
 import React, {Component} from 'react';
-import {StyleSheet, InteractionManager, View, Text, ScrollView, Image, ListView, ActivityIndicator} from 'react-native';
+import {StyleSheet, InteractionManager, View, Button, Text, ScrollView, Image, ListView, ActivityIndicator} from 'react-native';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import BackPageComponent from '../../components/BackPageComponent';

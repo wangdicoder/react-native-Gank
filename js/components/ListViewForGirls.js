@@ -6,6 +6,7 @@ import {StyleSheet, View, Text, Image, ListView, Platform, ActivityIndicator, To
 import {connect} from 'react-redux';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
+import Footer from './ListViewFooter';
 
 class ListViewForGirls extends Component{
     constructor(props){
@@ -36,23 +37,10 @@ class ListViewForGirls extends Component{
     }
 
     _renderFooter(){
-        if(this.props.isRenderFooter) {
-            if (this.props.isFullData)
-                return (
-                    <View style={styles.footer}>
-                        <Text style={{color: this.props.tabIconColor}}>已加载全部</Text>
-                    </View>
-                );
-            else
-                return (
-                    <View style={styles.footer}>
-                        <ActivityIndicator
-                            color={this.props.tabIconColor}
-                        />
-                        <Text style={{marginLeft: 10, color: this.props.tabIconColor}}>拼命获取中...</Text>
-                    </View>
-                );
-        }
+        const {isRenderFooter, tabIconColor, isFullData} = this.props;
+        return(
+            <Footer indicatorColor={tabIconColor} isFullData={isFullData} isRenderFooter={isRenderFooter}/>
+        );
     }
 
     _renderSeparator(sectionID, rowID, adjacentRowHighlighted){
