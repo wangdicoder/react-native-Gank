@@ -61,6 +61,11 @@ Apk file is [here](https://github.com/wangdicoder/react-native-Gank/blob/master/
 ![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/webview.gif)
 
 
+### collection contents
+
+![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/collection.gif)
+
+
 ### reorder
 
 ![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/order.gif)
@@ -73,13 +78,13 @@ Apk file is [here](https://github.com/wangdicoder/react-native-Gank/blob/master/
 
 ## Other Features
 
-- collect favourite articles
-
 - more friendly settings
 
 - better strategy to fetch contents for saving cellular data
 
 ## To do list
+
+- [ ] save girl's images into the phone
 
 - [ ] fetch historical contents
 

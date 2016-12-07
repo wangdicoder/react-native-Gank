@@ -61,6 +61,11 @@ Apk文件在[这里](https://github.com/wangdicoder/react-native-Gank/blob/maste
 ![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/webview.gif)
 
 
+### 收藏内容
+
+![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/collection.gif)
+
+
 ### 首页内容排序
 
 ![](https://github.com/wangdicoder/Gank.io/raw/master/screenshot/order.gif)
@@ -73,13 +78,13 @@ Apk文件在[这里](https://github.com/wangdicoder/react-native-Gank/blob/maste
 
 ## 其他特征
 
-- 可收藏喜爱的文章
-
 - 更大人性化友好的设置功能
 
 - 更好的获取数据策略帮你节省流量
 
 ## To do list
+
+- [ ] 保存福利图片到手机
 
 - [ ] 获取历史数据内容
 
