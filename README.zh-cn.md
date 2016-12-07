@@ -79,7 +79,7 @@ Apk文件在[这里](https://github.com/wangdicoder/react-native-Gank/blob/maste
 
 ## To do list
 
-- [ ] 获取历时数据内容
+- [ ] 获取历史数据内容
 
 - [ ] 根据网络类型选择加载图片
 
