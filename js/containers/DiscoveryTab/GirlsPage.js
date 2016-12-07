@@ -11,7 +11,7 @@ import NavigationBar from '../../components/NavigationBar';
 import BackPageComponent from '../../components/BackPageComponent';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/requestTargetData';
+import * as Actions from '../../actions/requestCategoryData';
 import ListViewForGirls from '../../components/ListViewForGirls';
 import px2dp from '../../utils/px2dp';
 
@@ -124,12 +124,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        loading: state.targetDataState.loading,
-        dataSource: state.targetDataState.dataSource,
-        isRenderFooter: state.targetDataState.isRenderFooter,
-        pageNumber: state.targetDataState.pageNumber,
-        isFullData: state.targetDataState.isFullData,
-        error: state.targetDataState.error,
+        loading: state.categoryDataState.loading,
+        dataSource: state.categoryDataState.dataSource,
+        isRenderFooter: state.categoryDataState.isRenderFooter,
+        pageNumber: state.categoryDataState.pageNumber,
+        isFullData: state.categoryDataState.isFullData,
+        error: state.categoryDataState.error,
         displayOrder: state.settingState.displayOrder,
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
         segmentColor: state.settingState.colorScheme.segmentColor,

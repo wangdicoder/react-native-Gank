@@ -5,11 +5,11 @@
 
 import {combineReducers} from 'redux';
 import homeDataState from './homeDataState';
-import targetDataState from './targetDataState';
+import categoryDataState from './categoryDataState';
 import settingState from './settingState';
 import favorDataState from './favorDataState';
 import randomDataState from './randomDataState';
 
 export default combineReducers({
-    homeDataState, targetDataState, settingState, favorDataState, randomDataState
+    homeDataState, categoryDataState, settingState, favorDataState, randomDataState
 });

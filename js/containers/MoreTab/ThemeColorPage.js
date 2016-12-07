@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     },
     img:{
         width: px2dp(250),
-        height: px2dp(390),
+        height: px2dp(412),
         position: 'absolute',
         top: (theme.screenHeight-px2dp(420))/2,
         left: (theme.screenWidth-px2dp(250))/2,

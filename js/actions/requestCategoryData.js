@@ -11,38 +11,38 @@ import px2dp from '../utils/px2dp';
 
 function requestData() {
     return {
-        type: TYPES.FETCH_TARGET_DATA_REQUEST
+        type: TYPES.FETCH_CATEGORY_DATA_REQUEST
     }
 }
 
 function requestMoreData() {
     return {
-        type: TYPES.FETCH_TARGET_MORE_DATA_REQUEST
+        type: TYPES.FETCH_CATEGORY_MORE_DATA_REQUEST
     }
 }
 
 function receiveData(json){
     return {
-        type: TYPES.FETCH_TARGET_DATA_SUCCESS,
+        type: TYPES.FETCH_CATEGORY_DATA_SUCCESS,
         dataSource: json.results
     }
 }
 
 function fetchFailure() {
     return {
-        type: TYPES.FETCH_TARGET_DATA_FAILURE
+        type: TYPES.FETCH_CATEGORY_DATA_FAILURE
     }
 }
 
 function fetchMoreDataFailure() {
     return {
-        type: TYPES.FETCH_TARGET_MORE_DATA_FAILURE
+        type: TYPES.FETCH_CATEGORY_MORE_DATA_FAILURE
     }
 }
 
 function fetchedFullData(){
     return {
-        type: TYPES.FETCH_TARGET_DATA_IS_FULL
+        type: TYPES.FETCH_CATEGORY_DATA_IS_FULL
     }
 }
 

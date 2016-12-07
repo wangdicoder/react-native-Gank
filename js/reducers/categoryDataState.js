@@ -16,7 +16,7 @@ const initialState = {
 
 export default function targetData(state=initialState, action) {
     switch(action.type){
-        case TYPES.FETCH_TARGET_DATA_REQUEST:
+        case TYPES.FETCH_CATEGORY_DATA_REQUEST:
             return Object.assign({}, state, {
                 loading: true,
                 isRenderFooter: false,
@@ -26,7 +26,7 @@ export default function targetData(state=initialState, action) {
                 error: false
             });
 
-        case TYPES.FETCH_TARGET_MORE_DATA_REQUEST:
+        case TYPES.FETCH_CATEGORY_MORE_DATA_REQUEST:
             return Object.assign({}, state, {
                 ...state,
                 loading: false,
@@ -35,7 +35,7 @@ export default function targetData(state=initialState, action) {
                 error: false
             });
 
-        case TYPES.FETCH_TARGET_DATA_SUCCESS:
+        case TYPES.FETCH_CATEGORY_DATA_SUCCESS:
             return Object.assign({}, state, {
                 ...state,
                 loading: false,
@@ -44,7 +44,7 @@ export default function targetData(state=initialState, action) {
                 pageNumber: state.pageNumber + 1
             });
 
-        case TYPES.FETCH_TARGET_DATA_FAILURE:
+        case TYPES.FETCH_CATEGORY_DATA_FAILURE:
             return Object.assign({}, state, {
                 ...state,
                 loading: false,
@@ -52,13 +52,13 @@ export default function targetData(state=initialState, action) {
                 error: true
             });
 
-        case TYPES.FETCH_TARGET_MORE_DATA_FAILURE:
+        case TYPES.FETCH_CATEGORY_MORE_DATA_FAILURE:
             return Object.assign({}, state, {
                 ...state,
                 isRenderFooter: false
             });
 
-        case TYPES.FETCH_TARGET_DATA_IS_FULL:
+        case TYPES.FETCH_CATEGORY_DATA_IS_FULL:
             return Object.assign({}, state, {
                 ...state,
                 loading: false,

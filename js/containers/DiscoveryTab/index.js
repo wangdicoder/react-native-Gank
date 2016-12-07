@@ -17,6 +17,7 @@ import px2dp from '../../utils/px2dp';
 import Avatar from '../../components/Avatar';
 import getCorrectImageSizeUrl from '../../utils/imageFactory';
 import WebViewPage from '../../containers/WebViewPage';
+import Footer from '../../components/ListViewFooter';
 
 class DiscoveryFragment extends Component{
     constructor(props){
@@ -116,16 +117,10 @@ class DiscoveryFragment extends Component{
     }
 
     _renderFooter(){
-        if(this.props.isRenderFooter) {
-            return (
-                <View style={styles.footer}>
-                    <ActivityIndicator
-                        color={this.props.tabIconColor}
-                    />
-                    <Text style={{marginLeft: 10, color: this.props.tabIconColor}}>拼命获取中...</Text>
-                </View>
-            );
-        }
+        const {isRenderFooter, tabIconColor} = this.props;
+        return(
+            <Footer indicatorColor={tabIconColor} isFullData={false} isRenderFooter={isRenderFooter}/>
+        );
     }
 
     _renderRow(rowData, sectionID, rowID, highlightRow){

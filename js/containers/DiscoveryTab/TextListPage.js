@@ -8,11 +8,11 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, InteractionManager, ActivityIndicator, Button} from 'react-native';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
-import * as Actions from '../../actions/requestTargetData';
+import * as Actions from '../../actions/requestCategoryData';
 import theme from '../../constants/theme';
 import NavigationBar from '../../components/NavigationBar';
 import BackPageComponent from '../../components/BackPageComponent';
-import ListViewWithInfo from '../../components/ListViewWithInfo';
+import ListViewForCategory from '../../components/ListViewForCategory';
 
 class TextListPage extends BackPageComponent{
     constructor(props){
@@ -44,7 +44,7 @@ class TextListPage extends BackPageComponent{
                                 <Text style={{marginLeft: 10, color: this.props.tabIconColor}}>获取中...</Text>
                             </View>
                             :
-                            <ListViewWithInfo
+                            <ListViewForCategory
                                 dataSource={this.props.dataSource}
                                 navigator={this.props.navigator}
                                 isRenderFooter={this.props.isRenderFooter}
@@ -61,9 +61,7 @@ class TextListPage extends BackPageComponent{
 
     componentDidMount(){
         super.componentDidMount();  // must invoke it for the back button event
-        //InteractionManager.runAfterInteractions(()=>{
         this._fethchData();
-        //});
     }
 
     _fethchData(){
@@ -103,12 +101,12 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = (state) => {
     return {
-        loading: state.targetDataState.loading,
-        dataSource: state.targetDataState.dataSource,
-        isRenderFooter: state.targetDataState.isRenderFooter,
-        pageNumber: state.targetDataState.pageNumber,
-        isFullData: state.targetDataState.isFullData,
-        error: state.targetDataState.error,
+        loading: state.categoryDataState.loading,
+        dataSource: state.categoryDataState.dataSource,
+        isRenderFooter: state.categoryDataState.isRenderFooter,
+        pageNumber: state.categoryDataState.pageNumber,
+        isFullData: state.categoryDataState.isFullData,
+        error: state.categoryDataState.error,
         mainThemeColor: state.settingState.colorScheme.mainThemeColor,
         pageBackgroundColor: state.settingState.colorScheme.pageBackgroundColor,
         tabIconColor: state.settingState.colorScheme.tabIconColor,
