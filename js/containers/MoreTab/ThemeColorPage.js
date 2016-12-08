@@ -37,12 +37,16 @@ class ThemeColorPage extends BackPageComponent{
                         {this._renderColorItem(colors.orangeRed)}
                         {this._renderColorItem(colors.orange)}
                         {this._renderColorItem(colors.yellow)}
+                        {this._renderColorItem(colors.yellowGreen)}
                         {this._renderColorItem(colors.lightGreen)}
                         {this._renderColorItem(colors.limeGreen)}
                         {this._renderColorItem(colors.seaGreen)}
+                        {this._renderColorItem(colors.skyBlue)}
                         {this._renderColorItem(colors.lightBlue)}
                         {this._renderColorItem(colors.dodgerBlue)}
+                        {this._renderColorItem(colors.thistle)}
                         {this._renderColorItem(colors.purple)}
+                        {this._renderColorItem(colors.slateBlue)}
                         {this._renderColorItem(colors.black)}
                     </ScrollView>
                 </View>
@@ -92,20 +96,19 @@ const styles = StyleSheet.create({
     },
     img:{
         width: px2dp(250),
-        height: px2dp(412),
-        position: 'absolute',
-        top: (theme.screenHeight-px2dp(420))/2,
-        left: (theme.screenWidth-px2dp(250))/2,
-    },
-    colorPanel: {
-        width: px2dp(250),
-        height: px2dp(390),
+        height: px2dp(411),
         position: 'absolute',
         top: (theme.screenHeight-px2dp(420))/2,
         left: (theme.screenWidth-px2dp(250))/2,
         borderWidth: theme.segment.width,
-        borderColor: theme.segment.color,
-        //elevation: 5,
+        borderColor: theme.segment.color
+    },
+    colorPanel: {
+        width: px2dp(250),
+        height: px2dp(411),
+        position: 'absolute',
+        top: (theme.screenHeight-px2dp(420))/2,
+        left: (theme.screenWidth-px2dp(250))/2
     },
     colorBlock: {
         borderRadius: 5,
