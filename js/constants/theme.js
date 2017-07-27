@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import {Platform, Dimensions, PixelRatio} from 'react-native';
+import {Platform, Dimensions, PixelRatio, StatusBar} from 'react-native';
 import colors from './colors';
 import px2dp from '../utils/px2dp';
 
@@ -23,7 +23,7 @@ export default {
     },
     toolbar: {
         height: Platform.OS === 'android' ? px2dp(40) : px2dp(49),
-        paddingTop: Platform.Version >= 21 ? px2dp(20) : 0,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0,
         //barColor: favoriteColor,
         titleColor: '#fff',
         titleSize: Platform.OS === 'android' ? px2dp(16) : px2dp(14),
