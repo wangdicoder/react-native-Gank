@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, ListView, Platform, ActivityIndicator, TouchableNativeFeedback, TouchableHighlight, ToastAndroid} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
@@ -12,7 +12,7 @@ import px2dp from '../utils/px2dp';
 import WebViewPage from '../containers/WebViewPage';
 import getCorrectImageSizeUrl from '../utils/imageFactory';
 import Footer from './ListViewFooter';
-
+import PropTypes from 'prop-types';
 class ListViewWithInfo extends Component{
     constructor(props){
         super(props);

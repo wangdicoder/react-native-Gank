@@ -3,11 +3,11 @@
  */
 'use strict';
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {Text, View, StyleSheet, ActivityIndicator} from 'react-native';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
-
+import PropTypes from 'prop-types';
 export default class ListViewFooter extends Component{
     static propTypes = {
         isRenderFooter: PropTypes.bool,

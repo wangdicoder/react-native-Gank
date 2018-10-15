@@ -5,11 +5,11 @@
 
 import {Provider} from 'react-redux';
 import React from 'react';
-import {Navigator} from 'react-native';
+import {Navigator} from 'react-native-deprecated-custom-components';
 import {store} from './store/index';
 import MainPage from './containers/MainPage';
 import SplashScreen from './native_modules/SplashScreen';
-import Test from './containers/DiscoveryTab/GirlsPage'
+
 
 export default class App extends React.Component{
     render(){

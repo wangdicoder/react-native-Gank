@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, View, WebView, InteractionManager, Text, TouchableOpacity, ActivityIndicator, Alert, Linking, Clipboard, Modal, PanResponder, Animated, ToastAndroid} from 'react-native';
 import theme from '../constants/theme';
 import NavigationBar from '../components/NavigationBar';
@@ -16,6 +16,7 @@ import * as Actions from '../actions/handleCollectionData';
 import Toast from 'react-native-root-toast';
 import ShareUtil from '../utils/ShareUtil';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+import PropTypes from 'prop-types';
 
 class WebViewPage extends BackPageComponent{
     constructor(props){

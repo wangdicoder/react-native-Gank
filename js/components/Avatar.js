@@ -1,9 +1,10 @@
 /**
  * Created by wangdi on 4/11/16.
  */
-import React, {Component, PropTypes} from "react";
+import React, {Component} from "react";
 import {StyleSheet, View, Image, Text} from "react-native";
 import Icon from 'react-native-vector-icons/Ionicons';
+import PropTypes from 'prop-types';
 
 export default class Avatar extends Component {
     static propTypes = {

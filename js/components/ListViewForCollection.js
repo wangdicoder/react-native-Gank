@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, View, Text, ListView, PixelRatio, Platform, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
 import {connect} from 'react-redux';
 import px2dp from '../utils/px2dp';
@@ -14,6 +14,7 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import {store} from '../store/index';
 import {unStarData} from '../actions/handleCollectionData';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+import PropTypes from 'prop-types';
 
 class ListViewForCollection extends Component{
     static propTypes = {

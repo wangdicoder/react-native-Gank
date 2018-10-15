@@ -1,13 +1,14 @@
 /**
  * Created by wangdi on 7/12/16.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, ListView, Platform, ActivityIndicator, TouchableOpacity, Modal} from 'react-native';
 import {connect} from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
 import Footer from './ListViewFooter';
+import PropTypes from 'prop-types';
 
 class ListViewForGirls extends Component{
     constructor(props){
