@@ -1,7 +1,7 @@
 /**
  * Created by wangdi on 24/11/16.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, TouchableHighlight, Alert} from 'react-native';
 import BackPageComponent from '../../components/BackPageComponent';
 import NavigationBar from '../../components/NavigationBar';
@@ -9,8 +9,8 @@ import theme from '../../constants/theme';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux';
 import px2dp from '../../utils/px2dp';
-import Toast from 'react-native-root-toast';
 import AboutAuthorPage from './AboutAuthorPage';
+import PropTypes from 'prop-types';
 
 class AboutGankPage extends BackPageComponent{
 

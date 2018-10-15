@@ -1,12 +1,13 @@
 /**
  * Created by wangdi on 23/11/16.
  */
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, Platform, View, Text, StatusBar, TouchableOpacity} from 'react-native';
 import theme from '../constants/theme';
 import px2dp from '../utils/px2dp';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {connect} from 'react-redux'
+import PropTypes from 'prop-types';
 
 class NavigationBar extends Component{
     static propTypes = {

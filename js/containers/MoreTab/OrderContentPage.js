@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, View, Platform, Text, PanResponder, AsyncStorage} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import BackPageComponent from '../../components/BackPageComponent';

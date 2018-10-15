@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, View, Text, ListView, PixelRatio, Platform, TouchableNativeFeedback, TouchableHighlight} from 'react-native';
 import {connect} from 'react-redux';
 import px2dp from '../utils/px2dp';
@@ -11,6 +11,7 @@ import theme from '../constants/theme';
 import Avatar from './Avatar';
 import Icon from 'react-native-vector-icons/Ionicons';
 import WebViewPage from '../containers/WebViewPage';
+import PropTypes from 'prop-types';
 
 class ListViewForHome extends Component{
     static propTypes = {

@@ -23,7 +23,6 @@ public class MyReactPackage implements ReactPackage{
         return list;
     }
 
-    @Override
     public List<Class<? extends JavaScriptModule>> createJSModules() {
         return Collections.emptyList();
     }

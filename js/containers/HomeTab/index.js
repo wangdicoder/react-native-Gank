@@ -3,7 +3,7 @@
  */
 'use strict';
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {bindActionCreators} from 'redux';
 import * as Actions from '../../actions/requestHomeData';
@@ -16,6 +16,7 @@ import * as Info from '../../utils/handleHomeDataSource';
 import ListViewForHome from '../../components/ListViewForHome';
 import colors from '../../constants/colors';
 import RCTDeviceEventEmitter from 'RCTDeviceEventEmitter';
+import PropTypes from 'prop-types';
 
 class HomeFragment extends Component{
     constructor(props){
