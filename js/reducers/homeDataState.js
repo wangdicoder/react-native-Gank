@@ -17,14 +17,12 @@ export default function homeDataState(state=initialState, action){
     switch (action.type){
         case types.FETCH_HOME_DATE_REQUEST:
             return Object.assign({}, state, {
-                ...state,
                 loading: true,
                 error: false
             });
 
         case types.FETCH_HOME_DATA_SUCCESS:
             return Object.assign({}, state, {
-                ...state,
                 loading: false,
                 hasData: true,
                 dataSource: action.dataSource,
@@ -33,7 +31,6 @@ export default function homeDataState(state=initialState, action){
 
         case types.FETCH_HOME_DATA_FAILURE:
             return Object.assign({}, state, {
-                ...state,
                 loading: false,
                 error: true
             });
