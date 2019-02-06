@@ -14,7 +14,6 @@ export default function favorDataState(state=initialState, action) {
     switch(action.type){
         case TYPES.UPDATE_STAR_LIST:
             return Object.assign({}, state, {
-                ...state,
                 dataSource: action.list
             });
 
@@ -32,7 +31,6 @@ export default function favorDataState(state=initialState, action) {
 
         case TYPES.UPDATE_STAR_STATE:
             return Object.assign({}, state, {
-                ...state,
                 isStarred: action.isStarred
             });
 
