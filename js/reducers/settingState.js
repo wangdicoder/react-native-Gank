@@ -30,37 +30,31 @@ export default function settingState(state=initialState, action) {
     switch(action.type){
         case TYPES.OPEN_SHOW_THUMBNAIL:
             return Object.assign({}, state, {
-                ...state,
                 isOpenThumbnail: true
             });
 
         case TYPES.CLOSE_SHOW_THUMBNAIL:
             return Object.assign({}, state, {
-                ...state,
                 isOpenThumbnail: false
             });
 
         case TYPES.OPEN_AUTO_FETCH:
             return Object.assign({}, state, {
-                ...state,
                 isAutoFetch: true
             });
 
         case TYPES.CLOSE_AUTO_FETCH:
             return Object.assign({}, state, {
-                ...state,
                 isAutoFetch: false
             });
 
         case TYPES.CHANGE_DISPLAY_ORDER:
             return Object.assign({}, state, {
-                ...state,
                 displayOrder: action.displayOrder
             });
 
         case TYPES.CHANGE_COLOR:
             return Object.assign({}, state, {
-                ...state,
                 themeColor: action.color,
                 colorScheme: {
                     ...state.colorScheme,
@@ -71,7 +65,6 @@ export default function settingState(state=initialState, action) {
 
         case TYPES.OPEN_NIGHT_MODE:
             return Object.assign({}, state, {
-                ...state,
                 isOpenNightMode: true,
                 colorScheme: {
                     mainThemeColor: 'rgb(40,40,40)',
@@ -89,7 +82,6 @@ export default function settingState(state=initialState, action) {
 
         case TYPES.CLOSE_NIGHT_MODE:
             return Object.assign({}, state, {
-                ...state,
                 isOpenNightMode: false,
                 colorScheme: {
                     mainThemeColor: state.themeColor,
