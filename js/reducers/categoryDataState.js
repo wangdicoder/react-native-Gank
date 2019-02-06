@@ -28,7 +28,6 @@ export default function targetData(state=initialState, action) {
 
         case TYPES.FETCH_CATEGORY_MORE_DATA_REQUEST:
             return Object.assign({}, state, {
-                ...state,
                 loading: false,
                 isRenderFooter: true,
                 dataSource: state.dataSource,
@@ -37,7 +36,6 @@ export default function targetData(state=initialState, action) {
 
         case TYPES.FETCH_CATEGORY_DATA_SUCCESS:
             return Object.assign({}, state, {
-                ...state,
                 loading: false,
                 isRenderFooter: false,
                 dataSource: state.dataSource.concat(action.dataSource),
@@ -46,7 +44,6 @@ export default function targetData(state=initialState, action) {
 
         case TYPES.FETCH_CATEGORY_DATA_FAILURE:
             return Object.assign({}, state, {
-                ...state,
                 loading: false,
                 isRenderFooter: false,
                 error: true
@@ -54,13 +51,11 @@ export default function targetData(state=initialState, action) {
 
         case TYPES.FETCH_CATEGORY_MORE_DATA_FAILURE:
             return Object.assign({}, state, {
-                ...state,
                 isRenderFooter: false
             });
 
         case TYPES.FETCH_CATEGORY_DATA_IS_FULL:
             return Object.assign({}, state, {
-                ...state,
                 loading: false,
                 isRenderFooter: true,
                 isFullData: true
